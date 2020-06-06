@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Ivorywhite
 
 class ViewController: UIViewController {
 
@@ -14,13 +15,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .blue
         
-        let config = AppConfiguration()
-        print(config.environment)
-        print(config.value(for: .baseUrl))
-        print(config.value(for: .appVersion))
-        print(config.value(for: .bundleId))
+        let service = Ivorywhite.shared.service(debugMode: true)
+        _ = service.request(with: URL(string: "https://sym-json-server.herokuapp.com/authors")!) { result in
+            switch result {
+            case .success(let response):
+                let responseString = String(data: response.value!, encoding: .utf8)
+                print(responseString ?? "nil")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
     }
-
-
 }
 

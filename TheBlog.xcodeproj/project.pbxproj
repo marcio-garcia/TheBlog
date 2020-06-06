@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,9 @@
 		258405BA248C085200F6C548 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258405B9248C085200F6C548 /* Author.swift */; };
 		258405BC248C09CF00F6C548 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258405BB248C09CF00F6C548 /* Post.swift */; };
 		258405BF248C0A7F00F6C548 /* Comments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258405BE248C0A7F00F6C548 /* Comments.swift */; };
+		258405C2248C0B4300F6C548 /* Ivorywhite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258405C1248C0B4300F6C548 /* Ivorywhite.framework */; };
+		258405C9248C0C1600F6C548 /* input.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 258405C8248C0C1600F6C548 /* input.xcfilelist */; };
+		258405CB248C0C2500F6C548 /* output.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 258405CA248C0C2500F6C548 /* output.xcfilelist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +48,9 @@
 		258405B9248C085200F6C548 /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
 		258405BB248C09CF00F6C548 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		258405BE248C0A7F00F6C548 /* Comments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comments.swift; sourceTree = "<group>"; };
+		258405C1248C0B4300F6C548 /* Ivorywhite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ivorywhite.framework; path = Carthage/Build/iOS/Ivorywhite.framework; sourceTree = "<group>"; };
+		258405C8248C0C1600F6C548 /* input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = input.xcfilelist; sourceTree = "<group>"; };
+		258405CA248C0C2500F6C548 /* output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = output.xcfilelist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				258405C2248C0B4300F6C548 /* Ivorywhite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +78,7 @@
 				2584058A248BDBFD00F6C548 /* TheBlog */,
 				258405A1248BDBFF00F6C548 /* TheBlogTests */,
 				25840589248BDBFD00F6C548 /* Products */,
+				258405C0248C0B4300F6C548 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,6 +118,7 @@
 		258405AD248BDC4500F6C548 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				258405C7248C0BF200F6C548 /* Carthage */,
 				258405AE248BDC5200F6C548 /* Config */,
 			);
 			path = SupportingFiles;
@@ -143,6 +152,23 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		258405C0248C0B4300F6C548 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				258405C1248C0B4300F6C548 /* Ivorywhite.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		258405C7248C0BF200F6C548 /* Carthage */ = {
+			isa = PBXGroup;
+			children = (
+				258405C8248C0C1600F6C548 /* input.xcfilelist */,
+				258405CA248C0C2500F6C548 /* output.xcfilelist */,
+			);
+			path = Carthage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -153,6 +179,8 @@
 				25840584248BDBFD00F6C548 /* Sources */,
 				25840585248BDBFD00F6C548 /* Frameworks */,
 				25840586248BDBFD00F6C548 /* Resources */,
+				258405C5248C0B5100F6C548 /* Carthage Framework Copy */,
+				258405C6248C0B6D00F6C548 /* Carthage Framework Outdated */,
 			);
 			buildRules = (
 			);
@@ -224,8 +252,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				258405C9248C0C1600F6C548 /* input.xcfilelist in Resources */,
 				25840598248BDBFF00F6C548 /* LaunchScreen.storyboard in Resources */,
 				25840595248BDBFF00F6C548 /* Assets.xcassets in Resources */,
+				258405CB248C0C2500F6C548 /* output.xcfilelist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +267,47 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		258405C5248C0B5100F6C548 /* Carthage Framework Copy */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"$(SRCROOT)/TheBlog/SupportingFiles/Carthage/input.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "Carthage Framework Copy";
+			outputFileListPaths = (
+				"$(SRCROOT)/TheBlog/SupportingFiles/Carthage/output.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+		258405C6248C0B6D00F6C548 /* Carthage Framework Outdated */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Carthage Framework Outdated";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage outdated --xcode-warnings 2>/dev/null\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		25840584248BDBFD00F6C548 /* Sources */ = {
@@ -404,6 +475,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(OXL_APPICON_NAME)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 466546777M;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = TheBlog/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -423,6 +498,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(OXL_APPICON_NAME)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 466546777M;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = TheBlog/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -547,6 +626,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(OXL_APPICON_NAME)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 466546777M;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = TheBlog/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
