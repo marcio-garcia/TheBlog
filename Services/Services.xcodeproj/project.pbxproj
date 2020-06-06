@@ -21,7 +21,6 @@
 		2584060A248C173400F6C548 /* PostsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840609248C173400F6C548 /* PostsRequest.swift */; };
 		2584060C248C179B00F6C548 /* CommentsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584060B248C179B00F6C548 /* CommentsRequest.swift */; };
 		25840612248C186500F6C548 /* Ivorywhite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25840611248C186500F6C548 /* Ivorywhite.framework */; };
-		25840613248C186500F6C548 /* Ivorywhite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25840611248C186500F6C548 /* Ivorywhite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		25840620248C1F6600F6C548 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584061F248C1F6600F6C548 /* Services.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,20 +33,6 @@
 			remoteInfo = Services;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		25840614248C186500F6C548 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				25840613248C186500F6C548 /* Ivorywhite.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		258405D6248C10A300F6C548 /* Services.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Services.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,7 +203,6 @@
 				258405D2248C10A300F6C548 /* Sources */,
 				258405D3248C10A300F6C548 /* Frameworks */,
 				258405D4248C10A300F6C548 /* Resources */,
-				25840614248C186500F6C548 /* Embed Frameworks */,
 				25840619248C1D6300F6C548 /* Product Framework Copy */,
 			);
 			buildRules = (
