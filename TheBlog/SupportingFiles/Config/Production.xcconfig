@@ -13,4 +13,4 @@ OXL_APP_NAME = The Blog
 OXL_BUNDLE_IDENTIFIER = oxltech.com.TheBlog
 OXL_APPICON_NAME = AppIcon-Prod
 OXL_ENVIRONMENT = production
-OXL_API_BASE_URL = sym-json-server.herokuapp.com
+OXL_API_BASE_URL = https:\/\/sym-json-server.herokuapp.com

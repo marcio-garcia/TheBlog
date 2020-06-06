@@ -14,4 +14,4 @@ OXL_BUNDLE_IDENTIFIER = oxltech.com.TheBlog.dev
 OXL_APPICON_NAME = AppIcon-Dev
 OXL_ENVIRONMENT = development
 // In a real situation the development base URL would be different than the production one.
-OXL_API_BASE_URL = sym-json-server.herokuapp.com
+OXL_API_BASE_URL = https:\/\/sym-json-server.herokuapp.com

@@ -13,6 +13,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
+        
+        let config = AppConfiguration()
+        print(config.environment)
+        print(config.value(for: .baseUrl))
+        print(config.value(for: .appVersion))
+        print(config.value(for: .bundleId))
     }
 
 
