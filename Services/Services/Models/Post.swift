@@ -6,9 +6,9 @@
 //  Copyright © 2020 Oxl Tech. All rights reserved.
 //
 
-typealias Posts = [Post]
+public typealias Posts = [Post]
 
-struct Post: Codable {
+public struct Post: Codable {
     let id: Int
     let date, title, body: String
     let imageURL: String

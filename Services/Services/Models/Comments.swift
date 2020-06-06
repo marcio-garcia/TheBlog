@@ -6,9 +6,9 @@
 //  Copyright © 2020 Oxl Tech. All rights reserved.
 //
 
-typealias Comments = [Comment]
+public typealias Comments = [Comment]
 
-struct Comment: Codable {
+public struct Comment: Codable {
     let id: Int
     let date, body, userName, email: String
     let avatarURL: String

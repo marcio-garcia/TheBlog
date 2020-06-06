@@ -5,7 +5,7 @@
 ## Build generated
 build/
 DerivedData/
-Frameworks/
+#Frameworks/
 
 ## Various settings
 *.pbxuser
@@ -51,8 +51,10 @@ Pods/
 # Carthage
 #
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
-Carthage/Checkouts
-Carthage/Build
+Carthage/
+!Carthage/Build/
+Services/Carthage/
+!Service/Carthage/Build/
 
 # fastlane
 #

@@ -6,9 +6,9 @@
 //  Copyright © 2020 Oxl Tech. All rights reserved.
 //
 
-typealias Authors = [Author]
+public typealias Authors = [Author]
 
-struct Author: Codable {
+public struct Author: Codable {
     let id: Int
     let name, userName, email: String
     let avatarURL: String
@@ -21,6 +21,6 @@ struct Author: Codable {
     }
 }
 
-struct Address: Codable {
+public struct Address: Codable {
     let latitude, longitude: String
 }
