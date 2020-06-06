@@ -13,6 +13,9 @@
 		25840598248BDBFF00F6C548 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25840596248BDBFF00F6C548 /* LaunchScreen.storyboard */; };
 		258405A3248BDBFF00F6C548 /* TheBlogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258405A2248BDBFF00F6C548 /* TheBlogTests.swift */; };
 		258405B7248BEEEB00F6C548 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258405B6248BEEEB00F6C548 /* AppConfiguration.swift */; };
+		258405BA248C085200F6C548 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258405B9248C085200F6C548 /* Author.swift */; };
+		258405BC248C09CF00F6C548 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258405BB248C09CF00F6C548 /* Post.swift */; };
+		258405BF248C0A7F00F6C548 /* Comments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258405BE248C0A7F00F6C548 /* Comments.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +42,9 @@
 		258405B0248BDC7100F6C548 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		258405B1248BDC7A00F6C548 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		258405B6248BEEEB00F6C548 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		258405B9248C085200F6C548 /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
+		258405BB248C09CF00F6C548 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		258405BE248C0A7F00F6C548 /* Comments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comments.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +86,7 @@
 		2584058A248BDBFD00F6C548 /* TheBlog */ = {
 			isa = PBXGroup;
 			children = (
+				258405B8248C07D400F6C548 /* Models */,
 				258405B5248BEED100F6C548 /* AppConfiguraton */,
 				258405AD248BDC4500F6C548 /* SupportingFiles */,
 				2584058B248BDBFD00F6C548 /* AppDelegate.swift */,
@@ -124,6 +131,16 @@
 				258405B6248BEEEB00F6C548 /* AppConfiguration.swift */,
 			);
 			path = AppConfiguraton;
+			sourceTree = "<group>";
+		};
+		258405B8248C07D400F6C548 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				258405B9248C085200F6C548 /* Author.swift */,
+				258405BB248C09CF00F6C548 /* Post.swift */,
+				258405BE248C0A7F00F6C548 /* Comments.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,7 +245,10 @@
 			files = (
 				258405B7248BEEEB00F6C548 /* AppConfiguration.swift in Sources */,
 				25840590248BDBFD00F6C548 /* ViewController.swift in Sources */,
+				258405BA248C085200F6C548 /* Author.swift in Sources */,
 				2584058C248BDBFD00F6C548 /* AppDelegate.swift in Sources */,
+				258405BC248C09CF00F6C548 /* Post.swift in Sources */,
+				258405BF248C0A7F00F6C548 /* Comments.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
