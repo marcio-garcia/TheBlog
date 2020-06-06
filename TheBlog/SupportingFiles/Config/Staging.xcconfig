@@ -1,0 +1,17 @@
+//
+//  Staging.xcconfig
+//  TheBlog
+//
+//  Created by Marcio Garcia on 06/06/20.
+//  Copyright © 2020 Oxl Tech. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+OXL_APP_NAME = The Blog Stg
+OXL_BUNDLE_IDENTIFIER = oxltech.com.TheBlog.stg
+OXL_APPICON_NAME = AppIcon-Stg
+OXL_ENVIRONMENT = staging
+// In a real situation the staging base URL would be different than the production one.
+OXL_API_BASE_URL = sym-json-server.herokuapp.com
