@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Ivorywhite
 
 class AuthorsListContentView: UIView, ViewCodingProtocol {
 
@@ -53,6 +54,7 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
         tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.register(AuthorsListTableViewCell.self, forCellReuseIdentifier: AuthorsListTableViewCell.identifier)
     }
     
     // MARK: Data
@@ -71,12 +73,28 @@ extension AuthorsListContentView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: AuthorsListTableViewCell.identifier,
+                                                    for: indexPath) as? AuthorsListTableViewCell {
+            
+            var imageWorker: ImageWorkLogic?
+            if cell.imageWorker == nil {
+                let service = Ivorywhite.shared.service(debugMode: true)
+                imageWorker = ImageWorker(service: service)
+            }
+            
+            cell.configure(imageWorker: imageWorker, author: displayedAuthors[indexPath.row])
+            return cell
+        }
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
     }
 }
 
 extension AuthorsListContentView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

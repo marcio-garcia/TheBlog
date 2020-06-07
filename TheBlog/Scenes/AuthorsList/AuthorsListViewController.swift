@@ -60,7 +60,8 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
   
     // MARK: AuthorsListDisplayLogic
     
-    func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel){
+    func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel) {
+        contentView.updateAuthors(displayedAuthors: viewModel.displayedAuthors)
     }
 }
 
