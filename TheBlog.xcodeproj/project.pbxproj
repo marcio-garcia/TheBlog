@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2584058C248BDBFD00F6C548 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584058B248BDBFD00F6C548 /* AppDelegate.swift */; };
-		25840590248BDBFD00F6C548 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584058F248BDBFD00F6C548 /* ViewController.swift */; };
 		25840595248BDBFF00F6C548 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25840594248BDBFF00F6C548 /* Assets.xcassets */; };
 		25840598248BDBFF00F6C548 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25840596248BDBFF00F6C548 /* LaunchScreen.storyboard */; };
-		258405A3248BDBFF00F6C548 /* TheBlogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258405A2248BDBFF00F6C548 /* TheBlogTests.swift */; };
 		258405B7248BEEEB00F6C548 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258405B6248BEEEB00F6C548 /* AppConfiguration.swift */; };
 		258405C2248C0B4300F6C548 /* Ivorywhite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258405C1248C0B4300F6C548 /* Ivorywhite.framework */; };
 		258405C9248C0C1600F6C548 /* input.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 258405C8248C0C1600F6C548 /* input.xcfilelist */; };
@@ -19,6 +17,20 @@
 		2584061B248C1E5C00F6C548 /* Services.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2584061A248C1E5C00F6C548 /* Services.framework */; };
 		2584061C248C1E5C00F6C548 /* Services.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2584061A248C1E5C00F6C548 /* Services.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		25840622248C203F00F6C548 /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840621248C203F00F6C548 /* NetworkConfiguration.swift */; };
+		2584064A248D3D5F00F6C548 /* AuthorsListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840643248D3D5F00F6C548 /* AuthorsListPresenter.swift */; };
+		2584064B248D3D5F00F6C548 /* AuthorsListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840644248D3D5F00F6C548 /* AuthorsListWorker.swift */; };
+		2584064C248D3D5F00F6C548 /* AuthorsListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840645248D3D5F00F6C548 /* AuthorsListRouter.swift */; };
+		2584064D248D3D5F00F6C548 /* AuthorsListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840646248D3D5F00F6C548 /* AuthorsListModels.swift */; };
+		2584064E248D3D5F00F6C548 /* AuthorsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840647248D3D5F00F6C548 /* AuthorsListViewController.swift */; };
+		2584064F248D3D5F00F6C548 /* AuthorsListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840648248D3D5F00F6C548 /* AuthorsListBuilder.swift */; };
+		25840650248D3D5F00F6C548 /* AuthorsListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840649248D3D5F00F6C548 /* AuthorsListInteractor.swift */; };
+		25840657248D572A00F6C548 /* AuthorsListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840653248D572A00F6C548 /* AuthorsListViewControllerTests.swift */; };
+		25840658248D572A00F6C548 /* AuthorsListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840654248D572A00F6C548 /* AuthorsListInteractorTests.swift */; };
+		25840659248D572A00F6C548 /* AuthorsListWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840655248D572A00F6C548 /* AuthorsListWorkerTests.swift */; };
+		2584065A248D572A00F6C548 /* AuthorsListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840656248D572A00F6C548 /* AuthorsListPresenterTests.swift */; };
+		2584065D248D628F00F6C548 /* BlogServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584065C248D628F00F6C548 /* BlogServiceMock.swift */; };
+		2584065E248D63C600F6C548 /* Ivorywhite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258405C1248C0B4300F6C548 /* Ivorywhite.framework */; };
+		2584065F248D63C800F6C548 /* Services.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2584061A248C1E5C00F6C548 /* Services.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,12 +60,10 @@
 /* Begin PBXFileReference section */
 		25840588248BDBFD00F6C548 /* TheBlog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheBlog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2584058B248BDBFD00F6C548 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2584058F248BDBFD00F6C548 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		25840594248BDBFF00F6C548 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		25840597248BDBFF00F6C548 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		25840599248BDBFF00F6C548 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2584059E248BDBFF00F6C548 /* TheBlogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheBlogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		258405A2248BDBFF00F6C548 /* TheBlogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheBlogTests.swift; sourceTree = "<group>"; };
 		258405A4248BDBFF00F6C548 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		258405AF248BDC6700F6C548 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		258405B0248BDC7100F6C548 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
@@ -64,6 +74,18 @@
 		258405CA248C0C2500F6C548 /* output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = output.xcfilelist; sourceTree = "<group>"; };
 		2584061A248C1E5C00F6C548 /* Services.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Services.framework; path = Frameworks/Services.framework; sourceTree = "<group>"; };
 		25840621248C203F00F6C548 /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
+		25840643248D3D5F00F6C548 /* AuthorsListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListPresenter.swift; sourceTree = "<group>"; };
+		25840644248D3D5F00F6C548 /* AuthorsListWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListWorker.swift; sourceTree = "<group>"; };
+		25840645248D3D5F00F6C548 /* AuthorsListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListRouter.swift; sourceTree = "<group>"; };
+		25840646248D3D5F00F6C548 /* AuthorsListModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListModels.swift; sourceTree = "<group>"; };
+		25840647248D3D5F00F6C548 /* AuthorsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListViewController.swift; sourceTree = "<group>"; };
+		25840648248D3D5F00F6C548 /* AuthorsListBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListBuilder.swift; sourceTree = "<group>"; };
+		25840649248D3D5F00F6C548 /* AuthorsListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListInteractor.swift; sourceTree = "<group>"; };
+		25840653248D572A00F6C548 /* AuthorsListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListViewControllerTests.swift; sourceTree = "<group>"; };
+		25840654248D572A00F6C548 /* AuthorsListInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListInteractorTests.swift; sourceTree = "<group>"; };
+		25840655248D572A00F6C548 /* AuthorsListWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListWorkerTests.swift; sourceTree = "<group>"; };
+		25840656248D572A00F6C548 /* AuthorsListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListPresenterTests.swift; sourceTree = "<group>"; };
+		2584065C248D628F00F6C548 /* BlogServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogServiceMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +102,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2584065E248D63C600F6C548 /* Ivorywhite.framework in Frameworks */,
+				2584065F248D63C800F6C548 /* Services.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,10 +132,10 @@
 		2584058A248BDBFD00F6C548 /* TheBlog */ = {
 			isa = PBXGroup;
 			children = (
+				25840641248D3B2400F6C548 /* Scenes */,
 				258405B5248BEED100F6C548 /* AppConfiguraton */,
 				258405AD248BDC4500F6C548 /* SupportingFiles */,
 				2584058B248BDBFD00F6C548 /* AppDelegate.swift */,
-				2584058F248BDBFD00F6C548 /* ViewController.swift */,
 				25840594248BDBFF00F6C548 /* Assets.xcassets */,
 				25840596248BDBFF00F6C548 /* LaunchScreen.storyboard */,
 				25840599248BDBFF00F6C548 /* Info.plist */,
@@ -122,7 +146,8 @@
 		258405A1248BDBFF00F6C548 /* TheBlogTests */ = {
 			isa = PBXGroup;
 			children = (
-				258405A2248BDBFF00F6C548 /* TheBlogTests.swift */,
+				2584065B248D624E00F6C548 /* Common */,
+				25840651248D56FF00F6C548 /* Scenes */,
 				258405A4248BDBFF00F6C548 /* Info.plist */,
 			);
 			path = TheBlogTests;
@@ -172,6 +197,55 @@
 				258405CA248C0C2500F6C548 /* output.xcfilelist */,
 			);
 			path = Carthage;
+			sourceTree = "<group>";
+		};
+		25840641248D3B2400F6C548 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				25840642248D3B3100F6C548 /* AuthorsList */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		25840642248D3B3100F6C548 /* AuthorsList */ = {
+			isa = PBXGroup;
+			children = (
+				25840648248D3D5F00F6C548 /* AuthorsListBuilder.swift */,
+				25840649248D3D5F00F6C548 /* AuthorsListInteractor.swift */,
+				25840643248D3D5F00F6C548 /* AuthorsListPresenter.swift */,
+				25840647248D3D5F00F6C548 /* AuthorsListViewController.swift */,
+				25840644248D3D5F00F6C548 /* AuthorsListWorker.swift */,
+				25840645248D3D5F00F6C548 /* AuthorsListRouter.swift */,
+				25840646248D3D5F00F6C548 /* AuthorsListModels.swift */,
+			);
+			path = AuthorsList;
+			sourceTree = "<group>";
+		};
+		25840651248D56FF00F6C548 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				25840652248D570500F6C548 /* AuthorsList */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		25840652248D570500F6C548 /* AuthorsList */ = {
+			isa = PBXGroup;
+			children = (
+				25840653248D572A00F6C548 /* AuthorsListViewControllerTests.swift */,
+				25840654248D572A00F6C548 /* AuthorsListInteractorTests.swift */,
+				25840655248D572A00F6C548 /* AuthorsListWorkerTests.swift */,
+				25840656248D572A00F6C548 /* AuthorsListPresenterTests.swift */,
+			);
+			path = AuthorsList;
+			sourceTree = "<group>";
+		};
+		2584065B248D624E00F6C548 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2584065C248D628F00F6C548 /* BlogServiceMock.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,10 +394,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2584064F248D3D5F00F6C548 /* AuthorsListBuilder.swift in Sources */,
+				2584064D248D3D5F00F6C548 /* AuthorsListModels.swift in Sources */,
+				2584064B248D3D5F00F6C548 /* AuthorsListWorker.swift in Sources */,
 				258405B7248BEEEB00F6C548 /* AppConfiguration.swift in Sources */,
-				25840590248BDBFD00F6C548 /* ViewController.swift in Sources */,
+				2584064C248D3D5F00F6C548 /* AuthorsListRouter.swift in Sources */,
 				2584058C248BDBFD00F6C548 /* AppDelegate.swift in Sources */,
+				2584064E248D3D5F00F6C548 /* AuthorsListViewController.swift in Sources */,
+				2584064A248D3D5F00F6C548 /* AuthorsListPresenter.swift in Sources */,
 				25840622248C203F00F6C548 /* NetworkConfiguration.swift in Sources */,
+				25840650248D3D5F00F6C548 /* AuthorsListInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,7 +411,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				258405A3248BDBFF00F6C548 /* TheBlogTests.swift in Sources */,
+				25840658248D572A00F6C548 /* AuthorsListInteractorTests.swift in Sources */,
+				25840659248D572A00F6C548 /* AuthorsListWorkerTests.swift in Sources */,
+				25840657248D572A00F6C548 /* AuthorsListViewControllerTests.swift in Sources */,
+				2584065A248D572A00F6C548 /* AuthorsListPresenterTests.swift in Sources */,
+				2584065D248D628F00F6C548 /* BlogServiceMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,6 +612,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 466546777M;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = TheBlogTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -550,6 +639,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 466546777M;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = TheBlogTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -657,6 +751,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 466546777M;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = TheBlogTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (

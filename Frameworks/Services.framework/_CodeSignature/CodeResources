@@ -4,18 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Frameworks/Ivorywhite.framework/Info.plist</key>
-		<data>
-		kqrkTtnP2DEOMuM1FluYTgPEswU=
-		</data>
-		<key>Frameworks/Ivorywhite.framework/Ivorywhite</key>
-		<data>
-		FSVvmYZcy1tvGimfnIDgYSDb46c=
-		</data>
-		<key>Frameworks/Ivorywhite.framework/_CodeSignature/CodeResources</key>
-		<data>
-		bD14g2A6XRV1CksoybPX+kTZoRE=
-		</data>
 		<key>Headers/Services-Swift.h</key>
 		<data>
 		m8Og+dvNS84iJ6lUISW9Jxy4AxM=
@@ -59,27 +47,6 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Frameworks/Ivorywhite.framework/Info.plist</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			vuWU8hC11Q1y6KA28Gfhmp7Becyl03D4SjVavZADAQY=
-			</data>
-		</dict>
-		<key>Frameworks/Ivorywhite.framework/Ivorywhite</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			WM2qAicxBrZiMm8+xH0kituG2zw6YqRnfESLPpfYmLc=
-			</data>
-		</dict>
-		<key>Frameworks/Ivorywhite.framework/_CodeSignature/CodeResources</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			DLAY9KAMb5okIBDO6jjd3JC7CQvEx4gDi6W0U00xfkA=
-			</data>
-		</dict>
 		<key>Headers/Services-Swift.h</key>
 		<dict>
 			<key>hash2</key>
