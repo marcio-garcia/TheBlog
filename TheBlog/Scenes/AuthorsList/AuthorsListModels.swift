@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import Services
 
 enum AuthorsList {
 
@@ -20,8 +21,16 @@ enum AuthorsList {
         struct Request {
         }
         struct Response {
+            var authors: Authors
         }
         struct ViewModel {
+            var displayedAuthors: [DisplayedAuthor]
         }
+    }
+    
+    struct DisplayedAuthor {
+        var id: Int
+        var name: String
+        var avatarUrl: String
     }
 }

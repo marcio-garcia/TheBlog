@@ -69,7 +69,7 @@ class AuthorsListViewControllerTests: XCTestCase{
   
     func testDisplaySomething(){
         // Given
-        let viewModel = AuthorsList.FetchAuthors.ViewModel()
+        let viewModel = AuthorsList.FetchAuthors.ViewModel(displayedAuthors: [])
     
         // When
         loadView()

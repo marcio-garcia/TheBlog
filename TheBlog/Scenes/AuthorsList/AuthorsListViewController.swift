@@ -17,6 +17,13 @@ protocol AuthorsListDisplayLogic: class {
 }
 
 class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
+    
+    // MARK: Layout properties
+    
+    private var contentView = AuthorsListContentView()
+    
+    // MARK: Properties
+    
     var interactor: AuthorsListBusinessLogic?
     var router: AuthorsListRoutingLogic?
 
@@ -34,6 +41,7 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
         self.init(nibName: nil, bundle: nil)
         self.interactor = interactor
         self.router = router
+        setupViewConfiguration()
     }
     
     // MARK: View lifecycle
@@ -53,5 +61,24 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
     // MARK: AuthorsListDisplayLogic
     
     func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel){
+    }
+}
+
+extension AuthorsListViewController: ViewCodingProtocol {
+    func buildViewHierarchy() {
+        view.addSubview(contentView)
+    }
+    
+    func setupConstraints() {
+        contentView.constraint {[
+            $0.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            $0.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            $0.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            $0.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+        ]}
+    }
+    
+    func configureViews() {
+        contentView.backgroundColor = .blue
     }
 }

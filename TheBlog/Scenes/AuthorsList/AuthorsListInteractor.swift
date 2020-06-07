@@ -35,7 +35,13 @@ class AuthorsListInteractor: AuthorsListBusinessLogic, AuthorsListDataStore {
   
     func fetchAuthors(request: AuthorsList.FetchAuthors.Request) {
         worker.requestAuthors { [weak self] authors, error in
-            let response = AuthorsList.FetchAuthors.Response()
+            if let error = error {
+                print("ERROR ******")
+                print(error)
+            }
+            print(authors)
+            guard let authors = authors else { return }
+            let response = AuthorsList.FetchAuthors.Response(authors: authors)
             self?.presenter?.presentAuthors(response: response)
         }
     }

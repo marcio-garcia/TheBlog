@@ -31,6 +31,9 @@
 		2584065D248D628F00F6C548 /* BlogServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584065C248D628F00F6C548 /* BlogServiceMock.swift */; };
 		2584065E248D63C600F6C548 /* Ivorywhite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258405C1248C0B4300F6C548 /* Ivorywhite.framework */; };
 		2584065F248D63C800F6C548 /* Services.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2584061A248C1E5C00F6C548 /* Services.framework */; };
+		25840664248D67D200F6C548 /* ViewCodingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840663248D67D200F6C548 /* ViewCodingProtocol.swift */; };
+		25840668248D682E00F6C548 /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840667248D682E00F6C548 /* UIView+NSLayoutConstraint.swift */; };
+		2584066A248D6D6900F6C548 /* AuthorsListContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25840660248D676500F6C548 /* AuthorsListContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +89,9 @@
 		25840655248D572A00F6C548 /* AuthorsListWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListWorkerTests.swift; sourceTree = "<group>"; };
 		25840656248D572A00F6C548 /* AuthorsListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListPresenterTests.swift; sourceTree = "<group>"; };
 		2584065C248D628F00F6C548 /* BlogServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogServiceMock.swift; sourceTree = "<group>"; };
+		25840660248D676500F6C548 /* AuthorsListContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListContentView.swift; sourceTree = "<group>"; };
+		25840663248D67D200F6C548 /* ViewCodingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCodingProtocol.swift; sourceTree = "<group>"; };
+		25840667248D682E00F6C548 /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +139,8 @@
 			isa = PBXGroup;
 			children = (
 				25840641248D3B2400F6C548 /* Scenes */,
+				25840662248D67B200F6C548 /* ViewCoding */,
+				25840666248D681300F6C548 /* Extensions */,
 				258405B5248BEED100F6C548 /* AppConfiguraton */,
 				258405AD248BDC4500F6C548 /* SupportingFiles */,
 				2584058B248BDBFD00F6C548 /* AppDelegate.swift */,
@@ -210,6 +218,7 @@
 		25840642248D3B3100F6C548 /* AuthorsList */ = {
 			isa = PBXGroup;
 			children = (
+				25840669248D6BF100F6C548 /* Views */,
 				25840648248D3D5F00F6C548 /* AuthorsListBuilder.swift */,
 				25840649248D3D5F00F6C548 /* AuthorsListInteractor.swift */,
 				25840643248D3D5F00F6C548 /* AuthorsListPresenter.swift */,
@@ -246,6 +255,30 @@
 				2584065C248D628F00F6C548 /* BlogServiceMock.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		25840662248D67B200F6C548 /* ViewCoding */ = {
+			isa = PBXGroup;
+			children = (
+				25840663248D67D200F6C548 /* ViewCodingProtocol.swift */,
+			);
+			path = ViewCoding;
+			sourceTree = "<group>";
+		};
+		25840666248D681300F6C548 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				25840667248D682E00F6C548 /* UIView+NSLayoutConstraint.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		25840669248D6BF100F6C548 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				25840660248D676500F6C548 /* AuthorsListContentView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -394,9 +427,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25840664248D67D200F6C548 /* ViewCodingProtocol.swift in Sources */,
+				2584066A248D6D6900F6C548 /* AuthorsListContentView.swift in Sources */,
 				2584064F248D3D5F00F6C548 /* AuthorsListBuilder.swift in Sources */,
 				2584064D248D3D5F00F6C548 /* AuthorsListModels.swift in Sources */,
 				2584064B248D3D5F00F6C548 /* AuthorsListWorker.swift in Sources */,
+				25840668248D682E00F6C548 /* UIView+NSLayoutConstraint.swift in Sources */,
 				258405B7248BEEEB00F6C548 /* AppConfiguration.swift in Sources */,
 				2584064C248D3D5F00F6C548 /* AuthorsListRouter.swift in Sources */,
 				2584058C248BDBFD00F6C548 /* AppDelegate.swift in Sources */,

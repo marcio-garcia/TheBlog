@@ -50,7 +50,7 @@ class AuthorsListPresenterTests: XCTestCase{
         // Given
         let spy = AuthorsListDisplayLogicSpy()
         sut.viewController = spy
-        let response = AuthorsList.FetchAuthors.Response()
+        let response = AuthorsList.FetchAuthors.Response(authors: [])
     
         // When
         sut.presentAuthors(response: response)
