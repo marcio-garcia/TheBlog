@@ -75,7 +75,7 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     }
     
     @objc func refreshData(_ sender: UIRefreshControl) {
-        viewController?.fetchAuthors()
+        viewController?.fetchFirstAuthors()
     }
 }
 

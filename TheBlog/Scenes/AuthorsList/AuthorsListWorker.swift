@@ -13,7 +13,7 @@
 import Services
 
 protocol AuthorsListWorkLogic {
-    func requestAuthors(completion: @escaping (Authors?, Error?) -> Void)
+    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void)
 }
 
 class AuthorsListWorker: AuthorsListWorkLogic {
@@ -28,8 +28,8 @@ class AuthorsListWorker: AuthorsListWorkLogic {
     
     // MARK: AuthorsListWorkLogic
     
-    func requestAuthors(completion: @escaping (Authors?, Error?) -> Void) {
-        service.requestAuthors { authors, error in
+    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void) {
+        service.requestAuthors(page: page, authorsPerPage: authorsPerPage) { authors, error in
             completion(authors, error)
         }
     }

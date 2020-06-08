@@ -26,7 +26,7 @@ class AuthorsListWorkerTests: XCTestCase {
         sut = AuthorsListWorker(service: service)
         
         // When
-        sut.requestAuthors { authors, error in
+        sut.requestAuthors(page: 1, authorsPerPage: nil) { authors, error in
             
             let author = authors!.first!
             

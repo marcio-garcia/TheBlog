@@ -15,7 +15,7 @@ class BlogServiceMock: BlogApi {
     var requestCommentsCalled = false
     var requestCancelCalled = false
     
-    func requestAuthors(completion: @escaping (Authors?, Error?) -> Void) -> TaskId? {
+    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void) -> TaskId? {
         requestAuthorsCalled = true
         let addressMock = Address(latitude: "0", longitude: "0")
         let authorMock = Author(id: 0, name: "Test", userName: "Test", email: "Test", avatarURL: "Test", address: addressMock)
@@ -23,12 +23,12 @@ class BlogServiceMock: BlogApi {
         return TaskId()
     }
     
-    func requestPosts(completion: @escaping (Posts?, Error?) -> Void) -> TaskId? {
+    func requestPosts(page: Int, postsPerPage: Int?, completion: @escaping (Posts?, Error?) -> Void) -> TaskId? {
         requestPostsCalled = true
         return TaskId()
     }
     
-    func requestComments(completion: @escaping (Comments?, Error?) -> Void) -> TaskId? {
+    func requestComments(page: Int, commentsPerPage: Int?, completion: @escaping (Comments?, Error?) -> Void) -> TaskId? {
         requestCommentsCalled = true
         return TaskId()
     }

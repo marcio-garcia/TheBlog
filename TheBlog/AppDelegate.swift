@@ -18,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let appConfig = AppConfiguration()
         let networkConfig = NetworkConfiguration(baseUrl: appConfig.value(for: .baseUrl), apiToken: "")
+        if appConfig.environment != .production {
+            networkConfig.debugMode = true
+        }
         let networkService = Services.shared.blogService(apiConfiguration: networkConfig)
         
         window = UIWindow()

@@ -49,14 +49,19 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchAuthors()
+        fetchFirstAuthors()
     }
   
     // MARK: Fetch data
   
-    func fetchAuthors() {
+    func fetchFirstAuthors() {
         let request = AuthorsList.FetchAuthors.Request()
-        interactor?.fetchAuthors(request: request)
+        interactor?.fetchFirstAuthors(request: request)
+    }
+    
+    func fetchNextAuthors() {
+        let request = AuthorsList.FetchAuthors.Request()
+        interactor?.fetchNextAuthors(request: request)
     }
   
     // MARK: AuthorsListDisplayLogic

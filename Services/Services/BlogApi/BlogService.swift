@@ -23,31 +23,43 @@ class BlogService: BlogApi {
     }
 
     @discardableResult
-    func requestAuthors(completion: @escaping (Authors?, Error?) -> Void) -> TaskId? {
-        guard let request = AuthorsRequest(apiConfiguration: apiConfiguration) else {
+    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void) -> TaskId? {
+        
+        guard let request = AuthorsRequest(apiConfiguration: apiConfiguration,
+                                           page: page,
+                                           authorsPerPage: authorsPerPage) else {
             completion(nil, NetworkError.badRequest)
             return nil
         }
+        
         let requestId = performRequest(request: request, completion: completion)
         return requestId
     }
 
     @discardableResult
-    func requestPosts(completion: @escaping (Posts?, Error?) -> Void) -> TaskId? {
-        guard let request = PostsRequest(apiConfiguration: apiConfiguration) else {
+    func requestPosts(page: Int, postsPerPage: Int?, completion: @escaping (Posts?, Error?) -> Void) -> TaskId? {
+        
+        guard let request = PostsRequest(apiConfiguration: apiConfiguration,
+                                         page: page,
+                                         postsPerPage: postsPerPage) else {
             completion(nil, NetworkError.badRequest)
             return nil
         }
+        
         let requestId = performRequest(request: request, completion: completion)
         return requestId
     }
 
     @discardableResult
-    func requestComments(completion: @escaping (Comments?, Error?) -> Void) -> TaskId? {
-        guard let request = CommentsRequest(apiConfiguration: apiConfiguration) else {
+    func requestComments(page: Int, commentsPerPage: Int?, completion: @escaping (Comments?, Error?) -> Void) -> TaskId? {
+        
+        guard let request = CommentsRequest(apiConfiguration: apiConfiguration,
+                                            page: page,
+                                            commentsPerPage: commentsPerPage) else {
             completion(nil, NetworkError.badRequest)
             return nil
         }
+        
         let requestId = performRequest(request: request, completion: completion)
         return requestId
     }

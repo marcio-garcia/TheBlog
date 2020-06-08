@@ -13,7 +13,8 @@
 import UIKit
 
 protocol AuthorsListBusinessLogic {
-    func fetchAuthors(request: AuthorsList.FetchAuthors.Request)
+    func fetchFirstAuthors(request: AuthorsList.FetchAuthors.Request)
+    func fetchNextAuthors(request: AuthorsList.FetchAuthors.Request)
 }
 
 protocol AuthorsListDataStore {
@@ -24,6 +25,9 @@ class AuthorsListInteractor: AuthorsListBusinessLogic, AuthorsListDataStore {
     var presenter: AuthorsListPresentationLogic?
     var worker: AuthorsListWorkLogic
   
+    private var page = 0
+    private var authorsPerPage = 20
+    
     // MARK: Object lifecycle
     
     init(presenter: AuthorsListPresentationLogic?, worker: AuthorsListWorker) {
@@ -33,13 +37,22 @@ class AuthorsListInteractor: AuthorsListBusinessLogic, AuthorsListDataStore {
 
     // MARK: Fetch data
   
-    func fetchAuthors(request: AuthorsList.FetchAuthors.Request) {
-        worker.requestAuthors { [weak self] authors, error in
+    func fetchFirstAuthors(request: AuthorsList.FetchAuthors.Request) {
+        page = 1
+        performRequest(page: page, authorsPerPage: authorsPerPage)
+    }
+    
+    func fetchNextAuthors(request: AuthorsList.FetchAuthors.Request) {
+        page += 1
+        performRequest(page: page, authorsPerPage: authorsPerPage)
+    }
+    
+    private func performRequest(page: Int, authorsPerPage: Int?) {
+        worker.requestAuthors(page: page, authorsPerPage: authorsPerPage) { [weak self] authors, error in
             if let error = error {
                 print("ERROR ******")
                 print(error)
             }
-            print(authors)
             guard let authors = authors else { return }
             let response = AuthorsList.FetchAuthors.Response(authors: authors)
             self?.presenter?.presentAuthors(response: response)
