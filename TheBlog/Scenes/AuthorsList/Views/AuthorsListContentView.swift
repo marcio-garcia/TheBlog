@@ -18,14 +18,18 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
         return view
     }()
     
+    private let refreshControl = UIRefreshControl()
+    
     // MARK: Properties
 
+    private weak var viewController: AuthorsListViewController?
     private var displayedAuthors: [AuthorsList.DisplayedAuthor] = []
     
     // MARK: Object lifecycle
     
-    init() {
+    init(viewController: AuthorsListViewController?) {
         super.init(frame: CGRect.zero)
+        self.viewController = viewController
         setupViewConfiguration()
     }
     
@@ -49,12 +53,15 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     }
     
     func configureViews() {
-        tableView.estimatedRowHeight = 100.0
+        tableView.estimatedRowHeight = 80.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = .white
+        tableView.refreshControl = refreshControl
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(AuthorsListTableViewCell.self, forCellReuseIdentifier: AuthorsListTableViewCell.identifier)
+        
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
     // MARK: Data
@@ -62,8 +69,13 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     func updateAuthors(displayedAuthors: [AuthorsList.DisplayedAuthor]) {
         self.displayedAuthors.append(contentsOf: displayedAuthors)
         DispatchQueue.main.async {
+            self.refreshControl.endRefreshing()
             self.tableView.reloadData()
         }
+    }
+    
+    @objc func refreshData(_ sender: UIRefreshControl) {
+        viewController?.fetchAuthors()
     }
 }
 
@@ -89,7 +101,7 @@ extension AuthorsListContentView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
+        return 80.0
     }
 }
 

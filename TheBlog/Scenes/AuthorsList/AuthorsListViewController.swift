@@ -20,7 +20,7 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
     
     // MARK: Layout properties
     
-    private var contentView = AuthorsListContentView()
+    private var contentView: AuthorsListContentView?
     
     // MARK: Properties
     
@@ -41,6 +41,7 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
         self.init(nibName: nil, bundle: nil)
         self.interactor = interactor
         self.router = router
+        contentView = AuthorsListContentView(viewController: self)
         setupViewConfiguration()
     }
     
@@ -61,17 +62,18 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
     // MARK: AuthorsListDisplayLogic
     
     func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel) {
-        contentView.updateAuthors(displayedAuthors: viewModel.displayedAuthors)
+        contentView?.updateAuthors(displayedAuthors: viewModel.displayedAuthors)
     }
 }
 
 extension AuthorsListViewController: ViewCodingProtocol {
     func buildViewHierarchy() {
+        guard let contentView = contentView else { return }
         view.addSubview(contentView)
     }
     
     func setupConstraints() {
-        contentView.constraint {[
+        contentView?.constraint {[
             $0.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             $0.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             $0.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -80,6 +82,6 @@ extension AuthorsListViewController: ViewCodingProtocol {
     }
     
     func configureViews() {
-        contentView.backgroundColor = .blue
+        contentView?.backgroundColor = .blue
     }
 }

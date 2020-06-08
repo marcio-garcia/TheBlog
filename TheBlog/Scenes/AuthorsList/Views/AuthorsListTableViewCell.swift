@@ -74,10 +74,11 @@ extension AuthorsListTableViewCell: ViewCodingProtocol {
     
     func setupConstraints() {
         avatarImageView.constraint {[
+            $0.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            $0.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             $0.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             $0.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            $0.widthAnchor.constraint(equalToConstant: 48),
-            $0.heightAnchor.constraint(equalTo: $0.widthAnchor)
+            $0.widthAnchor.constraint(equalTo: $0.heightAnchor)
         ]}
         
         nameLabel.constraint {[
