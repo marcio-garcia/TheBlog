@@ -13,7 +13,7 @@
 @testable import TheBlog
 import XCTest
 
-class AuthorsListViewControllerTests: XCTestCase{
+class AuthorsListViewControllerTests: XCTestCase {
     // MARK: Subject under test
   
     var sut: AuthorsListViewController!
@@ -21,20 +21,20 @@ class AuthorsListViewControllerTests: XCTestCase{
     
     // MARK: Test lifecycle
   
-    override func setUp(){
+    override func setUp() {
         super.setUp()
         window = UIWindow()
         setupAuthorsListViewController()
     }
   
-    override func tearDown(){
+    override func tearDown() {
         window = nil
         super.tearDown()
     }
   
     // MARK: Test setup
   
-    func setupAuthorsListViewController(){
+    func setupAuthorsListViewController() {
         sut = AuthorsListViewController()
     }
   
@@ -45,17 +45,22 @@ class AuthorsListViewControllerTests: XCTestCase{
   
   // MARK: Test doubles
   
-    class AuthorsListBusinessLogicSpy: AuthorsListBusinessLogic{
-        var doSomethingCalled = false
+    class AuthorsListBusinessLogicSpy: AuthorsListBusinessLogic {
+        var fetchFirstAuthorsCalled = false
+        var fetchNextAuthorsCalled = false
 
-        func fetchAuthors(request: AuthorsList.FetchAuthors.Request) {
-            doSomethingCalled = true
+        func fetchFirstAuthors() {
+            fetchFirstAuthorsCalled = true
+        }
+
+        func fetchNextAuthors() {
+            fetchNextAuthorsCalled = true
         }
     }
   
   // MARK: Tests
     
-    func testShouldDoSomethingWhenViewIsLoaded(){
+    func testShouldDoSomethingWhenViewIsLoaded() {
         // Given
         let spy = AuthorsListBusinessLogicSpy()
         sut.interactor = spy
@@ -64,10 +69,10 @@ class AuthorsListViewControllerTests: XCTestCase{
         loadView()
     
         // Then
-        XCTAssertTrue(spy.doSomethingCalled, "viewDidLoad() should ask the interactor to do something")
+        XCTAssertTrue(spy.fetchFirstAuthorsCalled, "viewDidLoad() should ask the interactor to do something")
     }
   
-    func testDisplaySomething(){
+    func testDisplaySomething() {
         // Given
         let viewModel = AuthorsList.FetchAuthors.ViewModel(displayedAuthors: [])
     

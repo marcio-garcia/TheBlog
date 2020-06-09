@@ -13,8 +13,8 @@
 import UIKit
 
 protocol AuthorsListBusinessLogic {
-    func fetchFirstAuthors(request: AuthorsList.FetchAuthors.Request)
-    func fetchNextAuthors(request: AuthorsList.FetchAuthors.Request)
+    func fetchFirstAuthors()
+    func fetchNextAuthors()
 }
 
 protocol AuthorsListDataStore {
@@ -25,24 +25,25 @@ class AuthorsListInteractor: AuthorsListBusinessLogic, AuthorsListDataStore {
     var presenter: AuthorsListPresentationLogic?
     var worker: AuthorsListWorkLogic
   
-    private var page = 0
-    private var authorsPerPage = 20
+    var page = 0
+    var authorsFirstPage = 50
+    var authorsPerPage = 40
     
     // MARK: Object lifecycle
     
-    init(presenter: AuthorsListPresentationLogic?, worker: AuthorsListWorker) {
+    init(presenter: AuthorsListPresentationLogic?, worker: AuthorsListWorkLogic) {
         self.presenter = presenter
         self.worker = worker
     }
 
     // MARK: Fetch data
   
-    func fetchFirstAuthors(request: AuthorsList.FetchAuthors.Request) {
+    func fetchFirstAuthors() {
         page = 1
-        performRequest(page: page, authorsPerPage: authorsPerPage)
+        performRequest(page: page, authorsPerPage: authorsFirstPage)
     }
     
-    func fetchNextAuthors(request: AuthorsList.FetchAuthors.Request) {
+    func fetchNextAuthors() {
         page += 1
         performRequest(page: page, authorsPerPage: authorsPerPage)
     }
@@ -50,8 +51,8 @@ class AuthorsListInteractor: AuthorsListBusinessLogic, AuthorsListDataStore {
     private func performRequest(page: Int, authorsPerPage: Int?) {
         worker.requestAuthors(page: page, authorsPerPage: authorsPerPage) { [weak self] authors, error in
             if let error = error {
-                print("ERROR ******")
-                print(error)
+                let response = AuthorsList.Error.Response(message: error.localizedDescription)
+                self?.presenter?.presentError(response: response)
             }
             guard let authors = authors else { return }
             let response = AuthorsList.FetchAuthors.Response(authors: authors)

@@ -11,9 +11,10 @@
 //
 
 import Services
+import Ivorywhite
 
 protocol AuthorsListWorkLogic {
-    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void)
+    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, NetworkError?) -> Void)
 }
 
 class AuthorsListWorker: AuthorsListWorkLogic {
@@ -28,9 +29,9 @@ class AuthorsListWorker: AuthorsListWorkLogic {
     
     // MARK: AuthorsListWorkLogic
     
-    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void) {
+    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, NetworkError?) -> Void) {
         service.requestAuthors(page: page, authorsPerPage: authorsPerPage) { authors, error in
-            completion(authors, error)
+            completion(authors, error as? NetworkError)
         }
     }
 }

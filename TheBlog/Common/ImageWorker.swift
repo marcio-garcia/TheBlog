@@ -42,9 +42,15 @@ class ImageWorker: ImageWorkLogic {
     
     func download(with url: URL, completion: @escaping (UIImage?) -> Void) -> RequestId? {
         if let image = cachedImage(for: url.absoluteString) {
+            // Debug print not needed in production
+            // It is here just to make it clear if the image is being retrived from the cache or the server
+            debugPrint("Getting image from cache")
             completion(image)
             return nil
         } else {
+            // Debug print not needed in production
+            // It is here just to make it clear if the image is being retrived from the cache or the server
+            debugPrint("Requesting image from server")
             let requestId = service.request(with: url) { [weak self] result in
                 switch result {
                 case .success(let response):

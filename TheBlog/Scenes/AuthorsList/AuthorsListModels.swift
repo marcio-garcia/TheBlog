@@ -18,13 +18,21 @@ enum AuthorsList {
     // MARK: Use cases
   
     enum FetchAuthors {
-        struct Request {
-        }
         struct Response {
             var authors: Authors
         }
         struct ViewModel {
             var displayedAuthors: [DisplayedAuthor]
+        }
+    }
+
+    enum Error {
+        struct Response {
+            var message: String
+        }
+        struct ViewModel {
+            var title: String
+            var message: String
         }
     }
     

@@ -26,13 +26,14 @@ class AuthorsListWorkerTests: XCTestCase {
         sut = AuthorsListWorker(service: service)
         
         // When
-        sut.requestAuthors(page: 1, authorsPerPage: nil) { authors, error in
+        sut.requestAuthors(page: 1, authorsPerPage: 4) { authors, error in
             
             let author = authors!.first!
             
             // Then
             XCTAssertTrue(service.requestAuthorsCalled, "requestAuthors should call the service requestAuthors method")
-            XCTAssertEqual(author.id, 0, "The Author object returned is not correct")
+            XCTAssertEqual(authors?.count, 4, "The Author object returned is not correct")
+            XCTAssertEqual(author.id, 1, "The Author object returned is not correct")
         }
     }
 }

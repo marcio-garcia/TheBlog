@@ -14,6 +14,7 @@ import UIKit
 
 protocol AuthorsListDisplayLogic: class {
     func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel)
+    func displayError(viewModel: AuthorsList.Error.ViewModel)
 }
 
 class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
@@ -25,7 +26,8 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
     // MARK: Properties
     
     var interactor: AuthorsListBusinessLogic?
-    var router: AuthorsListRoutingLogic?
+    private var router: AuthorsListRoutingLogic?
+    private var imageWorker: ImageWorkLogic?
 
     // MARK: Object lifecycle
     
@@ -37,11 +39,14 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
         super.init(coder: aDecoder)
     }
 
-    convenience init(interactor: AuthorsListBusinessLogic?, router: AuthorsListRoutingLogic?) {
+    convenience init(interactor: AuthorsListBusinessLogic?,
+                     router: AuthorsListRoutingLogic?,
+                     imageWorker: ImageWorkLogic?) {
         self.init(nibName: nil, bundle: nil)
         self.interactor = interactor
         self.router = router
-        contentView = AuthorsListContentView(viewController: self)
+        self.imageWorker = imageWorker
+        contentView = AuthorsListContentView(viewController: self, imageWorker: self.imageWorker)
         setupViewConfiguration()
     }
     
@@ -55,19 +60,24 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
     // MARK: Fetch data
   
     func fetchFirstAuthors() {
-        let request = AuthorsList.FetchAuthors.Request()
-        interactor?.fetchFirstAuthors(request: request)
+        interactor?.fetchFirstAuthors()
     }
     
     func fetchNextAuthors() {
-        let request = AuthorsList.FetchAuthors.Request()
-        interactor?.fetchNextAuthors(request: request)
+        interactor?.fetchNextAuthors()
     }
   
     // MARK: AuthorsListDisplayLogic
     
     func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel) {
         contentView?.updateAuthors(displayedAuthors: viewModel.displayedAuthors)
+    }
+
+    func displayError(viewModel: AuthorsList.Error.ViewModel) {
+        let alert = UIAlertController.standardMessage(title: viewModel.title,
+                                                      message: viewModel.message,
+                                                      completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

@@ -14,12 +14,21 @@ class BlogServiceMock: BlogApi {
     var requestPostsCalled = false
     var requestCommentsCalled = false
     var requestCancelCalled = false
-    
+
+    let addressMock = Address(latitude: "0", longitude: "0")
+    lazy var authorsMock = [
+        Author(id: 1, name: "Test", userName: "Test", email: "Test", avatarURL: "Test", address: addressMock),
+        Author(id: 2, name: "Test", userName: "Test", email: "Test", avatarURL: "Test", address: addressMock),
+        Author(id: 3, name: "Test", userName: "Test", email: "Test", avatarURL: "Test", address: addressMock),
+        Author(id: 4, name: "Test", userName: "Test", email: "Test", avatarURL: "Test", address: addressMock),
+    ]
+
     func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void) -> TaskId? {
         requestAuthorsCalled = true
-        let addressMock = Address(latitude: "0", longitude: "0")
-        let authorMock = Author(id: 0, name: "Test", userName: "Test", email: "Test", avatarURL: "Test", address: addressMock)
-        completion([authorMock], nil)
+        let startIndex = (page - 1) * authorsPerPage!
+        let endIndex = startIndex + authorsPerPage!
+        let authors = Array(authorsMock[startIndex ..< endIndex])
+        completion(authors, nil)
         return TaskId()
     }
     

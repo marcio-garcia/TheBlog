@@ -12,53 +12,85 @@
 
 @testable import TheBlog
 import XCTest
+import Services
+import Ivorywhite
 
 class AuthorsListInteractorTests: XCTestCase {
     // MARK: Subject under test
     var sut: AuthorsListInteractor!
-  
-    // MARK: Test lifecycle
-    
-    override func setUp() {
-        super.setUp()
-        setupAuthorsListInteractor()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-  
-    // MARK: Test setup
-  
-    func setupAuthorsListInteractor() {
-        let presenter = AuthorsListPresenter()
-        let worker = AuthorsListWorker(service: BlogServiceMock())
-        sut = AuthorsListInteractor(presenter: presenter, worker: worker)
-        
-    }
-  
-  // MARK: Test doubles
-    
-    class AuthorsListPresentationLogicSpy: AuthorsListPresentationLogic {
-        var presentSomethingCalled = false
-    
-        func presentAuthors(response: AuthorsList.FetchAuthors.Response) {
-            presentSomethingCalled = true
-        }
-    }
-  
+
     // MARK: Tests
     
-    func testDoSomething(){
+    func testFetchFirstAuthors(){
         // Given
-        let spy = AuthorsListPresentationLogicSpy()
-        sut.presenter = spy
-        let request = AuthorsList.FetchAuthors.Request()
-    
+        let presenter = AuthorsListPresentationLogicSpy()
+        let worker = AuthorsListWorkLogicMock()
+        sut = AuthorsListInteractor(presenter: presenter, worker: worker)
+        sut.page = 0
+        sut.authorsFirstPage = 2
+        sut.authorsPerPage = 2
+
         // When
-        sut.fetchAuthors(request: request)
+        sut.fetchFirstAuthors()
     
         // Then
-        XCTAssertTrue(spy.presentSomethingCalled, "doSomething(request:) should ask the presenter to format the result")
+        XCTAssertTrue(worker.requestAuthorsCalled,
+                      "fetchFirstAuthors() should ask the worker to request authors")
+        XCTAssertEqual(worker.authors?.first?.id, 1,
+                       "fetchFirstAuthors() should return the correct authors subset")
+        XCTAssertTrue(presenter.presentAuthorsCalled,
+                      "fetchFirstAuthors() should ask the presenter to format the result")
+    }
+
+    func testFetchNextAuthors(){
+        // Given
+        let presenter = AuthorsListPresentationLogicSpy()
+        let worker = AuthorsListWorkLogicMock()
+        sut = AuthorsListInteractor(presenter: presenter, worker: worker)
+        sut.page = 1
+        sut.authorsFirstPage = 2
+        sut.authorsPerPage = 2
+
+        // When
+        sut.fetchNextAuthors()
+
+        // Then
+        XCTAssertTrue(worker.requestAuthorsCalled,
+                      "fetchFirstAuthors() should ask the worker to request authors")
+        XCTAssertEqual(worker.authors?.first?.id, 3,
+                       "fetchFirstAuthors() should return the correct authors subset")
+        XCTAssertTrue(presenter.presentAuthorsCalled,
+                      "fetchFirstAuthors() should ask the presenter to format the result")
     }
 }
+
+// MARK: Test doubles
+
+class AuthorsListPresentationLogicSpy: AuthorsListPresentationLogic {
+    var presentAuthorsCalled = false
+    var presentErrorCalled = false
+
+    func presentAuthors(response: AuthorsList.FetchAuthors.Response) {
+        presentAuthorsCalled = true
+    }
+
+    func presentError(response: AuthorsList.Error.Response) {
+        presentErrorCalled = true
+    }
+}
+
+class AuthorsListWorkLogicMock: AuthorsListWorkLogic {
+    var requestAuthorsCalled = false
+    var authors: Authors?
+    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, NetworkError?) -> Void) {
+        requestAuthorsCalled = true
+        let service = BlogServiceMock()
+        _ = service.requestAuthors(page: page, authorsPerPage: authorsPerPage) { (authors, error) in
+            self.authors = authors
+            completion(authors, nil)
+        }
+    }
+}
+
+
+

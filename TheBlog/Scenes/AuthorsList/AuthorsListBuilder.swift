@@ -11,6 +11,7 @@
 //
 
 import Services
+import Ivorywhite
 
 class AuthorsListBuilder {
 
@@ -21,11 +22,16 @@ class AuthorsListBuilder {
     }
     
     func build() -> AuthorsListViewController {
+        let netServiceForImageDownloaging = Ivorywhite.shared.service(debugMode: false)
+        let imageWorker = ImageWorker(service: netServiceForImageDownloaging)
+
         let presenter = AuthorsListPresenter()
         let worker = AuthorsListWorker(service: service)
         let interactor = AuthorsListInteractor(presenter: presenter, worker: worker)
         let router = AuthorsListRouter(dataStore: interactor)
-        let viewController = AuthorsListViewController(interactor: interactor, router: router)
+        let viewController = AuthorsListViewController(interactor: interactor,
+                                                       router: router,
+                                                       imageWorker: imageWorker)
         router.viewController = viewController
         presenter.viewController = viewController
 

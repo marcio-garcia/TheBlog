@@ -37,16 +37,21 @@ class AuthorsListPresenterTests: XCTestCase{
   // MARK: Test doubles
   
     class AuthorsListDisplayLogicSpy: AuthorsListDisplayLogic {
-        var displaySomethingCalled = false
+        var displayAuthorsCalled = false
+        var displayErrorCalled = false
     
         func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel) {
-            displaySomethingCalled = true
+            displayAuthorsCalled = true
+        }
+
+        func displayError(viewModel: AuthorsList.Error.ViewModel) {
+            displayErrorCalled = true
         }
     }
   
   // MARK: Tests
     
-    func testPresentSomething(){
+    func testPresentAuthors(){
         // Given
         let spy = AuthorsListDisplayLogicSpy()
         sut.viewController = spy
@@ -56,6 +61,6 @@ class AuthorsListPresenterTests: XCTestCase{
         sut.presentAuthors(response: response)
     
         // Then
-        XCTAssertTrue(spy.displaySomethingCalled, "presentSomething(response:) should ask the view controller to display the result")
+        XCTAssertTrue(spy.displayAuthorsCalled, "presentSomething(response:) should ask the view controller to display the result")
     }
 }

@@ -14,6 +14,7 @@ import UIKit
 
 protocol AuthorsListPresentationLogic {
     func presentAuthors(response: AuthorsList.FetchAuthors.Response)
+    func presentError(response: AuthorsList.Error.Response)
 }
 
 class AuthorsListPresenter: AuthorsListPresentationLogic {
@@ -28,5 +29,11 @@ class AuthorsListPresenter: AuthorsListPresentationLogic {
         }
         let viewModel = AuthorsList.FetchAuthors.ViewModel(displayedAuthors: displayedAuthors)
         viewController?.displayAuthors(viewModel: viewModel)
+    }
+
+    func presentError(response: AuthorsList.Error.Response) {
+        let viewModel = AuthorsList.Error.ViewModel(title: "Error",
+                                                    message: response.message)
+        viewController?.displayError(viewModel: viewModel)
     }
 }

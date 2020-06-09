@@ -17,7 +17,7 @@ class AuthorsListTableViewCell: UITableViewCell {
     private lazy var avatarImageView: UIImageView = {
         return UIImageView()
     }()
-    
+
     private lazy var nameLabel: UILabel = {
         return UILabel()
     }()
