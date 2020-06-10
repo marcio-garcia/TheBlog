@@ -11,20 +11,24 @@
 //
 
 import UIKit
+import Services
 
 protocol AuthorsListBusinessLogic {
     func fetchFirstAuthors()
     func fetchNextAuthors()
+    func selectAuthor(_ author: Author?)
 }
 
 protocol AuthorsListDataStore {
+    var selectedAuthor: Author? { get set }
 }
 
 class AuthorsListInteractor: AuthorsListBusinessLogic, AuthorsListDataStore {
   
     var presenter: AuthorsListPresentationLogic?
     var worker: AuthorsListWorkLogic
-  
+
+    var selectedAuthor: Author?
     var page = 0
     var authorsFirstPage = 50
     var authorsPerPage = 40
@@ -47,7 +51,11 @@ class AuthorsListInteractor: AuthorsListBusinessLogic, AuthorsListDataStore {
         page += 1
         performRequest(page: page, authorsPerPage: authorsPerPage)
     }
-    
+
+    func selectAuthor(_ author: Author?) {
+        selectedAuthor = author
+    }
+
     private func performRequest(page: Int, authorsPerPage: Int?) {
         worker.requestAuthors(page: page, authorsPerPage: authorsPerPage) { [weak self] authors, error in
             if let _error = error {

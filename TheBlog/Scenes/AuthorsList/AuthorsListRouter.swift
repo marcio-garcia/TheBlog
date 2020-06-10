@@ -12,7 +12,7 @@
 
 import UIKit
 
-@objc protocol AuthorsListRoutingLogic {
+protocol AuthorsListRoutingLogic {
     func routeToAuthorDetails()
 }
 
@@ -23,30 +23,31 @@ protocol AuthorsListDataPassing {
 class AuthorsListRouter: AuthorsListRoutingLogic, AuthorsListDataPassing {
     weak var viewController: AuthorsListViewController?
     var dataStore: AuthorsListDataStore?
+    var authorDetailsBuilder: AuthorDetailsBuilder
 
-    init(dataStore: AuthorsListDataStore?) {
+    init(dataStore: AuthorsListDataStore?, authorDetailsBuilder: AuthorDetailsBuilder) {
         self.dataStore = dataStore
+        self.authorDetailsBuilder = authorDetailsBuilder
     }
  
     // MARK: Routing
     
     func routeToAuthorDetails() {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! AuthorDetailsViewController
-//        var destinationDS = destinationVC.router!.dataStore!
-//        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//        navigateToSomewhere(source: viewController!, destination: destinationVC)
+        let destinationVC = authorDetailsBuilder.build()
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+        navigateToSomewhere(source: viewController!, destination: destinationVC)
     }
 
     // MARK: Navigation
     
-//    func navigateToSomewhere(source: AuthorsListViewController, destination: AuthorDetailsViewController) {
-//        source.show(destination, sender: nil)
-//    }
+    func navigateToSomewhere(source: AuthorsListViewController, destination: AuthorDetailsViewController) {
+        source.show(destination, sender: nil)
+    }
   
     // MARK: Passing data
     
-//    func passDataToSomewhere(source: AuthorsListDataStore, destination: inout AuthorDetailsDataStore) {
-//        destination.name = source.name
-//    }
+    func passDataToSomewhere(source: AuthorsListDataStore, destination: inout AuthorDetailsDataStore) {
+        destination.author = source.selectedAuthor
+    }
 }

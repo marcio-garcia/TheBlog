@@ -1,5 +1,5 @@
 //
-//  AuthorsListViewController.swift
+//  AuthorDetailsViewController.swift
 //  TheBlog
 //
 //  Created by Marcio Garcia on 07/06/20.
@@ -11,23 +11,22 @@
 //
 
 import UIKit
-import Services
 
-protocol AuthorsListDisplayLogic: class {
-    func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel)
-    func displayError(viewModel: AuthorsList.Error.ViewModel)
+protocol AuthorDetailsDisplayLogic: class {
+    func displayAuthors(viewModel: AuthorDetails.FetchAuthors.ViewModel)
+    func displayError(viewModel: AuthorDetails.Error.ViewModel)
 }
 
-class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
+class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
     
     // MARK: Layout properties
     
-    var contentView: AuthorsListContentViewProtocol?
+    var contentView: AuthorDetailsContentViewProtocol?
     
     // MARK: Properties
     
-    var interactor: AuthorsListBusinessLogic?
-    var router: AuthorsListRoutingLogic?
+    var interactor: AuthorDetailsBusinessLogic?
+    var router: AuthorDetailsRoutingLogic?
     private var imageWorker: ImageWorkLogic?
 
     // MARK: Object lifecycle
@@ -40,14 +39,14 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
         super.init(coder: aDecoder)
     }
 
-    convenience init(interactor: AuthorsListBusinessLogic?,
-                     router: AuthorsListRoutingLogic?,
+    convenience init(interactor: AuthorDetailsBusinessLogic?,
+                     router: AuthorDetailsRoutingLogic?,
                      imageWorker: ImageWorkLogic?) {
         self.init(nibName: nil, bundle: nil)
         self.interactor = interactor
         self.router = router
         self.imageWorker = imageWorker
-        contentView = AuthorsListContentView(viewController: self, imageWorker: self.imageWorker)
+        contentView = AuthorDetailsContentView(viewController: self, imageWorker: self.imageWorker)
         setupViewConfiguration()
     }
     
@@ -55,33 +54,23 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Authors"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        fetchFirstAuthors()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let author = interactor?.fetchAuthor()
+        title = author?.name
     }
   
     // MARK: Fetch data
-  
-    func fetchFirstAuthors() {
-        interactor?.fetchFirstAuthors()
-    }
+
+    // MARK: AuthorDetailsDisplayLogic
     
-    func fetchNextAuthors() {
-        interactor?.fetchNextAuthors()
+    func displayAuthors(viewModel: AuthorDetails.FetchAuthors.ViewModel) {
+        contentView?.updateAuthors(displayedAuthors: viewModel.displayedAuthors)
     }
 
-    func selectedAurhor(_ author: Author?) {
-        interactor?.selectAuthor(author)
-        router?.routeToAuthorDetails()
-    }
-
-    // MARK: AuthorsListDisplayLogic
-    
-    func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel) {
-        contentView?.updateAuthors(displayedAuthors: viewModel.authors)
-    }
-
-    func displayError(viewModel: AuthorsList.Error.ViewModel) {
+    func displayError(viewModel: AuthorDetails.Error.ViewModel) {
         contentView?.updateAuthors(displayedAuthors: [])
         DispatchQueue.main.async {
             let alert = UIAlertController.standardMessage(title: viewModel.title,
@@ -92,7 +81,7 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
     }
 }
 
-extension AuthorsListViewController: ViewCodingProtocol {
+extension AuthorDetailsViewController: ViewCodingProtocol {
     func buildViewHierarchy() {
         guard let contentView = contentView else { return }
         view.addSubview(contentView)

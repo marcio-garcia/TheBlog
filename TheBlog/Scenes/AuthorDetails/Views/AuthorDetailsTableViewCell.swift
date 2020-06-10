@@ -1,5 +1,5 @@
 //
-//  AuthorsListTableViewCell.swift
+//  AuthorDetailsTableViewCell.swift
 //  TheBlog
 //
 //  Created by Marcio Garcia on 07/06/20.
@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import Services
 
-class AuthorsListTableViewCell: UITableViewCell {
+class AuthorDetailsTableViewCell: UITableViewCell {
 
-    static let identifier = String(describing: AuthorsListTableViewCell.self)
+    static let identifier = String(describing: AuthorDetailsTableViewCell.self)
     
     // MARK: Layout properties
     
@@ -27,7 +26,6 @@ class AuthorsListTableViewCell: UITableViewCell {
     
     public weak var imageWorker: ImageWorkLogic?
     private var requestId: RequestId?
-    private var author: Author?
     
     // MARK: Object lifecycle
     
@@ -51,13 +49,12 @@ class AuthorsListTableViewCell: UITableViewCell {
         nameLabel.text = nil
     }
     
-    func configure(imageWorker: ImageWorkLogic?, author: Author) {
-        self.author = author
+    func configure(imageWorker: ImageWorkLogic?, author: AuthorDetails.DisplayedAuthor) {
         self.nameLabel.text = author.name
         if let imageWorker = imageWorker {
             self.imageWorker = imageWorker
         }
-        if let url = URL(string: author.avatarURL) {
+        if let url = URL(string: author.avatarUrl) {
             self.requestId = self.imageWorker?.download(with: url, completion: { image in
                 DispatchQueue.main.async {
                     self.avatarImageView.image = image
@@ -65,15 +62,11 @@ class AuthorsListTableViewCell: UITableViewCell {
             })
         }
     }
-
-    func selectedAuthor() -> Author? {
-        return author
-    }
 }
 
 // MARK: ViewCodingProtocol
 
-extension AuthorsListTableViewCell: ViewCodingProtocol {
+extension AuthorDetailsTableViewCell: ViewCodingProtocol {
     func buildViewHierarchy() {
         contentView.addSubview(avatarImageView)
         contentView.addSubview(nameLabel)

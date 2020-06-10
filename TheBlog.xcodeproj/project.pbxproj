@@ -9,6 +9,16 @@
 /* Begin PBXBuildFile section */
 		2524112924903ACE0024079B /* UIAlertController+Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2524112824903ACD0024079B /* UIAlertController+Standard.swift */; };
 		2524113A249161220024079B /* AuthorsListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241139249161220024079B /* AuthorsListEmptyView.swift */; };
+		2524115B249172AE0024079B /* AuthorDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241154249172AE0024079B /* AuthorDetailsInteractor.swift */; };
+		2524115C249172AE0024079B /* AuthorDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241155249172AE0024079B /* AuthorDetailsViewController.swift */; };
+		2524115D249172AE0024079B /* AuthorDetailsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241156249172AE0024079B /* AuthorDetailsBuilder.swift */; };
+		2524115E249172AE0024079B /* AuthorDetailsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241157249172AE0024079B /* AuthorDetailsWorker.swift */; };
+		2524115F249172AE0024079B /* AuthorDetailsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241158249172AE0024079B /* AuthorDetailsModels.swift */; };
+		25241160249172AE0024079B /* AuthorDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241159249172AE0024079B /* AuthorDetailsPresenter.swift */; };
+		25241161249172AE0024079B /* AuthorDetailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2524115A249172AE0024079B /* AuthorDetailsRouter.swift */; };
+		25241165249172B70024079B /* AuthorDetailsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241162249172B70024079B /* AuthorDetailsEmptyView.swift */; };
+		25241166249172B70024079B /* AuthorDetailsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241163249172B70024079B /* AuthorDetailsContentView.swift */; };
+		25241167249172B70024079B /* AuthorDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241164249172B70024079B /* AuthorDetailsTableViewCell.swift */; };
 		2584058C248BDBFD00F6C548 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584058B248BDBFD00F6C548 /* AppDelegate.swift */; };
 		25840595248BDBFF00F6C548 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25840594248BDBFF00F6C548 /* Assets.xcassets */; };
 		25840598248BDBFF00F6C548 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25840596248BDBFF00F6C548 /* LaunchScreen.storyboard */; };
@@ -67,6 +77,16 @@
 /* Begin PBXFileReference section */
 		2524112824903ACD0024079B /* UIAlertController+Standard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Standard.swift"; sourceTree = "<group>"; };
 		25241139249161220024079B /* AuthorsListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListEmptyView.swift; sourceTree = "<group>"; };
+		25241154249172AE0024079B /* AuthorDetailsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsInteractor.swift; sourceTree = "<group>"; };
+		25241155249172AE0024079B /* AuthorDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsViewController.swift; sourceTree = "<group>"; };
+		25241156249172AE0024079B /* AuthorDetailsBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsBuilder.swift; sourceTree = "<group>"; };
+		25241157249172AE0024079B /* AuthorDetailsWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsWorker.swift; sourceTree = "<group>"; };
+		25241158249172AE0024079B /* AuthorDetailsModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsModels.swift; sourceTree = "<group>"; };
+		25241159249172AE0024079B /* AuthorDetailsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsPresenter.swift; sourceTree = "<group>"; };
+		2524115A249172AE0024079B /* AuthorDetailsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsRouter.swift; sourceTree = "<group>"; };
+		25241162249172B70024079B /* AuthorDetailsEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsEmptyView.swift; sourceTree = "<group>"; };
+		25241163249172B70024079B /* AuthorDetailsContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsContentView.swift; sourceTree = "<group>"; };
+		25241164249172B70024079B /* AuthorDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		25840588248BDBFD00F6C548 /* TheBlog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheBlog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2584058B248BDBFD00F6C548 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25840594248BDBFF00F6C548 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,6 +144,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		252411522491720F0024079B /* AuthorDetails */ = {
+			isa = PBXGroup;
+			children = (
+				252411532491723E0024079B /* Views */,
+				25241156249172AE0024079B /* AuthorDetailsBuilder.swift */,
+				25241154249172AE0024079B /* AuthorDetailsInteractor.swift */,
+				25241158249172AE0024079B /* AuthorDetailsModels.swift */,
+				25241159249172AE0024079B /* AuthorDetailsPresenter.swift */,
+				2524115A249172AE0024079B /* AuthorDetailsRouter.swift */,
+				25241155249172AE0024079B /* AuthorDetailsViewController.swift */,
+				25241157249172AE0024079B /* AuthorDetailsWorker.swift */,
+			);
+			path = AuthorDetails;
+			sourceTree = "<group>";
+		};
+		252411532491723E0024079B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				25241163249172B70024079B /* AuthorDetailsContentView.swift */,
+				25241162249172B70024079B /* AuthorDetailsEmptyView.swift */,
+				25241164249172B70024079B /* AuthorDetailsTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2584057F248BDBFD00F6C548 = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +264,7 @@
 		25840641248D3B2400F6C548 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				252411522491720F0024079B /* AuthorDetails */,
 				25840642248D3B3100F6C548 /* AuthorsList */,
 			);
 			path = Scenes;
@@ -448,21 +494,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				25840664248D67D200F6C548 /* ViewCodingProtocol.swift in Sources */,
+				2524115F249172AE0024079B /* AuthorDetailsModels.swift in Sources */,
 				2524113A249161220024079B /* AuthorsListEmptyView.swift in Sources */,
 				2584066A248D6D6900F6C548 /* AuthorsListContentView.swift in Sources */,
+				25241166249172B70024079B /* AuthorDetailsContentView.swift in Sources */,
 				2524112924903ACE0024079B /* UIAlertController+Standard.swift in Sources */,
 				2584066F248D78BE00F6C548 /* ImageWorker.swift in Sources */,
 				2584066C248D73E500F6C548 /* AuthorsListTableViewCell.swift in Sources */,
+				25241167249172B70024079B /* AuthorDetailsTableViewCell.swift in Sources */,
 				2584064F248D3D5F00F6C548 /* AuthorsListBuilder.swift in Sources */,
 				2584064D248D3D5F00F6C548 /* AuthorsListModels.swift in Sources */,
+				25241160249172AE0024079B /* AuthorDetailsPresenter.swift in Sources */,
 				2584064B248D3D5F00F6C548 /* AuthorsListWorker.swift in Sources */,
+				2524115D249172AE0024079B /* AuthorDetailsBuilder.swift in Sources */,
 				25840668248D682E00F6C548 /* UIView+NSLayoutConstraint.swift in Sources */,
+				2524115B249172AE0024079B /* AuthorDetailsInteractor.swift in Sources */,
+				25241161249172AE0024079B /* AuthorDetailsRouter.swift in Sources */,
 				258405B7248BEEEB00F6C548 /* AppConfiguration.swift in Sources */,
 				2584064C248D3D5F00F6C548 /* AuthorsListRouter.swift in Sources */,
+				25241165249172B70024079B /* AuthorDetailsEmptyView.swift in Sources */,
 				2584058C248BDBFD00F6C548 /* AppDelegate.swift in Sources */,
 				2584064E248D3D5F00F6C548 /* AuthorsListViewController.swift in Sources */,
 				2584064A248D3D5F00F6C548 /* AuthorsListPresenter.swift in Sources */,
+				2524115C249172AE0024079B /* AuthorDetailsViewController.swift in Sources */,
 				25840622248C203F00F6C548 /* NetworkConfiguration.swift in Sources */,
+				2524115E249172AE0024079B /* AuthorDetailsWorker.swift in Sources */,
 				25840650248D3D5F00F6C548 /* AuthorsListInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

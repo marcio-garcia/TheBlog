@@ -1,5 +1,5 @@
 //
-//  AuthorsListModels.swift
+//  AuthorDetailsModels.swift
 //  TheBlog
 //
 //  Created by Marcio Garcia on 07/06/20.
@@ -13,7 +13,7 @@
 import UIKit
 import Services
 
-enum AuthorsList {
+enum AuthorDetails {
 
     // MARK: Use cases
   
@@ -22,7 +22,7 @@ enum AuthorsList {
             var authors: Authors
         }
         struct ViewModel {
-            var authors: Authors
+            var displayedAuthors: [DisplayedAuthor]
         }
     }
 
@@ -34,5 +34,11 @@ enum AuthorsList {
             var title: String
             var message: String
         }
+    }
+    
+    struct DisplayedAuthor {
+        var id: Int
+        var name: String
+        var avatarUrl: String
     }
 }

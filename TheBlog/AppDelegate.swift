@@ -13,6 +13,7 @@ import Services
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var navigationController: UINavigationController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
@@ -24,7 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let networkService = Services.shared.blogService(apiConfiguration: networkConfig)
         
         window = UIWindow()
-        window?.rootViewController = AuthorsListBuilder(service: networkService).build()
+        let rootViewController = AuthorsListBuilder(service: networkService).build()
+        navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController?.navigationBar.backgroundColor = .white
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         return true
     }

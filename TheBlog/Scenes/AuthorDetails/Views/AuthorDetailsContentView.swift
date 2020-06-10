@@ -1,5 +1,5 @@
 //
-//  AuthorsListContentView.swift
+//  AuthorDetailsContentView.swift
 //  TheBlog
 //
 //  Created by Marcio Garcia on 07/06/20.
@@ -8,13 +8,12 @@
 
 import UIKit
 import Ivorywhite
-import Services
 
-protocol AuthorsListContentViewProtocol: UIView {
-    func updateAuthors(displayedAuthors: Authors)
+protocol AuthorDetailsContentViewProtocol: UIView {
+    func updateAuthors(displayedAuthors: [AuthorDetails.DisplayedAuthor])
 }
 
-class AuthorsListContentView: UIView, ViewCodingProtocol {
+class AuthorDetailsContentView: UIView, ViewCodingProtocol {
 
     // MARK: Layout properties
     
@@ -30,13 +29,13 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     
     // MARK: Properties
 
-    private weak var viewController: AuthorsListViewController?
-    private var displayedAuthors: Authors = []
+    private weak var viewController: AuthorDetailsViewController?
+    private var displayedAuthors: [AuthorDetails.DisplayedAuthor] = []
     private weak var imageWorker: ImageWorkLogic?
 
     // MARK: Object lifecycle
     
-    init(viewController: AuthorsListViewController?, imageWorker: ImageWorkLogic?) {
+    init(viewController: AuthorDetailsViewController?, imageWorker: ImageWorkLogic?) {
         super.init(frame: CGRect.zero)
         self.viewController = viewController
         self.imageWorker = imageWorker
@@ -77,7 +76,7 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
         tableView.refreshControl = refreshControl
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(AuthorsListTableViewCell.self, forCellReuseIdentifier: AuthorsListTableViewCell.identifier)
+        tableView.register(AuthorDetailsTableViewCell.self, forCellReuseIdentifier: AuthorDetailsTableViewCell.identifier)
         tableView.tableFooterView = UIView()
         
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
@@ -88,20 +87,19 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     // MARK: Data
     
     @objc func refreshData(_ sender: UIRefreshControl) {
-        viewController?.fetchFirstAuthors()
     }
 
     private func buildEmtpyView() -> UIView {
-        AuthorsListEmptyView(messageText: "Sorry, no authors found.", actionTitle: "Retry") { [weak self] sender in
-            self?.viewController?.fetchFirstAuthors()
+        AuthorDetailsEmptyView(messageText: "Sorry, no authors found.", actionTitle: "Retry") { sender in
+
         }
     }
 }
 
-// MARK: AuthorsListContentViewProtocol
+// MARK: AuthorDetailsContentViewProtocol
 
-extension AuthorsListContentView: AuthorsListContentViewProtocol {
-    func updateAuthors(displayedAuthors: Authors) {
+extension AuthorDetailsContentView: AuthorDetailsContentViewProtocol {
+    func updateAuthors(displayedAuthors: [AuthorDetails.DisplayedAuthor]) {
         self.displayedAuthors.append(contentsOf: displayedAuthors)
         DispatchQueue.main.async {
             self.activityIndicatorView.stopAnimating()
@@ -118,14 +116,14 @@ extension AuthorsListContentView: AuthorsListContentViewProtocol {
 
 // MARK: UITableViewDataSource
 
-extension AuthorsListContentView: UITableViewDataSource {
+extension AuthorDetailsContentView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayedAuthors.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: AuthorsListTableViewCell.identifier,
-                                                    for: indexPath) as? AuthorsListTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: AuthorDetailsTableViewCell.identifier,
+                                                    for: indexPath) as? AuthorDetailsTableViewCell {
 
             cell.configure(imageWorker: imageWorker, author: displayedAuthors[indexPath.row])
             return cell
@@ -138,7 +136,7 @@ extension AuthorsListContentView: UITableViewDataSource {
 
 // MARK: UITableViewDelegate
 
-extension AuthorsListContentView: UITableViewDelegate {
+extension AuthorDetailsContentView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80.0
@@ -147,16 +145,12 @@ extension AuthorsListContentView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == displayedAuthors.count - 20 {
             DispatchQueue.global().async {
-                self.viewController?.fetchNextAuthors()
+
             }
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let cell = tableView.cellForRow(at: indexPath) as? AuthorsListTableViewCell {
-            let selectedAuthor = cell.selectedAuthor()
-            viewController?.selectedAurhor(selectedAuthor)
-        }
     }
 }

@@ -24,10 +24,7 @@ class AuthorsListPresenter: AuthorsListPresentationLogic {
   
     func presentAuthors(response: AuthorsList.FetchAuthors.Response) {
         
-        let displayedAuthors = response.authors.compactMap {
-            AuthorsList.DisplayedAuthor(id: $0.id, name: $0.name, avatarUrl: $0.avatarURL)
-        }
-        let viewModel = AuthorsList.FetchAuthors.ViewModel(displayedAuthors: displayedAuthors)
+        let viewModel = AuthorsList.FetchAuthors.ViewModel(authors: response.authors)
         viewController?.displayAuthors(viewModel: viewModel)
     }
 
