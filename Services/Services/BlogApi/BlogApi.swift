@@ -10,10 +10,10 @@ import Ivorywhite
 
 public protocol BlogApi {
     @discardableResult
-    func requestAuthors(completion: @escaping (Authors?, Error?) -> Void) -> TaskId?
+    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void) -> TaskId?
     @discardableResult
-    func requestPosts(completion: @escaping (Posts?, Error?) -> Void) -> TaskId?
+    func requestPosts(page: Int, postsPerPage: Int?, completion: @escaping (Posts?, Error?) -> Void) -> TaskId?
     @discardableResult
-    func requestComments(completion: @escaping (Comments?, Error?) -> Void) -> TaskId?
+    func requestComments(page: Int, commentsPerPage: Int?, completion: @escaping (Comments?, Error?) -> Void) -> TaskId?
     func cancel(taskId: TaskId)
 }

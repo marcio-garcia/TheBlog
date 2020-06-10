@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Services
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,8 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        let appConfig = AppConfiguration()
+        let networkConfig = NetworkConfiguration(baseUrl: appConfig.value(for: .baseUrl), apiToken: "")
+        if appConfig.environment != .production {
+            networkConfig.debugMode = true
+        }
+        let networkService = Services.shared.blogService(apiConfiguration: networkConfig)
+        
         window = UIWindow()
-        window?.rootViewController = ViewController()
+        window?.rootViewController = AuthorsListBuilder(service: networkService).build()
         window?.makeKeyAndVisible()
         return true
     }

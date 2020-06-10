@@ -11,19 +11,23 @@ import Ivorywhite
 class AuthorsRequest: Request, NetworkRequest {
     typealias ModelType = Authors
     
-    init?(apiConfiguration: ApiConfiguration) {
+    init?(apiConfiguration: ApiConfiguration, page: Int, authorsPerPage: Int?) {
         super.init()
         
-        guard let baseURL = URL(string: apiConfiguration.baseUrl) else {
+        guard let _baseURL = URL(string: apiConfiguration.baseUrl) else {
             return nil
         }
         
-        self.baseURL = baseURL
-        self.path = "/authors"
-        self.httpMethod = .get
-        self.httpHeaders = [
-            "Content-Type": "application/json;charset=utf-8"
+        baseURL = _baseURL
+        path = "/authors"
+        httpMethod = .get
+        encoding = .urlEnconding
+        parameters = [
+            "_page": page
         ]
+        if let limit = authorsPerPage {
+            parameters?["_limit"] = limit
+        }
     }
     
     func parse(data: Data) throws -> ModelType? {

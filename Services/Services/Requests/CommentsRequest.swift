@@ -11,19 +11,22 @@ import Ivorywhite
 class CommentsRequest: Request, NetworkRequest {
     typealias ModelType = Comments
     
-    init?(apiConfiguration: ApiConfiguration) {
+    init?(apiConfiguration: ApiConfiguration, page: Int, commentsPerPage: Int?) {
         super.init()
         
-        guard let baseURL = URL(string: apiConfiguration.baseUrl) else {
+        guard let apiBaseURL = URL(string: apiConfiguration.baseUrl) else {
             return nil
         }
         
-        self.baseURL = baseURL
-        self.path = "/comments"
-        self.httpMethod = .get
-        self.httpHeaders = [
-            "Content-Type": "application/json;charset=utf-8"
+        baseURL = apiBaseURL
+        path = "/comments"
+        httpMethod = .get
+        parameters = [
+            "_page": page
         ]
+        if let limit = commentsPerPage {
+            parameters?["_limit"] = limit
+        }
     }
     
     func parse(data: Data) throws -> ModelType? {
