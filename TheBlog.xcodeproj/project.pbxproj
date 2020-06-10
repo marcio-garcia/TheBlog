@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2524112924903ACE0024079B /* UIAlertController+Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2524112824903ACD0024079B /* UIAlertController+Standard.swift */; };
+		2524113A249161220024079B /* AuthorsListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241139249161220024079B /* AuthorsListEmptyView.swift */; };
 		2584058C248BDBFD00F6C548 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2584058B248BDBFD00F6C548 /* AppDelegate.swift */; };
 		25840595248BDBFF00F6C548 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25840594248BDBFF00F6C548 /* Assets.xcassets */; };
 		25840598248BDBFF00F6C548 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25840596248BDBFF00F6C548 /* LaunchScreen.storyboard */; };
@@ -65,6 +66,7 @@
 
 /* Begin PBXFileReference section */
 		2524112824903ACD0024079B /* UIAlertController+Standard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Standard.swift"; sourceTree = "<group>"; };
+		25241139249161220024079B /* AuthorsListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListEmptyView.swift; sourceTree = "<group>"; };
 		25840588248BDBFD00F6C548 /* TheBlog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheBlog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2584058B248BDBFD00F6C548 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25840594248BDBFF00F6C548 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 			children = (
 				25840660248D676500F6C548 /* AuthorsListContentView.swift */,
 				2584066B248D73E500F6C548 /* AuthorsListTableViewCell.swift */,
+				25241139249161220024079B /* AuthorsListEmptyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25840664248D67D200F6C548 /* ViewCodingProtocol.swift in Sources */,
+				2524113A249161220024079B /* AuthorsListEmptyView.swift in Sources */,
 				2584066A248D6D6900F6C548 /* AuthorsListContentView.swift in Sources */,
 				2524112924903ACE0024079B /* UIAlertController+Standard.swift in Sources */,
 				2584066F248D78BE00F6C548 /* ImageWorker.swift in Sources */,

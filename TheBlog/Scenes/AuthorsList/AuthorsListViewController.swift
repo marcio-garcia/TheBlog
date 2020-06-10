@@ -74,10 +74,13 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
     }
 
     func displayError(viewModel: AuthorsList.Error.ViewModel) {
-        let alert = UIAlertController.standardMessage(title: viewModel.title,
-                                                      message: viewModel.message,
-                                                      completion: nil)
-        self.present(alert, animated: true, completion: nil)
+        contentView?.updateAuthors(displayedAuthors: [])
+        DispatchQueue.main.async {
+            let alert = UIAlertController.standardMessage(title: viewModel.title,
+                                                          message: viewModel.message,
+                                                          completion: nil)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 

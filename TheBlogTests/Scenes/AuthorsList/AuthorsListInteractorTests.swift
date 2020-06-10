@@ -82,7 +82,7 @@ class AuthorsListPresentationLogicSpy: AuthorsListPresentationLogic {
 class AuthorsListWorkLogicMock: AuthorsListWorkLogic {
     var requestAuthorsCalled = false
     var authors: Authors?
-    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, NetworkError?) -> Void) {
+    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void) {
         requestAuthorsCalled = true
         let service = BlogServiceMock()
         _ = service.requestAuthors(page: page, authorsPerPage: authorsPerPage) { (authors, error) in

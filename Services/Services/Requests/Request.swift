@@ -15,4 +15,5 @@ class Request {
     var httpHeaders: HTTPHeader?
     var parameters: Parameters?
     var encoding: ParameterEncoding?
+    var timeoutInterval: TimeInterval = 60.0
 }

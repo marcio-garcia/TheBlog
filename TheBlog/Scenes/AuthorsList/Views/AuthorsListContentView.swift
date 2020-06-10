@@ -73,6 +73,7 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(AuthorsListTableViewCell.self, forCellReuseIdentifier: AuthorsListTableViewCell.identifier)
+        tableView.tableFooterView = UIView()
         
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 
@@ -86,12 +87,23 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
         DispatchQueue.main.async {
             self.activityIndicatorView.stopAnimating()
             self.refreshControl.endRefreshing()
-            self.tableView.reloadData()
+
+            if self.displayedAuthors.isEmpty {
+                self.tableView.backgroundView = self.buildEmtpyView()
+            } else {
+                self.tableView.reloadData()
+            }
         }
     }
     
     @objc func refreshData(_ sender: UIRefreshControl) {
         viewController?.fetchFirstAuthors()
+    }
+
+    private func buildEmtpyView() -> UIView {
+        AuthorsListEmptyView(messageText: "Sorry, no authors found.", actionTitle: "Retry") { [weak self] sender in
+            self?.viewController?.fetchFirstAuthors()
+        }
     }
 }
 
