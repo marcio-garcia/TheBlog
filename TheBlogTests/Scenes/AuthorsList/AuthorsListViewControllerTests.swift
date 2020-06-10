@@ -24,7 +24,6 @@ class AuthorsListViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         window = UIWindow()
-        setupAuthorsListViewController()
     }
   
     override func tearDown() {
@@ -34,53 +33,60 @@ class AuthorsListViewControllerTests: XCTestCase {
   
     // MARK: Test setup
   
-    func setupAuthorsListViewController() {
-        sut = AuthorsListViewController()
-    }
-  
     func loadView(){
         window.addSubview(sut.view)
         RunLoop.current.run(until: Date())
     }
   
-  // MARK: Test doubles
-  
-    class AuthorsListBusinessLogicSpy: AuthorsListBusinessLogic {
-        var fetchFirstAuthorsCalled = false
-        var fetchNextAuthorsCalled = false
-
-        func fetchFirstAuthors() {
-            fetchFirstAuthorsCalled = true
-        }
-
-        func fetchNextAuthors() {
-            fetchNextAuthorsCalled = true
-        }
-    }
-  
   // MARK: Tests
     
-    func testShouldDoSomethingWhenViewIsLoaded() {
+    func testShouldFetchAuthorsWhenViewIsLoaded() {
         // Given
         let spy = AuthorsListBusinessLogicSpy()
+        sut = AuthorsListViewController()
         sut.interactor = spy
     
         // When
         loadView()
     
         // Then
-        XCTAssertTrue(spy.fetchFirstAuthorsCalled, "viewDidLoad() should ask the interactor to do something")
+        XCTAssertTrue(spy.fetchFirstAuthorsCalled, "viewDidLoad() should ask the interactor to fetch the first page of authors")
     }
   
-    func testDisplaySomething() {
+    func testDisplayAuthors() {
         // Given
         let viewModel = AuthorsList.FetchAuthors.ViewModel(displayedAuthors: [])
-    
+        let contentView = AuthorsListContentViewSpy()
+        sut = AuthorsListViewController()
+        sut.contentView = contentView
+
         // When
         loadView()
         sut.displayAuthors(viewModel: viewModel)
     
         // Then
-        //XCTAssertEqual(sut.nameTextField.text, "", "displaySomething(viewModel:) should update the name text field")
+        XCTAssertTrue(contentView.updateAuthorsCalled, "displayAuthors() should update the contentView")
+    }
+}
+
+// MARK: Test doubles
+
+class AuthorsListBusinessLogicSpy: AuthorsListBusinessLogic {
+    var fetchFirstAuthorsCalled = false
+    var fetchNextAuthorsCalled = false
+
+    func fetchFirstAuthors() {
+        fetchFirstAuthorsCalled = true
+    }
+
+    func fetchNextAuthors() {
+        fetchNextAuthorsCalled = true
+    }
+}
+
+class AuthorsListContentViewSpy: UIView, AuthorsListContentViewProtocol {
+    var updateAuthorsCalled = false
+    func updateAuthors(displayedAuthors: [AuthorsList.DisplayedAuthor]) {
+        updateAuthorsCalled = true
     }
 }

@@ -21,7 +21,7 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
     
     // MARK: Layout properties
     
-    private var contentView: AuthorsListContentView?
+    var contentView: AuthorsListContentViewProtocol?
     
     // MARK: Properties
     

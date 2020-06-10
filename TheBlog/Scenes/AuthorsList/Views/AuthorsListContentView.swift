@@ -9,6 +9,10 @@
 import UIKit
 import Ivorywhite
 
+protocol AuthorsListContentViewProtocol: UIView {
+    func updateAuthors(displayedAuthors: [AuthorsList.DisplayedAuthor])
+}
+
 class AuthorsListContentView: UIView, ViewCodingProtocol {
 
     // MARK: Layout properties
@@ -82,6 +86,20 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     
     // MARK: Data
     
+    @objc func refreshData(_ sender: UIRefreshControl) {
+        viewController?.fetchFirstAuthors()
+    }
+
+    private func buildEmtpyView() -> UIView {
+        AuthorsListEmptyView(messageText: "Sorry, no authors found.", actionTitle: "Retry") { [weak self] sender in
+            self?.viewController?.fetchFirstAuthors()
+        }
+    }
+}
+
+// MARK: AuthorsListContentViewProtocol
+
+extension AuthorsListContentView: AuthorsListContentViewProtocol {
     func updateAuthors(displayedAuthors: [AuthorsList.DisplayedAuthor]) {
         self.displayedAuthors.append(contentsOf: displayedAuthors)
         DispatchQueue.main.async {
@@ -93,16 +111,6 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
             } else {
                 self.tableView.reloadData()
             }
-        }
-    }
-    
-    @objc func refreshData(_ sender: UIRefreshControl) {
-        viewController?.fetchFirstAuthors()
-    }
-
-    private func buildEmtpyView() -> UIView {
-        AuthorsListEmptyView(messageText: "Sorry, no authors found.", actionTitle: "Retry") { [weak self] sender in
-            self?.viewController?.fetchFirstAuthors()
         }
     }
 }
