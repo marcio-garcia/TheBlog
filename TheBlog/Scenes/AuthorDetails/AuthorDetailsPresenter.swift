@@ -11,9 +11,11 @@
 //
 
 import UIKit
+import Services
 
 protocol AuthorDetailsPresentationLogic {
-    func presentAuthors(response: AuthorDetails.FetchAuthors.Response)
+    func presentAuthor(_ author: Author?)
+    func presentPosts(_ posts: Posts)
     func presentError(response: AuthorDetails.Error.Response)
 }
 
@@ -21,14 +23,13 @@ class AuthorDetailsPresenter: AuthorDetailsPresentationLogic {
     weak var viewController: AuthorDetailsDisplayLogic?
   
     // MARK: AuthorDetailsPresentationLogic
-  
-    func presentAuthors(response: AuthorDetails.FetchAuthors.Response) {
-        
-        let displayedAuthors = response.authors.compactMap {
-            AuthorDetails.DisplayedAuthor(id: $0.id, name: $0.name, avatarUrl: $0.avatarURL)
-        }
-        let viewModel = AuthorDetails.FetchAuthors.ViewModel(displayedAuthors: displayedAuthors)
-        viewController?.displayAuthors(viewModel: viewModel)
+
+    func presentAuthor(_ author: Author?) {
+        viewController?.displayAuthor(author: author)
+    }
+
+    func presentPosts(_ posts: Posts) {
+        viewController?.displayPosts(posts)
     }
 
     func presentError(response: AuthorDetails.Error.Response) {

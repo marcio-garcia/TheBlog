@@ -14,11 +14,14 @@ import UIKit
 import Services
 
 protocol AuthorDetailsBusinessLogic {
-    func fetchAuthor() -> Author?
+    func fetchAuthor()
+    func fetchFirstPosts()
+    func fetchNextPosts()
 }
 
 protocol AuthorDetailsDataStore {
     var author: Author? { get set }
+    var selectedPost: Post? { get set }
 }
 
 class AuthorDetailsInteractor: AuthorDetailsBusinessLogic, AuthorDetailsDataStore {
@@ -27,6 +30,10 @@ class AuthorDetailsInteractor: AuthorDetailsBusinessLogic, AuthorDetailsDataStor
     var worker: AuthorDetailsWorkLogic
   
     var author: Author?
+    var selectedPost: Post?
+    var page = 0
+    var postsFirstPage = 50
+    var postsPerPage = 40
 
     // MARK: Object lifecycle
     
@@ -36,20 +43,34 @@ class AuthorDetailsInteractor: AuthorDetailsBusinessLogic, AuthorDetailsDataStor
     }
 
     // MARK: Fetch data
-    func fetchAuthor() -> Author? {
-        return author
+    func fetchAuthor() {
+        presenter?.presentAuthor(author)
+    }
+
+    func fetchFirstPosts() {
+        page = 1
+        performRequest(page: page, authorsPerPage: postsFirstPage)
+    }
+
+    func fetchNextPosts() {
+        page += 1
+        performRequest(page: page, authorsPerPage: postsPerPage)
+    }
+
+    func selectPost(_ post: Post?) {
+        selectedPost = post
     }
 
     private func performRequest(page: Int, authorsPerPage: Int?) {
-        worker.requestAuthors(page: page, authorsPerPage: authorsPerPage) { [weak self] authors, error in
-            if let _error = error {
-                let response = AuthorDetails.Error.Response(message: _error.localizedDescription)
-                self?.presenter?.presentError(response: response)
-                return
-            }
-            guard let authors = authors else { return }
-            let response = AuthorDetails.FetchAuthors.Response(authors: authors)
-            self?.presenter?.presentAuthors(response: response)
-        }
+//        worker.requestAuthors(page: page, authorsPerPage: authorsPerPage) { [weak self] posts, error in
+//            if let _error = error {
+//                let response = AuthorDetails.Error.Response(message: _error.localizedDescription)
+//                self?.presenter?.presentError(response: response)
+//                return
+//            }
+//            guard let posts = posts else { return }
+//            self?.presenter?.presentPosts(Posts)
+//        }
+        self.presenter?.presentPosts([])
     }
 }

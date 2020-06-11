@@ -15,7 +15,7 @@ class AuthorsListTableViewCell: UITableViewCell {
     
     // MARK: Layout properties
     
-    private lazy var authorTitleView: AuthorTitleView = { return AuthorTitleView() }()
+    private lazy var authorTitleView = { return AuthorTitleView() }()
     
     // MARK: properties
     

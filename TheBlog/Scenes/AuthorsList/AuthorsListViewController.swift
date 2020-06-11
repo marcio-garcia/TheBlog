@@ -106,8 +106,4 @@ extension AuthorsListViewController: ViewCodingProtocol {
             $0.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ]}
     }
-    
-    func configureViews() {
-        contentView?.backgroundColor = .blue
-    }
 }

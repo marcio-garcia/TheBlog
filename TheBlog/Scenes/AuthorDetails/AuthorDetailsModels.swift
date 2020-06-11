@@ -19,10 +19,10 @@ enum AuthorDetails {
   
     enum FetchAuthors {
         struct Response {
-            var authors: Authors
+            var author: Author
         }
         struct ViewModel {
-            var displayedAuthors: [DisplayedAuthor]
+            var displayedAuthor: Author
         }
     }
 
@@ -34,11 +34,5 @@ enum AuthorDetails {
             var title: String
             var message: String
         }
-    }
-    
-    struct DisplayedAuthor {
-        var id: Int
-        var name: String
-        var avatarUrl: String
     }
 }

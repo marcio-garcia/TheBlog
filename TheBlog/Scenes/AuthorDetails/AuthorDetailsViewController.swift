@@ -11,9 +11,11 @@
 //
 
 import UIKit
+import Services
 
 protocol AuthorDetailsDisplayLogic: class {
-    func displayAuthors(viewModel: AuthorDetails.FetchAuthors.ViewModel)
+    func displayAuthor(author: Author?)
+    func displayPosts(_ posts: Posts)
     func displayError(viewModel: AuthorDetails.Error.ViewModel)
 }
 
@@ -58,26 +60,31 @@ class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let author = interactor?.fetchAuthor()
-        title = author?.name
+        interactor?.fetchAuthor()
+        interactor?.fetchNextPosts()
     }
   
     // MARK: Fetch data
 
     // MARK: AuthorDetailsDisplayLogic
-    
-    func displayAuthors(viewModel: AuthorDetails.FetchAuthors.ViewModel) {
-        contentView?.updateAuthors(displayedAuthors: viewModel.displayedAuthors)
+
+    func displayAuthor(author: Author?) {
+        title = author?.name
+        contentView?.updateAuthor(author: author)
+    }
+
+    func displayPosts(_ posts: Posts) {
+        contentView?.updatePosts(displayedPosts: posts)
     }
 
     func displayError(viewModel: AuthorDetails.Error.ViewModel) {
-        contentView?.updateAuthors(displayedAuthors: [])
-        DispatchQueue.main.async {
-            let alert = UIAlertController.standardMessage(title: viewModel.title,
-                                                          message: viewModel.message,
-                                                          completion: nil)
-            self.present(alert, animated: true, completion: nil)
-        }
+//        contentView?.updateAuthors(displayedAuthors: [])
+//        DispatchQueue.main.async {
+//            let alert = UIAlertController.standardMessage(title: viewModel.title,
+//                                                          message: viewModel.message,
+//                                                          completion: nil)
+//            self.present(alert, animated: true, completion: nil)
+//        }
     }
 }
 
@@ -94,9 +101,5 @@ extension AuthorDetailsViewController: ViewCodingProtocol {
             $0.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             $0.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ]}
-    }
-    
-    func configureViews() {
-        contentView?.backgroundColor = .blue
     }
 }

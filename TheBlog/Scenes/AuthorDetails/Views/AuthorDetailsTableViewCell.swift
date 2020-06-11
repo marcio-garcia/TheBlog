@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Services
 
 class AuthorDetailsTableViewCell: UITableViewCell {
 
@@ -49,19 +50,19 @@ class AuthorDetailsTableViewCell: UITableViewCell {
         nameLabel.text = nil
     }
     
-    func configure(imageWorker: ImageWorkLogic?, author: AuthorDetails.DisplayedAuthor) {
-        self.nameLabel.text = author.name
-        self.avatarView.name = author.name
-        if let imageWorker = imageWorker {
-            self.imageWorker = imageWorker
-        }
-        if let url = URL(string: author.avatarUrl) {
-            self.requestId = self.imageWorker?.download(with: url, completion: { image in
-                DispatchQueue.main.async {
-                    self.avatarView.image = image
-                }
-            })
-        }
+    func configure(imageWorker: ImageWorkLogic?, author: Post) {
+//        self.nameLabel.text = author.name
+//        self.avatarView.name = author.name
+//        if let imageWorker = imageWorker {
+//            self.imageWorker = imageWorker
+//        }
+//        if let url = URL(string: author.avatarUrl) {
+//            self.requestId = self.imageWorker?.download(with: url, completion: { image in
+//                DispatchQueue.main.async {
+//                    self.avatarView.image = image
+//                }
+//            })
+//        }
     }
 }
 

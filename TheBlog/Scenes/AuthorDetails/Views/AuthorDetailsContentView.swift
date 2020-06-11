@@ -8,29 +8,27 @@
 
 import UIKit
 import Ivorywhite
+import Services
 
 protocol AuthorDetailsContentViewProtocol: UIView {
-    func updateAuthors(displayedAuthors: [AuthorDetails.DisplayedAuthor])
+    func updateAuthor(author: Author?)
+    func updatePosts(displayedPosts: Posts)
 }
 
 class AuthorDetailsContentView: UIView, ViewCodingProtocol {
 
     // MARK: Layout properties
-    
-    private lazy var tableView: UITableView = {
-        return UITableView()
-    }()
 
-    private lazy var activityIndicatorView: UIActivityIndicatorView = {
-        return UIActivityIndicatorView()
-    }()
-
+    private lazy var authorHeaderView = { AuthorHeaderView() }()
+    private lazy var tableView = { return UITableView() }()
+    private lazy var activityIndicatorView = { return UIActivityIndicatorView() }()
     private let refreshControl = UIRefreshControl()
-    
+
     // MARK: Properties
 
     private weak var viewController: AuthorDetailsViewController?
-    private var displayedAuthors: [AuthorDetails.DisplayedAuthor] = []
+    private var displayedAuthor: Author?
+    private var displayedPosts: Posts = []
     private weak var imageWorker: ImageWorkLogic?
 
     // MARK: Object lifecycle
@@ -49,13 +47,21 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
     // MARK: ViewCodingProtocol
     
     func buildViewHierarchy() {
+        addSubview(authorHeaderView)
         addSubview(tableView)
         addSubview(activityIndicatorView)
     }
     
     func setupConstraints() {
-        tableView.constraint {[
+        authorHeaderView.constraint {[
             $0.topAnchor.constraint(equalTo: topAnchor),
+            $0.leadingAnchor.constraint(equalTo: leadingAnchor),
+            $0.trailingAnchor.constraint(equalTo: trailingAnchor),
+            $0.heightAnchor.constraint(equalToConstant: 100.0)
+        ]}
+
+        tableView.constraint {[
+            $0.topAnchor.constraint(equalTo: authorHeaderView.bottomAnchor),
             $0.bottomAnchor.constraint(equalTo: bottomAnchor),
             $0.leadingAnchor.constraint(equalTo: leadingAnchor),
             $0.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -70,14 +76,18 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
     }
     
     func configureViews() {
+
+        authorHeaderView.backgroundColor = UIColor.TBColors.primary.background
+
         tableView.estimatedRowHeight = 80.0
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = UIColor.TBColors.primary.background
         tableView.refreshControl = refreshControl
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(AuthorDetailsTableViewCell.self, forCellReuseIdentifier: AuthorDetailsTableViewCell.identifier)
         tableView.tableFooterView = UIView()
+        tableView.register(AuthorDetailsTableViewCell.self,
+                           forCellReuseIdentifier: AuthorDetailsTableViewCell.identifier)
         
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 
@@ -90,8 +100,8 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
     }
 
     private func buildEmtpyView() -> UIView {
-        AuthorDetailsEmptyView(messageText: "Sorry, no authors found.", actionTitle: "Retry") { sender in
-
+        AuthorDetailsEmptyView(messageText: "Sorry, no posts found.", actionTitle: "Retry") { sender in
+            //self?.viewController?.fetchFirstAuthors()
         }
     }
 }
@@ -99,13 +109,28 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
 // MARK: AuthorDetailsContentViewProtocol
 
 extension AuthorDetailsContentView: AuthorDetailsContentViewProtocol {
-    func updateAuthors(displayedAuthors: [AuthorDetails.DisplayedAuthor]) {
-        self.displayedAuthors.append(contentsOf: displayedAuthors)
+    func updateAuthor(author: Author?) {
+        authorHeaderView.name = author?.name
+        authorHeaderView.email = author?.email
+        authorHeaderView.userName = author?.userName
+        guard let urlString = author?.avatarURL, let url = URL(string: urlString) else {
+            authorHeaderView.image = nil
+            return
+        }
+        _ = imageWorker?.download(with: url, completion: { [weak self] image in
+            DispatchQueue.main.async {
+                self?.authorHeaderView.image = image
+            }
+        })
+    }
+
+    func updatePosts(displayedPosts: Posts) {
+        self.displayedPosts.append(contentsOf: displayedPosts)
         DispatchQueue.main.async {
             self.activityIndicatorView.stopAnimating()
             self.refreshControl.endRefreshing()
 
-            if self.displayedAuthors.isEmpty {
+            if self.displayedPosts.isEmpty {
                 self.tableView.backgroundView = self.buildEmtpyView()
             } else {
                 self.tableView.reloadData()
@@ -118,20 +143,18 @@ extension AuthorDetailsContentView: AuthorDetailsContentViewProtocol {
 
 extension AuthorDetailsContentView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return displayedAuthors.count
+        return displayedPosts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: AuthorDetailsTableViewCell.identifier,
                                                     for: indexPath) as? AuthorDetailsTableViewCell {
 
-            cell.configure(imageWorker: imageWorker, author: displayedAuthors[indexPath.row])
+            //cell.configure(imageWorker: imageWorker, author: displayedAuthors[indexPath.row])
             return cell
         }
         return UITableViewCell()
     }
-    
-    
 }
 
 // MARK: UITableViewDelegate
@@ -143,7 +166,7 @@ extension AuthorDetailsContentView: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == displayedAuthors.count - 20 {
+        if indexPath.row == displayedPosts.count - 20 {
             DispatchQueue.global().async {
 
             }
