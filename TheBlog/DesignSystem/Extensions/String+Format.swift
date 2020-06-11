@@ -15,4 +15,12 @@ extension String {
         let secondChar = secondString?.prefix(1)
         return "\(firstChar ?? "")\(secondChar ?? "")"
     }
+
+    func removeNameTitle() -> String {
+        var name = self.replacingOccurrences(of: "Mr.", with: "", options: .caseInsensitive)
+        name = name.replacingOccurrences(of: "Mrs.", with: "", options: .caseInsensitive)
+        name = name.replacingOccurrences(of: "Ms.", with: "", options: .caseInsensitive)
+        name = name.replacingOccurrences(of: "Miss", with: "", options: .caseInsensitive)
+        return name.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }

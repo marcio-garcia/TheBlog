@@ -4,9 +4,9 @@ enum TBFonts: String {
     case roboto = "Roboto"
 }
 
-private let boldFontName = "\(TBFonts.roboto)-Bold"
-private let regularFontName = "\(TBFonts.roboto)-Regular"
-private let mediumFontName = "\(TBFonts.roboto)-Medium"
+private let boldFontName = "\(TBFonts.roboto.rawValue)-Bold"
+private let regularFontName = "\(TBFonts.roboto.rawValue)-Regular"
+private let mediumFontName = "\(TBFonts.roboto.rawValue)-Medium"
 
 extension UIFont {
     public enum TBFonts {
@@ -18,7 +18,7 @@ extension UIFont {
 
         static var registredFonts: [(RegisterFontError?, String)] = {
             let fontNames = Set(allFonts().map { $0.fontName })
-            return fontNames.map { (UIFont.register(fileNameString: $0, type: "otf"), $0) }
+            return fontNames.map { (UIFont.register(fileNameString: $0, type: "ttf"), $0) }
         }()
 
         var fontName: String {

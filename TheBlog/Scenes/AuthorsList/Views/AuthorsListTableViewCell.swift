@@ -15,8 +15,8 @@ class AuthorsListTableViewCell: UITableViewCell {
     
     // MARK: Layout properties
     
-    private lazy var avatarImageView: UIImageView = {
-        return UIImageView()
+    private lazy var avatarView: AvatarView = {
+        return AvatarView()
     }()
 
     private lazy var nameLabel: UILabel = {
@@ -47,20 +47,21 @@ class AuthorsListTableViewCell: UITableViewCell {
             imageWorker?.cancelDownload(requestId: requestId)
             self.requestId = nil
         }
-        avatarImageView.image = nil
+        avatarView.image = nil
         nameLabel.text = nil
     }
     
     func configure(imageWorker: ImageWorkLogic?, author: Author) {
         self.author = author
         self.nameLabel.text = author.name
+        self.avatarView.name = author.name
         if let imageWorker = imageWorker {
             self.imageWorker = imageWorker
         }
         if let url = URL(string: author.avatarURL) {
             self.requestId = self.imageWorker?.download(with: url, completion: { image in
                 DispatchQueue.main.async {
-                    self.avatarImageView.image = image
+                    self.avatarView.image = image
                 }
             })
         }
@@ -75,12 +76,12 @@ class AuthorsListTableViewCell: UITableViewCell {
 
 extension AuthorsListTableViewCell: ViewCodingProtocol {
     func buildViewHierarchy() {
-        contentView.addSubview(avatarImageView)
+        contentView.addSubview(avatarView)
         contentView.addSubview(nameLabel)
     }
     
     func setupConstraints() {
-        avatarImageView.constraint {[
+        avatarView.constraint {[
             $0.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             $0.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             $0.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -89,15 +90,8 @@ extension AuthorsListTableViewCell: ViewCodingProtocol {
         ]}
         
         nameLabel.constraint {[
-            $0.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
-            $0.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor)
+            $0.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 16),
+            $0.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor)
         ]}
     }
-    
-    func configureViews() {
-        avatarImageView.contentMode = .scaleAspectFill
-        avatarImageView.layer.cornerRadius = 5
-        avatarImageView.clipsToBounds = true
-    }
-    
 }

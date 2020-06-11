@@ -17,7 +17,8 @@ class AvatarView: UIView {
 
     public var name: String {
         didSet {
-            initialsLabel.text = name.initials()
+            let text = name.removeNameTitle()
+            initialsLabel.text = text.initials()
             updateUI()
         }
     }
@@ -51,12 +52,13 @@ class AvatarView: UIView {
 extension AvatarView: ViewCodingProtocol {
     func buildViewHierarchy() {
         addSubview(noImageView)
+        addSubview(initialsLabel)
         addSubview(avatarImageView)
     }
 
     func setupConstraints() {
         noImageView.constraint(to: self)
-        initialsLabel.constraint(to: self, margin: 6)
+        initialsLabel.constraint(to: self)
         avatarImageView.constraint(to: self)
     }
 
@@ -71,8 +73,9 @@ extension AvatarView: ViewCodingProtocol {
         noImageView.backgroundColor = UIColor.TBColors.primary.avatarBackground
         noImageView.clipsToBounds = true
 
-        initialsLabel.font = UIFont.TBFonts.headline.font()
-        initialsLabel.textColor = UIColor.TBColors.primary.text
+        initialsLabel.font = UIFont.TBFonts.title.font()
+        initialsLabel.textColor = UIColor.TBColors.primary.avatarText
+        initialsLabel.textAlignment = .center
     }
 
 }

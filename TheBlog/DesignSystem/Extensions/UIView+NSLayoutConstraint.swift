@@ -18,9 +18,9 @@ public extension UIView {
         translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
             self.topAnchor.constraint(equalTo: container.topAnchor, constant: margin),
-            self.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: margin),
+            self.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -margin),
             self.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: margin),
-            self.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: margin),
+            self.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -margin),
         ]
         NSLayoutConstraint.activate(constraints)
     }

@@ -22,8 +22,7 @@ extension UIFont {
             return RegisterFontError.initFontError
         }
         var errorRef: Unmanaged<CFError>?
-        guard CTFontManagerRegisterGraphicsFont(fontRef,
-                                                &errorRef) else {
+        guard CTFontManagerRegisterGraphicsFont(fontRef, &errorRef) else {
             return RegisterFontError.registerFailed
         }
         return nil

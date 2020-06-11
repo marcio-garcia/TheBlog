@@ -16,6 +16,10 @@ extension UIColor {
                                alpha: 1)
             }
 
+            public static var avatarText: UIColor {
+                return UIColor.darkGray
+            }
+
             public static var avatarBorder: UIColor {
                 return UIColor.darkGray
             }
@@ -35,6 +39,10 @@ extension UIColor {
                 green: 248 / 255,
                 blue: 248 / 255,
                 alpha: 1)
+            }
+
+            public static var avatarText: UIColor {
+                return UIColor.white
             }
 
             public static var avatarBorder: UIColor {
