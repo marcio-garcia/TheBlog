@@ -9,10 +9,10 @@
 public typealias Posts = [Post]
 
 public struct Post: Codable {
-    let id: Int
-    let date, title, body: String
-    let imageURL: String
-    let authorID: Int
+    public let id: Int
+    public let date, title, body: String
+    public let imageURL: String
+    public let authorID: Int
 
     enum CodingKeys: String, CodingKey {
         case id, date, title, body

@@ -60,6 +60,7 @@ class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        title = "Posts"
         interactor?.fetchAuthor()
         interactor?.fetchNextPosts()
     }
@@ -69,7 +70,6 @@ class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
     // MARK: AuthorDetailsDisplayLogic
 
     func displayAuthor(author: Author?) {
-        title = author?.name
         contentView?.updateAuthor(author: author)
     }
 

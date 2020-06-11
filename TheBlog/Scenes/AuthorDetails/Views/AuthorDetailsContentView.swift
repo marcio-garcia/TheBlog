@@ -79,7 +79,7 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
 
         authorHeaderView.backgroundColor = UIColor.TBColors.primary.background
 
-        tableView.estimatedRowHeight = 80.0
+        tableView.estimatedRowHeight = 200.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = UIColor.TBColors.primary.background
         tableView.refreshControl = refreshControl
@@ -150,7 +150,11 @@ extension AuthorDetailsContentView: UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(withIdentifier: AuthorDetailsTableViewCell.identifier,
                                                     for: indexPath) as? AuthorDetailsTableViewCell {
 
-            //cell.configure(imageWorker: imageWorker, author: displayedAuthors[indexPath.row])
+            cell.configure(imageWorker: imageWorker, post: displayedPosts[indexPath.row])
+            cell.updateTableLayout = {
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
+            }
             return cell
         }
         return UITableViewCell()
@@ -161,10 +165,6 @@ extension AuthorDetailsContentView: UITableViewDataSource {
 
 extension AuthorDetailsContentView: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
-    }
-
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == displayedPosts.count - 20 {
             DispatchQueue.global().async {
