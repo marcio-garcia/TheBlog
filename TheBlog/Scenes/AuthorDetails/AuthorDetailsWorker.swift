@@ -14,7 +14,7 @@ import Services
 import Ivorywhite
 
 protocol AuthorDetailsWorkLogic {
-    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void)
+    func requestPosts(page: Int, postsPerPage: Int?, completion: @escaping (Posts?, Error?) -> Void)
 }
 
 class AuthorDetailsWorker: AuthorDetailsWorkLogic {
@@ -29,14 +29,14 @@ class AuthorDetailsWorker: AuthorDetailsWorkLogic {
     
     // MARK: AuthorDetailsWorkLogic
     
-    func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void) {
-        service.requestAuthors(page: page, authorsPerPage: authorsPerPage) { authors, error in
+    func requestPosts(page: Int, postsPerPage: Int?, completion: @escaping (Posts?, Error?) -> Void) {
+        service.requestPosts(page: page, postsPerPage: postsPerPage) { posts, error in
             if let _error = error as? NetworkError {
-                completion(authors, _error)
+                completion(posts, _error)
             } else if let _error = error {
-                completion(authors, _error as NSError)
+                completion(posts, _error as NSError)
             } else {
-                completion(authors, error)
+                completion(posts, error)
             }
         }
     }

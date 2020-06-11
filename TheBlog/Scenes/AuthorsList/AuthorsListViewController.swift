@@ -14,8 +14,8 @@ import UIKit
 import Services
 
 protocol AuthorsListDisplayLogic: class {
-    func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel)
-    func displayError(viewModel: AuthorsList.Error.ViewModel)
+    func displayAuthors(_ authors: Authors)
+    func displayError(title: String, message: String)
 }
 
 class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
@@ -77,15 +77,15 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
 
     // MARK: AuthorsListDisplayLogic
     
-    func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel) {
-        contentView?.updateAuthors(displayedAuthors: viewModel.authors)
+    func displayAuthors(_ authors: Authors) {
+        contentView?.updateAuthors(displayedAuthors: authors)
     }
 
-    func displayError(viewModel: AuthorsList.Error.ViewModel) {
+    func displayError(title: String, message: String) {
         contentView?.updateAuthors(displayedAuthors: [])
         DispatchQueue.main.async {
-            let alert = UIAlertController.standardMessage(title: viewModel.title,
-                                                          message: viewModel.message,
+            let alert = UIAlertController.standardMessage(title: title,
+                                                          message: message,
                                                           completion: nil)
             self.present(alert, animated: true, completion: nil)
         }

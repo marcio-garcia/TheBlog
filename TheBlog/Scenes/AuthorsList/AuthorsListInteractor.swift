@@ -59,13 +59,11 @@ class AuthorsListInteractor: AuthorsListBusinessLogic, AuthorsListDataStore {
     private func performRequest(page: Int, authorsPerPage: Int?) {
         worker.requestAuthors(page: page, authorsPerPage: authorsPerPage) { [weak self] authors, error in
             if let _error = error {
-                let response = AuthorsList.Error.Response(message: _error.localizedDescription)
-                self?.presenter?.presentError(response: response)
+                self?.presenter?.presentError(_error)
                 return
             }
             guard let authors = authors else { return }
-            let response = AuthorsList.FetchAuthors.Response(authors: authors)
-            self?.presenter?.presentAuthors(response: response)
+            self?.presenter?.presentAuthors(authors)
         }
     }
 }

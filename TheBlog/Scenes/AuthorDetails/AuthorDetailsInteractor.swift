@@ -49,28 +49,26 @@ class AuthorDetailsInteractor: AuthorDetailsBusinessLogic, AuthorDetailsDataStor
 
     func fetchFirstPosts() {
         page = 1
-        performRequest(page: page, authorsPerPage: postsFirstPage)
+        performRequest(page: page, postsPerPage: postsFirstPage)
     }
 
     func fetchNextPosts() {
         page += 1
-        performRequest(page: page, authorsPerPage: postsPerPage)
+        performRequest(page: page, postsPerPage: postsPerPage)
     }
 
     func selectPost(_ post: Post?) {
         selectedPost = post
     }
 
-    private func performRequest(page: Int, authorsPerPage: Int?) {
-//        worker.requestAuthors(page: page, authorsPerPage: authorsPerPage) { [weak self] posts, error in
-//            if let _error = error {
-//                let response = AuthorDetails.Error.Response(message: _error.localizedDescription)
-//                self?.presenter?.presentError(response: response)
-//                return
-//            }
-//            guard let posts = posts else { return }
-//            self?.presenter?.presentPosts(Posts)
-//        }
-        self.presenter?.presentPosts([])
+    private func performRequest(page: Int, postsPerPage: Int?) {
+        worker.requestPosts(page: page, postsPerPage: postsPerPage) { [weak self] posts, error in
+            if let _error = error {
+                self?.presenter?.presentError(_error)
+                return
+            }
+            guard let posts = posts else { return }
+            self?.presenter?.presentPosts(posts)
+        }
     }
 }

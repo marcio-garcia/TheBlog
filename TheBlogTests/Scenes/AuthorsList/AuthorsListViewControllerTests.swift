@@ -56,14 +56,13 @@ class AuthorsListViewControllerTests: XCTestCase {
   
     func testDisplayAuthors() {
         // Given
-        let viewModel = AuthorsList.FetchAuthors.ViewModel(authors: [])
         let contentView = AuthorsListContentViewSpy()
         sut = AuthorsListViewController()
         sut.contentView = contentView
 
         // When
         loadView()
-        sut.displayAuthors(viewModel: viewModel)
+        sut.displayAuthors([])
     
         // Then
         XCTAssertTrue(contentView.updateAuthorsCalled, "displayAuthors() should update the contentView")

@@ -16,7 +16,7 @@ import Services
 protocol AuthorDetailsDisplayLogic: class {
     func displayAuthor(author: Author?)
     func displayPosts(_ posts: Posts)
-    func displayError(viewModel: AuthorDetails.Error.ViewModel)
+    func displayError(title: String, message: String)
 }
 
 class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
@@ -77,14 +77,14 @@ class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
         contentView?.updatePosts(displayedPosts: posts)
     }
 
-    func displayError(viewModel: AuthorDetails.Error.ViewModel) {
-//        contentView?.updateAuthors(displayedAuthors: [])
-//        DispatchQueue.main.async {
-//            let alert = UIAlertController.standardMessage(title: viewModel.title,
-//                                                          message: viewModel.message,
-//                                                          completion: nil)
-//            self.present(alert, animated: true, completion: nil)
-//        }
+    func displayError(title: String, message: String) {
+        contentView?.updatePosts(displayedPosts: [])
+        DispatchQueue.main.async {
+            let alert = UIAlertController.standardMessage(title: title,
+                                                          message: message,
+                                                          completion: nil)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 

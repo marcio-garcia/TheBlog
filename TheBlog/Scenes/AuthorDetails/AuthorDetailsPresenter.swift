@@ -16,7 +16,7 @@ import Services
 protocol AuthorDetailsPresentationLogic {
     func presentAuthor(_ author: Author?)
     func presentPosts(_ posts: Posts)
-    func presentError(response: AuthorDetails.Error.Response)
+    func presentError(_ error: Error)
 }
 
 class AuthorDetailsPresenter: AuthorDetailsPresentationLogic {
@@ -32,9 +32,7 @@ class AuthorDetailsPresenter: AuthorDetailsPresentationLogic {
         viewController?.displayPosts(posts)
     }
 
-    func presentError(response: AuthorDetails.Error.Response) {
-        let viewModel = AuthorDetails.Error.ViewModel(title: "Error",
-                                                    message: response.message)
-        viewController?.displayError(viewModel: viewModel)
+    func presentError(_ error: Error) {
+        viewController?.displayError(title: "Error", message: error.localizedDescription)
     }
 }
