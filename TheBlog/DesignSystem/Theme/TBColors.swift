@@ -10,10 +10,7 @@ extension UIColor {
             }
 
             public static var text: UIColor {
-                return UIColor(red: 221 / 255,
-                               green: 221 / 255,
-                               blue: 221 / 255,
-                               alpha: 1)
+                return UIColor.gray
             }
 
             public static var avatarText: UIColor {
@@ -25,7 +22,7 @@ extension UIColor {
             }
 
             public static var avatarBackground: UIColor {
-                return UIColor.gray
+                return UIColor.lightGray
             }
         }
 

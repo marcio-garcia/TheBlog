@@ -15,13 +15,7 @@ class AuthorsListTableViewCell: UITableViewCell {
     
     // MARK: Layout properties
     
-    private lazy var avatarView: AvatarView = {
-        return AvatarView()
-    }()
-
-    private lazy var nameLabel: UILabel = {
-        return UILabel()
-    }()
+    private lazy var authorTitleView: AuthorTitleView = { return AuthorTitleView() }()
     
     // MARK: properties
     
@@ -47,21 +41,20 @@ class AuthorsListTableViewCell: UITableViewCell {
             imageWorker?.cancelDownload(requestId: requestId)
             self.requestId = nil
         }
-        avatarView.image = nil
-        nameLabel.text = nil
+        authorTitleView.image = nil
+        authorTitleView.name = nil
     }
     
     func configure(imageWorker: ImageWorkLogic?, author: Author) {
         self.author = author
-        self.nameLabel.text = author.name
-        self.avatarView.name = author.name
+        self.authorTitleView.name = author.name
         if let imageWorker = imageWorker {
             self.imageWorker = imageWorker
         }
         if let url = URL(string: author.avatarURL) {
             self.requestId = self.imageWorker?.download(with: url, completion: { image in
                 DispatchQueue.main.async {
-                    self.avatarView.image = image
+                    self.authorTitleView.image = image
                 }
             })
         }
@@ -76,22 +69,15 @@ class AuthorsListTableViewCell: UITableViewCell {
 
 extension AuthorsListTableViewCell: ViewCodingProtocol {
     func buildViewHierarchy() {
-        contentView.addSubview(avatarView)
-        contentView.addSubview(nameLabel)
+        contentView.addSubview(authorTitleView)
     }
     
     func setupConstraints() {
-        avatarView.constraint {[
+        authorTitleView.constraint {[
             $0.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             $0.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             $0.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            $0.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            $0.widthAnchor.constraint(equalTo: $0.heightAnchor)
-        ]}
-        
-        nameLabel.constraint {[
-            $0.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 16),
-            $0.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor)
+            $0.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ]}
     }
 }

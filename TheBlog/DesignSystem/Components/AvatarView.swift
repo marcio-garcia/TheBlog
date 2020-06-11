@@ -6,7 +6,6 @@
 //  Copyright © 2020 Oxl Tech. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class AvatarView: UIView {
@@ -77,5 +76,4 @@ extension AvatarView: ViewCodingProtocol {
         initialsLabel.textColor = UIColor.TBColors.primary.avatarText
         initialsLabel.textAlignment = .center
     }
-
 }
