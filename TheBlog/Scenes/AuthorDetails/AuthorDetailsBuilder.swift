@@ -10,6 +10,7 @@
 //  see http://clean-swift.com
 //
 
+import UIKit
 import Services
 import Ivorywhite
 
@@ -21,10 +22,10 @@ class AuthorDetailsBuilder {
         self.service = service
     }
     
-    func build() -> AuthorDetailsViewController {
+    func build(imageCache: NSCache<NSString, UIImage>) -> AuthorDetailsViewController {
         let netServiceForImageDownloaging = Ivorywhite.shared.service(debugMode: false)
-        let imageWorker = ImageWorker(service: netServiceForImageDownloaging)
-
+        let imageWorker = ImageWorker(service: netServiceForImageDownloaging,
+                                      imageCache: imageCache)
         let presenter = AuthorDetailsPresenter()
         let worker = AuthorDetailsWorker(service: service)
         let interactor = AuthorDetailsInteractor(presenter: presenter, worker: worker)

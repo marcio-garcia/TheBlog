@@ -10,6 +10,7 @@
 //  see http://clean-swift.com
 //
 
+import UIKit
 import Services
 import Ivorywhite
 
@@ -21,15 +22,16 @@ class AuthorsListBuilder {
         self.service = service
     }
     
-    func build() -> AuthorsListViewController {
+    func build(imageCache: NSCache<NSString, UIImage>) -> AuthorsListViewController {
         let netServiceForImageDownloaging = Ivorywhite.shared.service(debugMode: false)
-        let imageWorker = ImageWorker(service: netServiceForImageDownloaging)
-
+        let imageWorker = ImageWorker(service: netServiceForImageDownloaging,
+                                      imageCache: imageCache)
         let presenter = AuthorsListPresenter()
         let worker = AuthorsListWorker(service: service)
         let interactor = AuthorsListInteractor(presenter: presenter, worker: worker)
         let router = AuthorsListRouter(dataStore: interactor,
-                                       authorDetailsBuilder: AuthorDetailsBuilder(service: service))
+                                       authorDetailsBuilder: AuthorDetailsBuilder(service: service),
+                                       imageCache: imageCache)
         let viewController = AuthorsListViewController(interactor: interactor,
                                                        router: router,
                                                        imageWorker: imageWorker)

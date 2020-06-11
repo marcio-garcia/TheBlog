@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var navigationController: UINavigationController?
+    var imageCache = NSCache<NSString, UIImage>()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
@@ -25,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let networkService = Services.shared.blogService(apiConfiguration: networkConfig)
         
         window = UIWindow()
-        let rootViewController = AuthorsListBuilder(service: networkService).build()
+        let rootViewController = AuthorsListBuilder(service: networkService).build(imageCache: imageCache)
         navigationController = UINavigationController(rootViewController: rootViewController)
         navigationController?.navigationBar.backgroundColor = .white
         window?.rootViewController = navigationController

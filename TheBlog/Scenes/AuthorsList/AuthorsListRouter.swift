@@ -24,16 +24,21 @@ class AuthorsListRouter: AuthorsListRoutingLogic, AuthorsListDataPassing {
     weak var viewController: AuthorsListViewController?
     var dataStore: AuthorsListDataStore?
     var authorDetailsBuilder: AuthorDetailsBuilder
+    var imageCache: NSCache<NSString, UIImage>
 
-    init(dataStore: AuthorsListDataStore?, authorDetailsBuilder: AuthorDetailsBuilder) {
+    init(dataStore: AuthorsListDataStore?,
+         authorDetailsBuilder: AuthorDetailsBuilder,
+         imageCache: NSCache<NSString, UIImage>) {
+
         self.dataStore = dataStore
         self.authorDetailsBuilder = authorDetailsBuilder
+        self.imageCache = imageCache
     }
  
     // MARK: Routing
     
     func routeToAuthorDetails() {
-        let destinationVC = authorDetailsBuilder.build()
+        let destinationVC = authorDetailsBuilder.build(imageCache: imageCache)
         var destinationDS = destinationVC.router!.dataStore!
         passDataToSomewhere(source: dataStore!, destination: &destinationDS)
         navigateToSomewhere(source: viewController!, destination: destinationVC)

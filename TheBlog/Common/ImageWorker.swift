@@ -23,12 +23,13 @@ protocol ImageWorkLogic: class {
 class ImageWorker: ImageWorkLogic {
     
     private var service: NetworkService
-    private var imageCache: NSCache = NSCache<NSString, UIImage>()
+    private var imageCache: NSCache<NSString, UIImage>
     
     // MARK: Object Lifecycle
     
-    init(service: NetworkService) {
+    init(service: NetworkService, imageCache: NSCache<NSString, UIImage>) {
         self.service = service
+        self.imageCache = imageCache
     }
     
     // MARK: AuthorsListWorkLogic
