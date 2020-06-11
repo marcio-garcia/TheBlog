@@ -13,7 +13,7 @@ class AuthorDetailsTableViewCell: UITableViewCell {
     static let identifier = String(describing: AuthorDetailsTableViewCell.self)
     
     // MARK: Layout properties
-    
+
     private lazy var avatarImageView: UIImageView = {
         return UIImageView()
     }()
