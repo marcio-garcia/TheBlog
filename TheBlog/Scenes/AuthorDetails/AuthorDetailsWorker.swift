@@ -14,7 +14,12 @@ import Services
 import Ivorywhite
 
 protocol AuthorDetailsWorkLogic {
-    func requestPosts(page: Int, postsPerPage: Int?, completion: @escaping (Posts?, Error?) -> Void)
+    func requestPosts(authorId: Int,
+                      page: Int,
+                      postsPerPage: Int?,
+                      orderBy: PostsOrderBy?,
+                      direction: SortDirection?,
+                      completion: @escaping (Posts?, Error?) -> Void)
 }
 
 class AuthorDetailsWorker: AuthorDetailsWorkLogic {
@@ -29,8 +34,17 @@ class AuthorDetailsWorker: AuthorDetailsWorkLogic {
     
     // MARK: AuthorDetailsWorkLogic
     
-    func requestPosts(page: Int, postsPerPage: Int?, completion: @escaping (Posts?, Error?) -> Void) {
-        service.requestPosts(page: page, postsPerPage: postsPerPage) { posts, error in
+    func requestPosts(authorId: Int,
+                      page: Int,
+                      postsPerPage: Int?,
+                      orderBy: PostsOrderBy?,
+                      direction: SortDirection?,
+                      completion: @escaping (Posts?, Error?) -> Void) {
+        service.requestPosts(authorId: authorId,
+                             page: page,
+                             postsPerPage: postsPerPage,
+                             orderBy: orderBy,
+                             direction: direction) { posts, error in
             if let _error = error as? NetworkError {
                 completion(posts, _error)
             } else if let _error = error {

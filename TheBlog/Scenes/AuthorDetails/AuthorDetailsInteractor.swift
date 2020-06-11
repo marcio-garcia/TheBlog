@@ -62,7 +62,18 @@ class AuthorDetailsInteractor: AuthorDetailsBusinessLogic, AuthorDetailsDataStor
     }
 
     private func performRequest(page: Int, postsPerPage: Int?) {
-        worker.requestPosts(page: page, postsPerPage: postsPerPage) { [weak self] posts, error in
+        guard let author = self.author else {
+            let error = NSError(domain: "Data", code: 999, userInfo: [NSLocalizedDescriptionKey : "No author selected"])
+            presenter?.presentError(error)
+            return
+        }
+
+        worker.requestPosts(authorId: author.id,
+                            page: page,
+                            postsPerPage: postsPerPage,
+                            orderBy: PostsOrderBy.date,
+                            direction: SortDirection.desc) { [weak self] posts, error in
+
             if let _error = error {
                 self?.presenter?.presentError(_error)
                 return

@@ -8,10 +8,22 @@
 
 import Ivorywhite
 
+public enum PostsOrderBy: String {
+    case id
+    case date
+    case authorId
+}
+
 class PostsRequest: Request, NetworkRequest {
     typealias ModelType = Posts
     
-    init?(apiConfiguration: ApiConfiguration, page: Int, postsPerPage: Int?) {
+    init?(apiConfiguration: ApiConfiguration,
+          authorId: Int,
+          page: Int,
+          postsPerPage: Int?,
+          orderBy: PostsOrderBy?,
+          direction: SortDirection?) {
+
         super.init()
         
         guard let apiBaseURL = URL(string: apiConfiguration.baseUrl) else {
@@ -21,11 +33,21 @@ class PostsRequest: Request, NetworkRequest {
         baseURL = apiBaseURL
         path = "/posts"
         httpMethod = .get
+        encoding = .urlEnconding
         parameters = [
+            "authorId": authorId,
             "_page": page
         ]
+
         if let limit = postsPerPage {
             parameters?["_limit"] = limit
+        }
+
+        if let order = orderBy {
+            parameters?["_sort"] = order.rawValue
+            if let dir = direction {
+                parameters?["_order"] = dir.rawValue
+            }
         }
     }
     

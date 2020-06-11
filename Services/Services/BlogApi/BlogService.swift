@@ -37,15 +37,23 @@ class BlogService: BlogApi {
     }
 
     @discardableResult
-    func requestPosts(page: Int, postsPerPage: Int?, completion: @escaping (Posts?, Error?) -> Void) -> TaskId? {
-        
+    func requestPosts(authorId: Int,
+                      page: Int,
+                      postsPerPage: Int?,
+                      orderBy: PostsOrderBy?,
+                      direction: SortDirection?,
+                      completion: @escaping (Posts?, Error?) -> Void) -> TaskId? {
+
         guard let request = PostsRequest(apiConfiguration: apiConfiguration,
+                                         authorId: authorId,
                                          page: page,
-                                         postsPerPage: postsPerPage) else {
+                                         postsPerPage: postsPerPage,
+                                         orderBy: orderBy,
+                                         direction: direction) else {
             completion(nil, NetworkError.badRequest)
             return nil
         }
-        
+
         let requestId = performRequest(request: request, completion: completion)
         return requestId
     }
