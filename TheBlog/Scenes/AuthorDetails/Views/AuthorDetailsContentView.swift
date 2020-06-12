@@ -12,7 +12,7 @@ import Services
 
 protocol AuthorDetailsContentViewProtocol: UIView {
     func updateAuthor(author: Author?)
-    func updatePosts(displayedPosts: Posts)
+    func updatePosts(displayedPosts: [DisplayedPost])
 }
 
 class AuthorDetailsContentView: UIView, ViewCodingProtocol {
@@ -28,7 +28,7 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
 
     private weak var viewController: AuthorDetailsViewController?
     private var displayedAuthor: Author?
-    private var displayedPosts: Posts = []
+    private var displayedPosts: [DisplayedPost] = []
     private weak var imageWorker: ImageWorkLogic?
 
     // MARK: Object lifecycle
@@ -86,8 +86,10 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
-        tableView.register(AuthorDetailsTableViewCell.self,
-                           forCellReuseIdentifier: AuthorDetailsTableViewCell.identifier)
+        tableView.register(PostWithImageTableViewCell.self,
+                           forCellReuseIdentifier: PostWithImageTableViewCell.identifier)
+        tableView.register(PostNoImageTableViewCell.self,
+                           forCellReuseIdentifier: PostNoImageTableViewCell.identifier)
         
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 
@@ -124,7 +126,7 @@ extension AuthorDetailsContentView: AuthorDetailsContentViewProtocol {
         })
     }
 
-    func updatePosts(displayedPosts: Posts) {
+    func updatePosts(displayedPosts: [DisplayedPost]) {
         self.displayedPosts.append(contentsOf: displayedPosts)
         DispatchQueue.main.async {
             self.activityIndicatorView.stopAnimating()
@@ -147,15 +149,26 @@ extension AuthorDetailsContentView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: AuthorDetailsTableViewCell.identifier,
-                                                    for: indexPath) as? AuthorDetailsTableViewCell {
 
-            cell.configure(imageWorker: imageWorker, post: displayedPosts[indexPath.row])
-            cell.updateTableLayout = {
-                self.tableView.beginUpdates()
-                self.tableView.endUpdates()
+        let displayedPost = displayedPosts[indexPath.row]
+        if displayedPost.hasImage {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: PostWithImageTableViewCell.identifier,
+                                                        for: indexPath) as? PostWithImageTableViewCell {
+
+                cell.configure(imageWorker: imageWorker, displayedPost: displayedPost)
+                cell.updateTableLayout = {
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
+                }
+                return cell
             }
-            return cell
+        } else {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: PostNoImageTableViewCell.identifier,
+                                                        for: indexPath) as? PostNoImageTableViewCell {
+
+                cell.configure(imageWorker: imageWorker, displayedPost: displayedPost)
+                return cell
+            }
         }
         return UITableViewCell()
     }

@@ -19,17 +19,29 @@ protocol AuthorDetailsPresentationLogic {
     func presentError(_ error: Error)
 }
 
+class DisplayedPost {
+    var post: Post
+    var hasImage: Bool
+    init(post: Post, hasImage: Bool) {
+        self.post = post
+        self.hasImage = hasImage
+    }
+}
+
 class AuthorDetailsPresenter: AuthorDetailsPresentationLogic {
     weak var viewController: AuthorDetailsDisplayLogic?
   
     // MARK: AuthorDetailsPresentationLogic
 
     func presentAuthor(_ author: Author?) {
-        viewController?.displayAuthor(author: author)
+        viewController?.displayAuthor(author)
     }
 
     func presentPosts(_ posts: Posts) {
-        viewController?.displayPosts(posts)
+        let displayedPosts = posts.compactMap {
+            return DisplayedPost(post: $0, hasImage: true)
+        }
+        viewController?.displayPosts(displayedPosts)
     }
 
     func presentError(_ error: Error) {

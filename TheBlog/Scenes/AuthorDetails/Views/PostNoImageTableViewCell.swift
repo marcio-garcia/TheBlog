@@ -1,18 +1,18 @@
 //
-//  AuthorDetailsTableViewCell.swift
+//  PostNoImageTableViewCell.swift
 //  TheBlog
 //
-//  Created by Marcio Garcia on 07/06/20.
+//  Created by Marcio Garcia on 12/06/20.
 //  Copyright © 2020 Oxl Tech. All rights reserved.
 //
 
 import UIKit
 import Services
 
-class AuthorDetailsTableViewCell: UITableViewCell {
+class PostNoImageTableViewCell: UITableViewCell {
 
-    static let identifier = String(describing: AuthorDetailsTableViewCell.self)
-    
+    static let identifier = String(describing: PostNoImageTableViewCell.self)
+
     // MARK: Layout properties
 
     private lazy var stackView = { UIStackView() }()
@@ -20,16 +20,14 @@ class AuthorDetailsTableViewCell: UITableViewCell {
     private lazy var dateLabel = { UILabel() }()
     private lazy var timeLabel = { UILabel() }()
     private lazy var bodyLabel = { UILabel() }()
-    private lazy var postImageView = { UIImageView() }()
 
     // MARK: properties
-    
+
     public weak var imageWorker: ImageWorkLogic?
-    public var updateTableLayout: (() -> Void)?
     private var requestId: RequestId?
 
     // MARK: Object lifecycle
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViewConfiguration()
@@ -40,7 +38,7 @@ class AuthorDetailsTableViewCell: UITableViewCell {
     }
 
     // MARK: Data
-    
+
     override func prepareForReuse() {
         if let requestId = self.requestId {
             imageWorker?.cancelDownload(requestId: requestId)
@@ -50,50 +48,34 @@ class AuthorDetailsTableViewCell: UITableViewCell {
         dateLabel.text = nil
         timeLabel.text = nil
         bodyLabel.text = nil
-        postImageView.isHidden = false
-        postImageView.image = nil
     }
-    
-    func configure(imageWorker: ImageWorkLogic?, post: Post) {
 
+    func configure(imageWorker: ImageWorkLogic?, displayedPost: DisplayedPost) {
         dateLabel.text = nil
         timeLabel.text = nil
-        if let postDate = Date.date(from: post.date, format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") {
+        if let postDate = Date.date(from: displayedPost.post.date, format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") {
             dateLabel.text = Date.string(from: postDate, format: "dd MMM yyyy")
             timeLabel.text = Date.string(from: postDate, format: "HH:mm")
         }
-        titleLabel.text = post.title
-        bodyLabel.text = post.body
+        titleLabel.text = displayedPost.post.title
+        bodyLabel.text = displayedPost.post.body
         if let imageWorker = imageWorker {
             self.imageWorker = imageWorker
-        }
-        if let url = URL(string: post.imageURL) {
-            self.requestId = self.imageWorker?.download(with: url, completion: { image in
-                DispatchQueue.main.async {
-                    self.postImageView.image = image
-                    self.postImageView.isHidden = false
-                    if image == nil {
-                        self.postImageView.isHidden = true
-                        self.updateTableLayout?()
-                    }
-                }
-            })
         }
     }
 }
 
 // MARK: ViewCodingProtocol
 
-extension AuthorDetailsTableViewCell: ViewCodingProtocol {
+extension PostNoImageTableViewCell: ViewCodingProtocol {
     func buildViewHierarchy() {
         contentView.addSubview(dateLabel)
         contentView.addSubview(timeLabel)
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(bodyLabel)
-        stackView.addArrangedSubview(postImageView)
     }
-    
+
     func setupConstraints() {
         dateLabel.constraint {[
             $0.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
@@ -114,10 +96,6 @@ extension AuthorDetailsTableViewCell: ViewCodingProtocol {
             $0.leadingAnchor.constraint(equalTo: dateLabel.trailingAnchor, constant: 8),
             $0.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ]}
-        postImageView.constraint {[
-            $0.heightAnchor.constraint(equalTo: $0.widthAnchor)
-        ]}
-
     }
 
     func configureViews() {
@@ -139,8 +117,5 @@ extension AuthorDetailsTableViewCell: ViewCodingProtocol {
         bodyLabel.font = UIFont.TBFonts.caption.font()
         bodyLabel.textColor = UIColor.TBColors.primary.text
         bodyLabel.numberOfLines = 0
-
-        postImageView.contentMode = .scaleToFill
-        postImageView.clipsToBounds = true
     }
 }

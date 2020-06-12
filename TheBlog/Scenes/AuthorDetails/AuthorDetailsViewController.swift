@@ -14,8 +14,8 @@ import UIKit
 import Services
 
 protocol AuthorDetailsDisplayLogic: class {
-    func displayAuthor(author: Author?)
-    func displayPosts(_ posts: Posts)
+    func displayAuthor(_ author: Author?)
+    func displayPosts(_ displayedPosts: [DisplayedPost])
     func displayError(title: String, message: String)
 }
 
@@ -69,12 +69,12 @@ class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
 
     // MARK: AuthorDetailsDisplayLogic
 
-    func displayAuthor(author: Author?) {
+    func displayAuthor(_ author: Author?) {
         contentView?.updateAuthor(author: author)
     }
 
-    func displayPosts(_ posts: Posts) {
-        contentView?.updatePosts(displayedPosts: posts)
+    func displayPosts(_ displayedPosts: [DisplayedPost]) {
+        contentView?.updatePosts(displayedPosts: displayedPosts)
     }
 
     func displayError(title: String, message: String) {
