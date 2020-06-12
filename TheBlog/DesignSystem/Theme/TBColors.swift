@@ -24,6 +24,13 @@ extension UIColor {
             public static var avatarBackground: UIColor {
                 return UIColor.lightGray
             }
+
+            public static var postImagePlaceholder: UIColor {
+                return UIColor(red: 217 / 255,
+                               green: 217 / 255,
+                               blue: 217 / 255,
+                               alpha: 1)
+            }
         }
 
         public enum secondary {
@@ -33,9 +40,9 @@ extension UIColor {
 
             public static var text: UIColor {
                 return UIColor(red: 248 / 255,
-                green: 248 / 255,
-                blue: 248 / 255,
-                alpha: 1)
+                               green: 248 / 255,
+                               blue: 248 / 255,
+                               alpha: 1)
             }
 
             public static var avatarText: UIColor {
@@ -48,6 +55,13 @@ extension UIColor {
 
             public static var avatarBackground: UIColor {
                 return UIColor.lightGray
+            }
+
+            public static var postImagePlaceholder: UIColor {
+                return UIColor(red: 217 / 255,
+                               green: 217 / 255,
+                               blue: 217 / 255,
+                               alpha: 1)
             }
         }
 

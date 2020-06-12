@@ -1,5 +1,5 @@
 //
-//  PostWithImageTableViewCell.swift
+//  PostTableViewCell.swift
 //  TheBlog
 //
 //  Created by Marcio Garcia on 07/06/20.
@@ -9,9 +9,9 @@
 import UIKit
 import Services
 
-class PostWithImageTableViewCell: UITableViewCell {
+class PostTableViewCell: UITableViewCell {
 
-    static let identifier = String(describing: PostWithImageTableViewCell.self)
+    static let identifier = String(describing: PostTableViewCell.self)
     
     // MARK: Layout properties
 
@@ -26,7 +26,6 @@ class PostWithImageTableViewCell: UITableViewCell {
     // MARK: properties
     
     public weak var imageWorker: ImageWorkLogic?
-    public var updateTableLayout: (() -> Void)?
     private var requestId: RequestId?
 
     // MARK: Object lifecycle
@@ -52,7 +51,7 @@ class PostWithImageTableViewCell: UITableViewCell {
         timeLabel.text = nil
         bodyLabel.text = nil
         postImageView.isHidden = false
-        postImageView.image = nil
+        postImageView.image = UIImage(named: "image-placeholder")
     }
     
     func configure(imageWorker: ImageWorkLogic?, displayedPost: DisplayedPost) {
@@ -70,23 +69,14 @@ class PostWithImageTableViewCell: UITableViewCell {
         }
         if let url = URL(string: displayedPost.post.imageURL), displayedPost.hasImage {
             self.requestId = self.imageWorker?.download(with: url, completion: { result in
-                switch result {
-                case .success(let image):
-                    DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let image):
                         self.postImageView.image = image
-                        self.postImageView.isHidden = false
-                    }
-                case .failure(let error as NSError):
-                    displayedPost.hasImage = false
-                    if error.code == NSURLErrorCancelled {
-                        displayedPost.hasImage = true
-                    }
-                    DispatchQueue.main.async {
-                        self.postImageView.isHidden = true
-                        self.updateTableLayout?()
+                    case .failure:
+                        break
                     }
                 }
-
             })
         }
     }
@@ -94,7 +84,7 @@ class PostWithImageTableViewCell: UITableViewCell {
 
 // MARK: ViewCodingProtocol
 
-extension PostWithImageTableViewCell: ViewCodingProtocol {
+extension PostTableViewCell: ViewCodingProtocol {
     func buildViewHierarchy() {
         contentView.addSubview(dateStackView)
         dateStackView.addArrangedSubview(dateLabel)
@@ -158,5 +148,6 @@ extension PostWithImageTableViewCell: ViewCodingProtocol {
 
         postImageView.contentMode = .scaleToFill
         postImageView.clipsToBounds = true
+        postImageView.backgroundColor = UIColor.TBColors.primary.postImagePlaceholder
     }
 }

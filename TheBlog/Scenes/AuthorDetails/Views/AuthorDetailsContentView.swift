@@ -30,7 +30,7 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
     private var displayedAuthor: Author?
     private var displayedPosts: [DisplayedPost] = []
     private weak var imageWorker: ImageWorkLogic?
-    private var updatingTableLayout: Bool = false
+    private var prefetchingPosts: Bool = false
 
     // MARK: Object lifecycle
     
@@ -87,11 +87,9 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
-        tableView.register(PostWithImageTableViewCell.self,
-                           forCellReuseIdentifier: PostWithImageTableViewCell.identifier)
-        tableView.register(PostNoImageTableViewCell.self,
-                           forCellReuseIdentifier: PostNoImageTableViewCell.identifier)
-        
+        tableView.register(PostTableViewCell.self,
+                           forCellReuseIdentifier: PostTableViewCell.identifier)
+
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 
         activityIndicatorView.startAnimating()
@@ -107,6 +105,20 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
         return AuthorDetailsEmptyView(messageText: "No posts yet.",
                                       actionTitle: nil,
                                       actionHandler: nil)
+    }
+
+    // MARK: Pagination
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard prefetchingPosts == false else { return }
+        let actualPosition: CGFloat = scrollView.contentOffset.y
+        let contentHeight: CGFloat = scrollView.contentSize.height - (scrollView.frame.size.height)
+        if (actualPosition >= contentHeight) {
+            DispatchQueue.global().async {
+                self.prefetchingPosts = true
+                self.viewController?.fetchNextPosts()
+            }
+         }
     }
 }
 
@@ -140,8 +152,11 @@ extension AuthorDetailsContentView: AuthorDetailsContentViewProtocol {
             if self.displayedPosts.isEmpty {
                 self.tableView.backgroundView = self.buildEmtpyView()
             } else {
-                self.tableView.reloadData()
+                if !displayedPosts.isEmpty {
+                    self.tableView.reloadData()
+                }
             }
+            self.prefetchingPosts = false
         }
     }
 }
@@ -154,34 +169,12 @@ extension AuthorDetailsContentView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier,
+                                                    for: indexPath) as? PostTableViewCell {
 
-        let displayedPost = displayedPosts[indexPath.row]
-        if displayedPost.hasImage {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: PostWithImageTableViewCell.identifier,
-                                                        for: indexPath) as? PostWithImageTableViewCell {
+            cell.configure(imageWorker: imageWorker, displayedPost: displayedPosts[indexPath.row])
 
-                cell.configure(imageWorker: imageWorker, displayedPost: displayedPost)
-                cell.updateTableLayout = {
-                    var dispatchTime: DispatchTime = .now()
-                    if self.updatingTableLayout {
-                        dispatchTime = .now() + 1.0
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
-                        self.updatingTableLayout = true
-                        self.tableView.beginUpdates()
-                        self.tableView.endUpdates()
-                        self.updatingTableLayout = false
-                    }
-                }
-                return cell
-            }
-        } else {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: PostNoImageTableViewCell.identifier,
-                                                        for: indexPath) as? PostNoImageTableViewCell {
-
-                cell.configure(imageWorker: imageWorker, displayedPost: displayedPost)
-                return cell
-            }
+            return cell
         }
         return UITableViewCell()
     }
@@ -191,15 +184,8 @@ extension AuthorDetailsContentView: UITableViewDataSource {
 
 extension AuthorDetailsContentView: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == displayedPosts.count - 5 {
-            DispatchQueue.global().async {
-                self.viewController?.fetchNextPosts()
-            }
-        }
-    }
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
+

@@ -32,8 +32,8 @@ class AuthorDetailsInteractor: AuthorDetailsBusinessLogic, AuthorDetailsDataStor
     var author: Author?
     var selectedPost: Post?
     var page = 0
-    var postsFirstPage = 50
-    var postsPerPage = 40
+    var postsFirstPage = 10
+    var postsPerPage = 10
 
     // MARK: Object lifecycle
     

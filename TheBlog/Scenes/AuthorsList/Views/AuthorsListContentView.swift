@@ -33,6 +33,7 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     private weak var viewController: AuthorsListViewController?
     private var displayedAuthors: Authors = []
     private weak var imageWorker: ImageWorkLogic?
+    private var prefetchingAuthors: Bool = false
 
     // MARK: Object lifecycle
     
@@ -96,6 +97,20 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
             self?.viewController?.fetchFirstAuthors()
         }
     }
+
+    // MARK: Pagination
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard prefetchingAuthors == false else { return }
+        let actualPosition: CGFloat = scrollView.contentOffset.y
+        let contentHeight: CGFloat = scrollView.contentSize.height - (scrollView.frame.size.height)
+        if (actualPosition >= contentHeight) {
+            DispatchQueue.global().async {
+                self.prefetchingAuthors = true
+                self.viewController?.fetchNextAuthors()
+            }
+         }
+    }
 }
 
 // MARK: AuthorsListContentViewProtocol
@@ -110,8 +125,11 @@ extension AuthorsListContentView: AuthorsListContentViewProtocol {
             if self.displayedAuthors.isEmpty {
                 self.tableView.backgroundView = self.buildEmtpyView()
             } else {
-                self.tableView.reloadData()
+                if !displayedAuthors.isEmpty {
+                    self.tableView.reloadData()
+                }
             }
+            self.prefetchingAuthors = false
         }
     }
 }
@@ -142,14 +160,6 @@ extension AuthorsListContentView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80.0
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == displayedAuthors.count - 20 {
-            DispatchQueue.global().async {
-                self.viewController?.fetchNextAuthors()
-            }
-        }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
