@@ -17,6 +17,7 @@ protocol AuthorDetailsBusinessLogic {
     func fetchAuthor()
     func fetchFirstPosts()
     func fetchNextPosts()
+    func selectPost(_ post: Post?)
 }
 
 protocol AuthorDetailsDataStore {

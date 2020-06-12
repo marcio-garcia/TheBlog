@@ -1,5 +1,5 @@
 //
-//  AuthorDetailsContentView.swift
+//  PostDetailsContentView.swift
 //  TheBlog
 //
 //  Created by Marcio Garcia on 07/06/20.
@@ -10,31 +10,31 @@ import UIKit
 import Ivorywhite
 import Services
 
-protocol AuthorDetailsContentViewProtocol: UIView {
-    func updateAuthor(author: Author?)
-    func updatePosts(displayedPosts: [DisplayedPost])
+protocol PostDetailsContentViewProtocol: UIView {
+    func updatePost(_ post: Post?)
+    func updateComments(displayedComments: Comments)
 }
 
-class AuthorDetailsContentView: UIView, ViewCodingProtocol {
+class PostDetailsContentView: UIView, ViewCodingProtocol {
 
     // MARK: Layout properties
 
-    private lazy var authorHeaderView = { AuthorHeaderView() }()
+    private lazy var postHeaderView = { return PostHeaderView() }()
     private lazy var tableView = { return UITableView() }()
     private lazy var activityIndicatorView = { return UIActivityIndicatorView() }()
     private let refreshControl = UIRefreshControl()
 
     // MARK: Properties
 
-    private weak var viewController: AuthorDetailsViewController?
-    private var displayedAuthor: Author?
-    private var displayedPosts: [DisplayedPost] = []
+    private weak var viewController: PostDetailsViewController?
+    private var displayedPost: Post?
+    private var displayedComments: Comments = []
     private weak var imageWorker: ImageWorkLogic?
     private var prefetchingPosts: Bool = false
 
     // MARK: Object lifecycle
     
-    init(viewController: AuthorDetailsViewController?, imageWorker: ImageWorkLogic?) {
+    init(viewController: PostDetailsViewController?, imageWorker: ImageWorkLogic?) {
         super.init(frame: CGRect.zero)
         self.viewController = viewController
         self.imageWorker = imageWorker
@@ -48,13 +48,13 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
     // MARK: ViewCodingProtocol
     
     func buildViewHierarchy() {
-        addSubview(authorHeaderView)
+        addSubview(postHeaderView)
         addSubview(tableView)
         addSubview(activityIndicatorView)
     }
     
     func setupConstraints() {
-        authorHeaderView.constraint {[
+        postHeaderView.constraint {[
             $0.topAnchor.constraint(equalTo: topAnchor),
             $0.leadingAnchor.constraint(equalTo: leadingAnchor),
             $0.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -62,7 +62,7 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
         ]}
 
         tableView.constraint {[
-            $0.topAnchor.constraint(equalTo: authorHeaderView.bottomAnchor),
+            $0.topAnchor.constraint(equalTo: postHeaderView.bottomAnchor),
             $0.bottomAnchor.constraint(equalTo: bottomAnchor),
             $0.leadingAnchor.constraint(equalTo: leadingAnchor),
             $0.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -78,7 +78,7 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
     
     func configureViews() {
 
-        authorHeaderView.backgroundColor = UIColor.TBColors.primary.background
+        postHeaderView.backgroundColor = UIColor.TBColors.primary.background
 
         tableView.estimatedRowHeight = 200.0
         tableView.rowHeight = UITableView.automaticDimension
@@ -102,7 +102,7 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
     }
 
     private func buildEmtpyView() -> UIView {
-        return AuthorDetailsEmptyView(messageText: "No posts yet.",
+        return PostDetailsEmptyView(messageText: "No posts yet.",
                                       actionTitle: nil,
                                       actionHandler: nil)
     }
@@ -122,37 +122,37 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
     }
 }
 
-// MARK: AuthorDetailsContentViewProtocol
+// MARK: PostDetailsContentViewProtocol
 
-extension AuthorDetailsContentView: AuthorDetailsContentViewProtocol {
-    func updateAuthor(author: Author?) {
-        authorHeaderView.name = author?.name
-        authorHeaderView.email = author?.email
-        authorHeaderView.userName = author?.userName
-        guard let urlString = author?.avatarURL, let url = URL(string: urlString) else {
-            authorHeaderView.image = nil
+extension PostDetailsContentView: PostDetailsContentViewProtocol {
+    func updatePost(_ post: Post?) {
+        postHeaderView.title = post?.title
+        postHeaderView.date = post?.date
+        postHeaderView.body = post?.body
+        guard let urlString = post?.imageURL, let url = URL(string: urlString) else {
+            postHeaderView.image = nil
             return
         }
         _ = imageWorker?.download(with: url, completion: { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let image): self?.authorHeaderView.image = image
-                case .failure: self?.authorHeaderView.image = nil
+                case .success(let image): self?.postHeaderView.image = image
+                case .failure: self?.postHeaderView.image = nil
                 }
             }
         })
     }
 
-    func updatePosts(displayedPosts: [DisplayedPost]) {
-        self.displayedPosts.append(contentsOf: displayedPosts)
+    func updateComments(displayedComments: Comments) {
+        self.displayedComments.append(contentsOf: displayedComments)
         DispatchQueue.main.async {
             self.activityIndicatorView.stopAnimating()
             self.refreshControl.endRefreshing()
 
-            if self.displayedPosts.isEmpty {
+            if self.displayedComments.isEmpty {
                 self.tableView.backgroundView = self.buildEmtpyView()
             } else {
-                if !displayedPosts.isEmpty {
+                if !displayedComments.isEmpty {
                     self.tableView.reloadData()
                 }
             }
@@ -163,16 +163,16 @@ extension AuthorDetailsContentView: AuthorDetailsContentViewProtocol {
 
 // MARK: UITableViewDataSource
 
-extension AuthorDetailsContentView: UITableViewDataSource {
+extension PostDetailsContentView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return displayedPosts.count
+        return displayedComments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier,
-                                                    for: indexPath) as? PostTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: CommentTableViewCell.identifier,
+                                                    for: indexPath) as? CommentTableViewCell {
 
-            cell.configure(imageWorker: imageWorker, displayedPost: displayedPosts[indexPath.row])
+            cell.configure(imageWorker: imageWorker, displayedComment: displayedComments[indexPath.row])
 
             return cell
         }
@@ -182,11 +182,10 @@ extension AuthorDetailsContentView: UITableViewDataSource {
 
 // MARK: UITableViewDelegate
 
-extension AuthorDetailsContentView: UITableViewDelegate {
+extension PostDetailsContentView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        viewController?.selectedPost(displayedPosts[indexPath.row].post)
     }
 }
 

@@ -40,8 +40,13 @@ class BlogServiceMock: BlogApi {
         requestPostsCalled = true
         return TaskId()
     }
-    
-    func requestComments(page: Int, commentsPerPage: Int?, completion: @escaping (Comments?, Error?) -> Void) -> TaskId? {
+
+    func requestComments(postId: Int,
+                         page: Int,
+                         commentsPerPage: Int?,
+                         orderBy: CommentsOrderBy?,
+                         direction: SortDirection?,
+                         completion: @escaping (Comments?, Error?) -> Void) -> TaskId? {
         requestCommentsCalled = true
         return TaskId()
     }

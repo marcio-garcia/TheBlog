@@ -1,5 +1,5 @@
 //
-//  AuthorDetailsBuilder.swift
+//  PostDetailsBuilder.swift
 //  TheBlog
 //
 //  Created by Marcio Garcia on 07/06/20.
@@ -14,7 +14,7 @@ import UIKit
 import Services
 import Ivorywhite
 
-class AuthorDetailsBuilder {
+class PostDetailsBuilder {
 
     private var service: BlogApi
     
@@ -22,18 +22,16 @@ class AuthorDetailsBuilder {
         self.service = service
     }
     
-    func build(imageCache: NSCache<NSString, UIImage>) -> AuthorDetailsViewController {
+    func build(imageCache: NSCache<NSString, UIImage>) -> PostDetailsViewController {
         let netServiceForImageDownloading = Ivorywhite.shared.service(debugMode: false)
         let imageWorker = ImageWorker(service: netServiceForImageDownloading,
                                       imageCache: imageCache)
-        let presenter = AuthorDetailsPresenter()
-        let worker = AuthorDetailsWorker(service: service)
-        let interactor = AuthorDetailsInteractor(presenter: presenter, worker: worker)
-        let router = AuthorDetailsRouter(dataStore: interactor,
-                                         postDetailsBuilder: PostDetailsBuilder(service: service),
-                                         imageCache: imageCache)
-        let viewController = AuthorDetailsViewController(interactor: interactor,
-                                                       router: router,
+        let presenter = PostDetailsPresenter()
+        let worker = PostDetailsWorker(service: service)
+        let interactor = PostDetailsInteractor(presenter: presenter, worker: worker)
+        let router = PostDetailsRouter(dataStore: interactor)
+        let viewController = PostDetailsViewController(interactor: interactor,
+                                                       router: nil,
                                                        imageWorker: imageWorker)
         router.viewController = viewController
         presenter.viewController = viewController

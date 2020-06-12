@@ -8,10 +8,23 @@
 
 import Ivorywhite
 
+public enum CommentsOrderBy: String {
+    case id
+    case date
+    case userName
+    case postId
+}
+
 class CommentsRequest: Request, NetworkRequest {
     typealias ModelType = Comments
     
-    init?(apiConfiguration: ApiConfiguration, page: Int, commentsPerPage: Int?) {
+    init?(apiConfiguration: ApiConfiguration,
+          postId: Int,
+          page: Int,
+          commentsPerPage: Int?,
+          orderBy: CommentsOrderBy?,
+          direction: SortDirection?) {
+        
         super.init()
         
         guard let apiBaseURL = URL(string: apiConfiguration.baseUrl) else {
@@ -27,6 +40,22 @@ class CommentsRequest: Request, NetworkRequest {
         ]
         if let limit = commentsPerPage {
             parameters?["_limit"] = limit
+        }
+
+        parameters = [
+            "postId": postId,
+            "_page": page
+        ]
+
+        if let limit = commentsPerPage {
+            parameters?["_limit"] = limit
+        }
+
+        if let order = orderBy {
+            parameters?["_sort"] = order.rawValue
+            if let dir = direction {
+                parameters?["_order"] = dir.rawValue
+            }
         }
     }
     

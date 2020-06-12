@@ -19,6 +19,11 @@ public protocol BlogApi {
                       direction: SortDirection?,
                       completion: @escaping (Posts?, Error?) -> Void) -> TaskId?
     @discardableResult
-    func requestComments(page: Int, commentsPerPage: Int?, completion: @escaping (Comments?, Error?) -> Void) -> TaskId?
+    func requestComments(postId: Int,
+                         page: Int,
+                         commentsPerPage: Int?,
+                         orderBy: CommentsOrderBy?,
+                         direction: SortDirection?,
+                         completion: @escaping (Comments?, Error?) -> Void) -> TaskId?
     func cancel(taskId: TaskId)
 }
