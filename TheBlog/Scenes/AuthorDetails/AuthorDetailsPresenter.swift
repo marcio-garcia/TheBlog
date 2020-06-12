@@ -38,8 +38,11 @@ class AuthorDetailsPresenter: AuthorDetailsPresentationLogic {
     }
 
     func presentPosts(_ posts: Posts) {
-        let displayedPosts = posts.compactMap {
-            return DisplayedPost(post: $0, hasImage: true)
+        let displayedPosts = posts.map { post -> DisplayedPost in
+            if URL(string: post.imageURL) == nil {
+                return DisplayedPost(post: post, hasImage: false)
+            }
+            return DisplayedPost(post: post, hasImage: true)
         }
         viewController?.displayPosts(displayedPosts)
     }
