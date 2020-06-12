@@ -23,8 +23,8 @@ class AuthorsListBuilder {
     }
     
     func build(imageCache: NSCache<NSString, UIImage>) -> AuthorsListViewController {
-        let netServiceForImageDownloaging = Ivorywhite.shared.service(debugMode: false)
-        let imageWorker = ImageWorker(service: netServiceForImageDownloaging,
+        let netServiceForImageDownloading = Ivorywhite.shared.service(debugMode: false)
+        let imageWorker = ImageWorker(service: netServiceForImageDownloading,
                                       imageCache: imageCache)
         let presenter = AuthorsListPresenter()
         let worker = AuthorsListWorker(service: service)

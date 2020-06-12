@@ -23,8 +23,8 @@ class AuthorDetailsBuilder {
     }
     
     func build(imageCache: NSCache<NSString, UIImage>) -> AuthorDetailsViewController {
-        let netServiceForImageDownloaging = Ivorywhite.shared.service(debugMode: false)
-        let imageWorker = ImageWorker(service: netServiceForImageDownloaging,
+        let netServiceForImageDownloading = Ivorywhite.shared.service(debugMode: false)
+        let imageWorker = ImageWorker(service: netServiceForImageDownloading,
                                       imageCache: imageCache)
         let presenter = AuthorDetailsPresenter()
         let worker = AuthorDetailsWorker(service: service)
