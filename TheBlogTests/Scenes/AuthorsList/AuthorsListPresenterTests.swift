@@ -12,6 +12,7 @@
 
 @testable import TheBlog
 import XCTest
+import Services
 
 class AuthorsListPresenterTests: XCTestCase {
     // MARK: Subject under test
@@ -24,10 +25,9 @@ class AuthorsListPresenterTests: XCTestCase {
         sut = AuthorsListPresenter()
         let spy = AuthorsListDisplayLogicSpy()
         sut.viewController = spy
-        let response = AuthorsList.FetchAuthors.Response(authors: [])
-    
+
         // When
-        sut.presentAuthors(response: response)
+        sut.presentAuthors([])
     
         // Then
         XCTAssertTrue(spy.displayAuthorsCalled, "presentAuthors() should ask the view controller to display the result")
@@ -38,10 +38,9 @@ class AuthorsListPresenterTests: XCTestCase {
         sut = AuthorsListPresenter()
         let spy = AuthorsListDisplayLogicSpy()
         sut.viewController = spy
-        let response = AuthorsList.Error.Response(message: "Error")
 
         // When
-        sut.presentError(response: response)
+        sut.presentError(NSError(domain: "Error", code: 0, userInfo: nil))
 
         // Then
         XCTAssertTrue(spy.displayErrorCalled, "presentError() should ask the view controller to display the error")
@@ -54,11 +53,11 @@ class AuthorsListDisplayLogicSpy: AuthorsListDisplayLogic {
     var displayAuthorsCalled = false
     var displayErrorCalled = false
 
-    func displayAuthors(viewModel: AuthorsList.FetchAuthors.ViewModel) {
+    func displayAuthors(_ authors: Authors) {
         displayAuthorsCalled = true
     }
 
-    func displayError(viewModel: AuthorsList.Error.ViewModel) {
+    func displayError(title: String, message: String) {
         displayErrorCalled = true
     }
 }

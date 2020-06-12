@@ -12,6 +12,7 @@
 
 @testable import TheBlog
 import XCTest
+import Services
 
 class AuthorsListViewControllerTests: XCTestCase {
     // MARK: Subject under test
@@ -55,14 +56,13 @@ class AuthorsListViewControllerTests: XCTestCase {
   
     func testDisplayAuthors() {
         // Given
-        let viewModel = AuthorsList.FetchAuthors.ViewModel(displayedAuthors: [])
         let contentView = AuthorsListContentViewSpy()
         sut = AuthorsListViewController()
         sut.contentView = contentView
 
         // When
         loadView()
-        sut.displayAuthors(viewModel: viewModel)
+        sut.displayAuthors([])
     
         // Then
         XCTAssertTrue(contentView.updateAuthorsCalled, "displayAuthors() should update the contentView")
@@ -82,11 +82,14 @@ class AuthorsListBusinessLogicSpy: AuthorsListBusinessLogic {
     func fetchNextAuthors() {
         fetchNextAuthorsCalled = true
     }
+
+    func selectAuthor(_ author: Author?) {
+    }
 }
 
 class AuthorsListContentViewSpy: UIView, AuthorsListContentViewProtocol {
     var updateAuthorsCalled = false
-    func updateAuthors(displayedAuthors: [AuthorsList.DisplayedAuthor]) {
+    func updateAuthors(displayedAuthors: Authors) {
         updateAuthorsCalled = true
     }
 }

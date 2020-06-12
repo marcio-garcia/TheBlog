@@ -70,11 +70,11 @@ class AuthorsListPresentationLogicSpy: AuthorsListPresentationLogic {
     var presentAuthorsCalled = false
     var presentErrorCalled = false
 
-    func presentAuthors(response: AuthorsList.FetchAuthors.Response) {
+    func presentAuthors(_ authors: Authors) {
         presentAuthorsCalled = true
     }
 
-    func presentError(response: AuthorsList.Error.Response) {
+    func presentError(_ error: Error) {
         presentErrorCalled = true
     }
 }

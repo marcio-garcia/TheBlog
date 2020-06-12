@@ -31,8 +31,12 @@ class BlogServiceMock: BlogApi {
         completion(authors, nil)
         return TaskId()
     }
-    
-    func requestPosts(page: Int, postsPerPage: Int?, completion: @escaping (Posts?, Error?) -> Void) -> TaskId? {
+
+    func requestPosts(authorId: Int,
+                      page: Int,
+                      postsPerPage: Int?,
+                      orderBy: PostsOrderBy?,
+                      direction: SortDirection?, completion: @escaping (Posts?, Error?) -> Void) -> TaskId? {
         requestPostsCalled = true
         return TaskId()
     }

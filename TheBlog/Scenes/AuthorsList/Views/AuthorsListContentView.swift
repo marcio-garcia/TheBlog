@@ -8,9 +8,10 @@
 
 import UIKit
 import Ivorywhite
+import Services
 
 protocol AuthorsListContentViewProtocol: UIView {
-    func updateAuthors(displayedAuthors: [AuthorsList.DisplayedAuthor])
+    func updateAuthors(displayedAuthors: Authors)
 }
 
 class AuthorsListContentView: UIView, ViewCodingProtocol {
@@ -30,8 +31,9 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     // MARK: Properties
 
     private weak var viewController: AuthorsListViewController?
-    private var displayedAuthors: [AuthorsList.DisplayedAuthor] = []
+    private var displayedAuthors: Authors = []
     private weak var imageWorker: ImageWorkLogic?
+    private var prefetchingAuthors: Bool = false
 
     // MARK: Object lifecycle
     
@@ -95,12 +97,26 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
             self?.viewController?.fetchFirstAuthors()
         }
     }
+
+    // MARK: Pagination
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard prefetchingAuthors == false else { return }
+        let actualPosition: CGFloat = scrollView.contentOffset.y
+        let contentHeight: CGFloat = scrollView.contentSize.height - (scrollView.frame.size.height)
+        if (actualPosition >= contentHeight) {
+            DispatchQueue.global().async {
+                self.prefetchingAuthors = true
+                self.viewController?.fetchNextAuthors()
+            }
+         }
+    }
 }
 
 // MARK: AuthorsListContentViewProtocol
 
 extension AuthorsListContentView: AuthorsListContentViewProtocol {
-    func updateAuthors(displayedAuthors: [AuthorsList.DisplayedAuthor]) {
+    func updateAuthors(displayedAuthors: Authors) {
         self.displayedAuthors.append(contentsOf: displayedAuthors)
         DispatchQueue.main.async {
             self.activityIndicatorView.stopAnimating()
@@ -109,8 +125,11 @@ extension AuthorsListContentView: AuthorsListContentViewProtocol {
             if self.displayedAuthors.isEmpty {
                 self.tableView.backgroundView = self.buildEmtpyView()
             } else {
-                self.tableView.reloadData()
+                if !displayedAuthors.isEmpty {
+                    self.tableView.reloadData()
+                }
             }
+            self.prefetchingAuthors = false
         }
     }
 }
@@ -143,15 +162,11 @@ extension AuthorsListContentView: UITableViewDelegate {
         return 80.0
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == displayedAuthors.count - 20 {
-            DispatchQueue.global().async {
-                self.viewController?.fetchNextAuthors()
-            }
-        }
-    }
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if let cell = tableView.cellForRow(at: indexPath) as? AuthorsListTableViewCell {
+            let selectedAuthor = cell.selectedAuthor()
+            viewController?.selectedAurhor(selectedAuthor)
+        }
     }
 }

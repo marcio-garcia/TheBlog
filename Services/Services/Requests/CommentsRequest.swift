@@ -21,6 +21,7 @@ class CommentsRequest: Request, NetworkRequest {
         baseURL = apiBaseURL
         path = "/comments"
         httpMethod = .get
+        encoding = .urlEnconding
         parameters = [
             "_page": page
         ]

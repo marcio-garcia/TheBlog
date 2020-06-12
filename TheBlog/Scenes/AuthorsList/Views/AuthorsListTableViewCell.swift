@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Services
 
 class AuthorsListTableViewCell: UITableViewCell {
 
@@ -14,18 +15,13 @@ class AuthorsListTableViewCell: UITableViewCell {
     
     // MARK: Layout properties
     
-    private lazy var avatarImageView: UIImageView = {
-        return UIImageView()
-    }()
-
-    private lazy var nameLabel: UILabel = {
-        return UILabel()
-    }()
+    private lazy var authorTitleView = { return AuthorTitleView() }()
     
     // MARK: properties
     
     public weak var imageWorker: ImageWorkLogic?
     private var requestId: RequestId?
+    private var author: Author?
     
     // MARK: Object lifecycle
     
@@ -45,22 +41,31 @@ class AuthorsListTableViewCell: UITableViewCell {
             imageWorker?.cancelDownload(requestId: requestId)
             self.requestId = nil
         }
-        avatarImageView.image = nil
-        nameLabel.text = nil
+        authorTitleView.image = nil
+        authorTitleView.name = nil
     }
     
-    func configure(imageWorker: ImageWorkLogic?, author: AuthorsList.DisplayedAuthor) {
-        self.nameLabel.text = author.name
+    func configure(imageWorker: ImageWorkLogic?, author: Author) {
+        self.author = author
+        self.authorTitleView.name = author.name
         if let imageWorker = imageWorker {
             self.imageWorker = imageWorker
         }
-        if let url = URL(string: author.avatarUrl) {
-            self.requestId = self.imageWorker?.download(with: url, completion: { image in
+        if let url = URL(string: author.avatarURL) {
+            self.requestId = self.imageWorker?.download(with: url, completion: { result in
                 DispatchQueue.main.async {
-                    self.avatarImageView.image = image
+                    switch result {
+                    case .success(let image): self.authorTitleView.image = image
+                    case .failure: self.authorTitleView.image = nil
+                    }
+
                 }
             })
         }
+    }
+
+    func selectedAuthor() -> Author? {
+        return author
     }
 }
 
@@ -68,29 +73,15 @@ class AuthorsListTableViewCell: UITableViewCell {
 
 extension AuthorsListTableViewCell: ViewCodingProtocol {
     func buildViewHierarchy() {
-        contentView.addSubview(avatarImageView)
-        contentView.addSubview(nameLabel)
+        contentView.addSubview(authorTitleView)
     }
     
     func setupConstraints() {
-        avatarImageView.constraint {[
+        authorTitleView.constraint {[
             $0.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             $0.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             $0.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            $0.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            $0.widthAnchor.constraint(equalTo: $0.heightAnchor)
-        ]}
-        
-        nameLabel.constraint {[
-            $0.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
-            $0.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor)
+            $0.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ]}
     }
-    
-    func configureViews() {
-        avatarImageView.contentMode = .scaleAspectFill
-        avatarImageView.layer.cornerRadius = 5
-        avatarImageView.clipsToBounds = true
-    }
-    
 }

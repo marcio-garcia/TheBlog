@@ -11,10 +11,11 @@
 //
 
 import UIKit
+import Services
 
 protocol AuthorsListPresentationLogic {
-    func presentAuthors(response: AuthorsList.FetchAuthors.Response)
-    func presentError(response: AuthorsList.Error.Response)
+    func presentAuthors(_ authors: Authors)
+    func presentError(_ error: Error)
 }
 
 class AuthorsListPresenter: AuthorsListPresentationLogic {
@@ -22,18 +23,11 @@ class AuthorsListPresenter: AuthorsListPresentationLogic {
   
     // MARK: AuthorsListPresentationLogic
   
-    func presentAuthors(response: AuthorsList.FetchAuthors.Response) {
-        
-        let displayedAuthors = response.authors.compactMap {
-            AuthorsList.DisplayedAuthor(id: $0.id, name: $0.name, avatarUrl: $0.avatarURL)
-        }
-        let viewModel = AuthorsList.FetchAuthors.ViewModel(displayedAuthors: displayedAuthors)
-        viewController?.displayAuthors(viewModel: viewModel)
+    func presentAuthors(_ authors: Authors) {
+        viewController?.displayAuthors(authors)
     }
 
-    func presentError(response: AuthorsList.Error.Response) {
-        let viewModel = AuthorsList.Error.ViewModel(title: "Error",
-                                                    message: response.message)
-        viewController?.displayError(viewModel: viewModel)
+    func presentError(_ error: Error) {
+        viewController?.displayError(title: "Error", message: error.localizedDescription)
     }
 }

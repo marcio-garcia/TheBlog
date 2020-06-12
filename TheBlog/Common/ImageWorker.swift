@@ -16,19 +16,25 @@ import Ivorywhite
 typealias RequestId = TaskId
 
 protocol ImageWorkLogic: class {
-    func download(with url: URL, completion: @escaping (UIImage?) -> Void) -> RequestId?
+    func download(with url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) -> RequestId?
     func cancelDownload(requestId: RequestId)
+}
+
+enum ImageError: Error {
+    case dataError
+    case requestCanceled
 }
 
 class ImageWorker: ImageWorkLogic {
     
     private var service: NetworkService
-    private var imageCache: NSCache = NSCache<NSString, UIImage>()
+    private var imageCache: NSCache<NSString, UIImage>
     
     // MARK: Object Lifecycle
     
-    init(service: NetworkService) {
+    init(service: NetworkService, imageCache: NSCache<NSString, UIImage>) {
         self.service = service
+        self.imageCache = imageCache
     }
     
     // MARK: AuthorsListWorkLogic
@@ -40,12 +46,12 @@ class ImageWorker: ImageWorkLogic {
         return nil
     }
     
-    func download(with url: URL, completion: @escaping (UIImage?) -> Void) -> RequestId? {
+    func download(with url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) -> RequestId? {
         if let image = cachedImage(for: url.absoluteString) {
             // Debug print not needed in production
             // It is here just to make it clear if the image is being retrived from the cache or the server
             debugPrint("Getting image from cache")
-            completion(image)
+            completion(.success(image))
             return nil
         } else {
             // Debug print not needed in production
@@ -55,13 +61,13 @@ class ImageWorker: ImageWorkLogic {
                 switch result {
                 case .success(let response):
                     guard let data = response.value, let image = UIImage(data: data) else {
-                        completion(nil)
+                        completion(.failure(ImageError.dataError))
                         return
                     }
                     self?.imageCache.setObject(image, forKey: url.absoluteString as NSString)
-                    completion(image)
-                case .failure:
-                    completion(nil)
+                    completion(.success(image))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
             return requestId

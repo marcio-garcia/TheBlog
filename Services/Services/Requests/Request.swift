@@ -8,6 +8,11 @@
 
 import Ivorywhite
 
+public enum SortDirection: String {
+    case asc
+    case desc
+}
+
 class Request {
     var baseURL: URL = URL(string: "https://empty.com")!
     var path: String = ""

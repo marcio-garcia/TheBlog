@@ -9,10 +9,10 @@
 public typealias Comments = [Comment]
 
 public struct Comment: Codable {
-    let id: Int
-    let date, body, userName, email: String
-    let avatarURL: String
-    let postID: Int
+    public let id: Int
+    public let date, body, userName, email: String
+    public let avatarURL: String
+    public let postID: Int
 
     enum CodingKeys: String, CodingKey {
         case id, date, body, userName, email
