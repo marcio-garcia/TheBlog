@@ -52,9 +52,13 @@ class AuthorsListTableViewCell: UITableViewCell {
             self.imageWorker = imageWorker
         }
         if let url = URL(string: author.avatarURL) {
-            self.requestId = self.imageWorker?.download(with: url, completion: { image in
+            self.requestId = self.imageWorker?.download(with: url, completion: { result in
                 DispatchQueue.main.async {
-                    self.authorTitleView.image = image
+                    switch result {
+                    case .success(let image): self.authorTitleView.image = image
+                    case .failure: self.authorTitleView.image = nil
+                    }
+
                 }
             })
         }

@@ -15,7 +15,8 @@ class PostNoImageTableViewCell: UITableViewCell {
 
     // MARK: Layout properties
 
-    private lazy var stackView = { UIStackView() }()
+    private lazy var dateStackView = { UIStackView() }()
+    private lazy var bodyStackView = { UIStackView() }()
     private lazy var titleLabel = { UILabel() }()
     private lazy var dateLabel = { UILabel() }()
     private lazy var timeLabel = { UILabel() }()
@@ -69,36 +70,35 @@ class PostNoImageTableViewCell: UITableViewCell {
 
 extension PostNoImageTableViewCell: ViewCodingProtocol {
     func buildViewHierarchy() {
-        contentView.addSubview(dateLabel)
-        contentView.addSubview(timeLabel)
-        contentView.addSubview(stackView)
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(bodyLabel)
+        contentView.addSubview(dateStackView)
+        dateStackView.addArrangedSubview(dateLabel)
+        dateStackView.addArrangedSubview(timeLabel)
+        contentView.addSubview(bodyStackView)
+        bodyStackView.addArrangedSubview(titleLabel)
+        bodyStackView.addArrangedSubview(bodyLabel)
     }
 
     func setupConstraints() {
-        dateLabel.constraint {[
+        dateStackView.constraint {[
             $0.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            $0.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
             $0.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             $0.widthAnchor.constraint(equalToConstant: 48)
         ]}
 
-        timeLabel.constraint {[
-            $0.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 3),
-            $0.leadingAnchor.constraint(equalTo: dateLabel.leadingAnchor),
-            $0.trailingAnchor.constraint(equalTo: dateLabel.trailingAnchor),
-            $0.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
-        ]}
-
-        stackView.constraint {[
+        bodyStackView.constraint {[
             $0.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             $0.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
-            $0.leadingAnchor.constraint(equalTo: dateLabel.trailingAnchor, constant: 8),
+            $0.leadingAnchor.constraint(equalTo: dateStackView.trailingAnchor, constant: 8),
             $0.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ]}
     }
 
     func configureViews() {
+        dateStackView.axis = .vertical
+        dateStackView.alignment = .leading
+        dateStackView.distribution = .fill
+
         dateLabel.font = UIFont.TBFonts.body.font()
         dateLabel.textColor = UIColor.TBColors.primary.text
         dateLabel.numberOfLines = 3
@@ -107,9 +107,9 @@ extension PostNoImageTableViewCell: ViewCodingProtocol {
         timeLabel.textColor = UIColor.TBColors.primary.text
         timeLabel.numberOfLines = 1
 
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .fill
+        bodyStackView.axis = .vertical
+        bodyStackView.alignment = .fill
+        bodyStackView.distribution = .fill
 
         titleLabel.font = UIFont.TBFonts.body.font()
         titleLabel.textColor = UIColor.TBColors.primary.text

@@ -30,6 +30,7 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
     private var displayedAuthor: Author?
     private var displayedPosts: [DisplayedPost] = []
     private weak var imageWorker: ImageWorkLogic?
+    private var updatingTableLayout: Bool = false
 
     // MARK: Object lifecycle
     
@@ -119,9 +120,12 @@ extension AuthorDetailsContentView: AuthorDetailsContentViewProtocol {
             authorHeaderView.image = nil
             return
         }
-        _ = imageWorker?.download(with: url, completion: { [weak self] image in
+        _ = imageWorker?.download(with: url, completion: { [weak self] result in
             DispatchQueue.main.async {
-                self?.authorHeaderView.image = image
+                switch result {
+                case .success(let image): self?.authorHeaderView.image = image
+                case .failure: self?.authorHeaderView.image = nil
+                }
             }
         })
     }
@@ -157,8 +161,16 @@ extension AuthorDetailsContentView: UITableViewDataSource {
 
                 cell.configure(imageWorker: imageWorker, displayedPost: displayedPost)
                 cell.updateTableLayout = {
-                    self.tableView.beginUpdates()
-                    self.tableView.endUpdates()
+                    var dispatchTime: DispatchTime = .now()
+                    if self.updatingTableLayout {
+                        dispatchTime = .now() + 1.0
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
+                        self.updatingTableLayout = true
+                        self.tableView.beginUpdates()
+                        self.tableView.endUpdates()
+                        self.updatingTableLayout = false
+                    }
                 }
                 return cell
             }
