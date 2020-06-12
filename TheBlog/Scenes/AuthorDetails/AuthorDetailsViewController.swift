@@ -61,11 +61,23 @@ class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         title = "Posts"
-        interactor?.fetchAuthor()
-        interactor?.fetchNextPosts()
+        fetchAuthor()
+        fetchFirstPosts()
     }
   
     // MARK: Fetch data
+
+    func fetchAuthor() {
+        interactor?.fetchAuthor()
+    }
+
+    func fetchFirstPosts() {
+        interactor?.fetchFirstPosts()
+    }
+
+    func fetchNextPosts() {
+        interactor?.fetchNextPosts()
+    }
 
     // MARK: AuthorDetailsDisplayLogic
 

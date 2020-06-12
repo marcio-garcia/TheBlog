@@ -100,12 +100,13 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
     // MARK: Data
     
     @objc func refreshData(_ sender: UIRefreshControl) {
+        viewController?.fetchFirstPosts()
     }
 
     private func buildEmtpyView() -> UIView {
-        AuthorDetailsEmptyView(messageText: "Sorry, no posts found.", actionTitle: "Retry") { sender in
-            //self?.viewController?.fetchFirstAuthors()
-        }
+        return AuthorDetailsEmptyView(messageText: "No posts yet.",
+                                      actionTitle: nil,
+                                      actionHandler: nil)
     }
 }
 
@@ -191,9 +192,9 @@ extension AuthorDetailsContentView: UITableViewDataSource {
 extension AuthorDetailsContentView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == displayedPosts.count - 20 {
+        if indexPath.row == displayedPosts.count - 5 {
             DispatchQueue.global().async {
-
+                self.viewController?.fetchNextPosts()
             }
         }
     }
