@@ -186,6 +186,7 @@ extension AuthorDetailsContentView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        viewController?.selectedPost(displayedPosts[indexPath.row].post)
     }
 }
 

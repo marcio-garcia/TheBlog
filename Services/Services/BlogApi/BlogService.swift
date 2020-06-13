@@ -59,11 +59,19 @@ class BlogService: BlogApi {
     }
 
     @discardableResult
-    func requestComments(page: Int, commentsPerPage: Int?, completion: @escaping (Comments?, Error?) -> Void) -> TaskId? {
+    func requestComments(postId: Int,
+                         page: Int,
+                         commentsPerPage: Int?,
+                         orderBy: CommentsOrderBy?,
+                         direction: SortDirection?,
+                         completion: @escaping (Comments?, Error?) -> Void) -> TaskId? {
         
         guard let request = CommentsRequest(apiConfiguration: apiConfiguration,
+                                            postId: postId,
                                             page: page,
-                                            commentsPerPage: commentsPerPage) else {
+                                            commentsPerPage: commentsPerPage,
+                                            orderBy: orderBy,
+                                            direction: direction) else {
             completion(nil, NetworkError.badRequest)
             return nil
         }

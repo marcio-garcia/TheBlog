@@ -1,5 +1,5 @@
 //
-//  AuthorDetailsViewController.swift
+//  PostDetailsViewController.swift
 //  TheBlog
 //
 //  Created by Marcio Garcia on 07/06/20.
@@ -13,22 +13,22 @@
 import UIKit
 import Services
 
-protocol AuthorDetailsDisplayLogic: class {
-    func displayAuthor(_ author: Author?)
-    func displayPosts(_ displayedPosts: [DisplayedPost])
+protocol PostDetailsDisplayLogic: class {
+    func displayPost(_ Post: Post?)
+    func displayComments(_ comments: Comments)
     func displayError(title: String, message: String)
 }
 
-class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
+class PostDetailsViewController: UIViewController, PostDetailsDisplayLogic {
     
     // MARK: Layout properties
     
-    var contentView: AuthorDetailsContentViewProtocol?
+    var contentView: PostDetailsContentViewProtocol?
     
     // MARK: Properties
     
-    var interactor: AuthorDetailsBusinessLogic?
-    var router: AuthorDetailsRoutingLogic?
+    var interactor: PostDetailsBusinessLogic?
+    var router: PostDetailsRoutingLogic?
     private var imageWorker: ImageWorkLogic?
 
     // MARK: Object lifecycle
@@ -41,14 +41,14 @@ class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
         super.init(coder: aDecoder)
     }
 
-    convenience init(interactor: AuthorDetailsBusinessLogic?,
-                     router: AuthorDetailsRoutingLogic?,
+    convenience init(interactor: PostDetailsBusinessLogic?,
+                     router: PostDetailsRoutingLogic?,
                      imageWorker: ImageWorkLogic?) {
         self.init(nibName: nil, bundle: nil)
         self.interactor = interactor
         self.router = router
         self.imageWorker = imageWorker
-        contentView = AuthorDetailsContentView(viewController: self, imageWorker: self.imageWorker)
+        contentView = PostDetailsContentView(viewController: self, imageWorker: self.imageWorker)
         setupViewConfiguration()
     }
     
@@ -60,43 +60,38 @@ class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        title = "Posts"
+        title = "Comments"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        fetchAuthor()
+        fetchPost()
         fetchFirstPosts()
     }
   
     // MARK: Fetch data
 
-    func fetchAuthor() {
-        interactor?.fetchAuthor()
+    func fetchPost() {
+        interactor?.fetchPost()
     }
 
     func fetchFirstPosts() {
-        interactor?.fetchFirstPosts()
+        interactor?.fetchFirstComments()
     }
 
     func fetchNextPosts() {
-        interactor?.fetchNextPosts()
+        interactor?.fetchNextComments()
     }
 
-    func selectedPost(_ post: Post?) {
-        interactor?.selectPost(post)
-        router?.routeToPostDetails()
+    // MARK: PostDetailsDisplayLogic
+
+    func displayPost(_ post: Post?) {
+        contentView?.updatePost(post)
     }
 
-    // MARK: AuthorDetailsDisplayLogic
-
-    func displayAuthor(_ author: Author?) {
-        contentView?.updateAuthor(author: author)
-    }
-
-    func displayPosts(_ displayedPosts: [DisplayedPost]) {
-        contentView?.updatePosts(displayedPosts: displayedPosts)
+    func displayComments(_ comments: Comments) {
+        contentView?.updateComments(displayedComments: comments)
     }
 
     func displayError(title: String, message: String) {
-        contentView?.updatePosts(displayedPosts: [])
+        contentView?.updateComments(displayedComments: [])
         DispatchQueue.main.async {
             let alert = UIAlertController.standardMessage(title: title,
                                                           message: message,
@@ -104,9 +99,15 @@ class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
             self.present(alert, animated: true, completion: nil)
         }
     }
+
+    // MARK: Routing
+
+    func routeToFullScreenImage(image: UIImage?) {
+        router?.routeToFullScreenImage(imageUrl: nil, image: image, imageWorker: imageWorker)
+    }
 }
 
-extension AuthorDetailsViewController: ViewCodingProtocol {
+extension PostDetailsViewController: ViewCodingProtocol {
     func buildViewHierarchy() {
         guard let contentView = contentView else { return }
         view.addSubview(contentView)

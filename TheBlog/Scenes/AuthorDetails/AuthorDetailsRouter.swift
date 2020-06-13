@@ -14,7 +14,7 @@ import UIKit
 
 protocol AuthorDetailsRoutingLogic {
     var dataStore: AuthorDetailsDataStore? { get }
-    func routeToAuthorDetails()
+    func routeToPostDetails()
 }
 
 protocol AuthorDetailsDataPassing {
@@ -25,30 +25,35 @@ class AuthorDetailsRouter: AuthorDetailsRoutingLogic, AuthorDetailsDataPassing {
 
     weak var viewController: AuthorDetailsViewController?
     var dataStore: AuthorDetailsDataStore?
+    var postDetailsBuilder: PostDetailsBuilder
+    var imageCache: NSCache<NSString, UIImage>
 
-    init(dataStore: AuthorDetailsDataStore?) {
+    init(dataStore: AuthorDetailsDataStore?,
+         postDetailsBuilder: PostDetailsBuilder,
+         imageCache: NSCache<NSString, UIImage>) {
         self.dataStore = dataStore
+        self.postDetailsBuilder = postDetailsBuilder
+        self.imageCache = imageCache
     }
  
     // MARK: Routing
     
-    func routeToAuthorDetails() {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! AuthorDetailsViewController
-//        var destinationDS = destinationVC.router!.dataStore!
-//        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//        navigateToSomewhere(source: viewController!, destination: destinationVC)
+    func routeToPostDetails() {
+        let destinationVC = postDetailsBuilder.build(imageCache: imageCache)
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+        navigateToSomewhere(source: viewController!, destination: destinationVC)
     }
 
     // MARK: Navigation
     
-//    func navigateToSomewhere(source: AuthorDetailsViewController, destination: AuthorDetailsViewController) {
-//        source.show(destination, sender: nil)
-//    }
+    func navigateToSomewhere(source: AuthorDetailsViewController, destination: PostDetailsViewController) {
+        source.show(destination, sender: nil)
+    }
   
     // MARK: Passing data
     
-//    func passDataToSomewhere(source: AuthorDetailsDataStore, destination: inout AuthorDetailsDataStore) {
-//        destination.name = source.name
-//    }
+    func passDataToSomewhere(source: AuthorDetailsDataStore, destination: inout PostDetailsDataStore) {
+        destination.post = source.selectedPost
+    }
 }

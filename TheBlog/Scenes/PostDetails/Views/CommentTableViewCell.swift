@@ -1,5 +1,5 @@
 //
-//  PostTableViewCell.swift
+//  CommentTableViewCell.swift
 //  TheBlog
 //
 //  Created by Marcio Garcia on 07/06/20.
@@ -9,19 +9,19 @@
 import UIKit
 import Services
 
-class PostTableViewCell: UITableViewCell {
+class CommentTableViewCell: UITableViewCell {
 
-    static let identifier = String(describing: PostTableViewCell.self)
+    static let identifier = String(describing: CommentTableViewCell.self)
     
     // MARK: Layout properties
 
     private lazy var dateStackView = { UIStackView() }()
     private lazy var bodyStackView = { UIStackView() }()
-    private lazy var titleLabel = { UILabel() }()
+    private lazy var avatarView = { AvatarView() }()
     private lazy var dateLabel = { UILabel() }()
     private lazy var timeLabel = { UILabel() }()
+    private lazy var userNameLabel = { UILabel() }()
     private lazy var bodyLabel = { UILabel() }()
-    private lazy var postImageView = { UIImageView() }()
 
     // MARK: properties
     
@@ -46,31 +46,32 @@ class PostTableViewCell: UITableViewCell {
             imageWorker?.cancelDownload(requestId: requestId)
             self.requestId = nil
         }
-        titleLabel.text = nil
+        userNameLabel.text = nil
         dateLabel.text = nil
         timeLabel.text = nil
         bodyLabel.text = nil
-        postImageView.isHidden = false
-        postImageView.image = UIImage(named: "image-placeholder")
+        avatarView.image = nil
     }
     
-    func configure(imageWorker: ImageWorkLogic?, displayedPost: DisplayedPost) {
+    func configure(imageWorker: ImageWorkLogic?, displayedComment: Comment) {
 
-        if let postDate = Date.date(from: displayedPost.post.date, format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") {
-            dateLabel.text = Date.string(from: postDate, format: "dd MMM yyyy")
-            timeLabel.text = Date.string(from: postDate, format: "HH:mm")
+        if let commentDate = Date.date(from: displayedComment.date,
+                                       format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") {
+
+            dateLabel.text = Date.string(from: commentDate, format: "dd MMM yyyy")
+            timeLabel.text = Date.string(from: commentDate, format: "HH:mm")
         }
-        titleLabel.text = displayedPost.post.title
-        bodyLabel.text = displayedPost.post.body
+        userNameLabel.text = displayedComment.userName
+        bodyLabel.text = displayedComment.body
         if let imageWorker = imageWorker {
             self.imageWorker = imageWorker
         }
-        if let url = URL(string: displayedPost.post.imageURL), displayedPost.hasImage {
+        if let url = URL(string: displayedComment.avatarURL) {
             self.requestId = self.imageWorker?.download(with: url, completion: { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let image):
-                        self.postImageView.image = image
+                        self.avatarView.image = image
                     case .failure:
                         break
                     }
@@ -82,16 +83,17 @@ class PostTableViewCell: UITableViewCell {
 
 // MARK: ViewCodingProtocol
 
-extension PostTableViewCell: ViewCodingProtocol {
+extension CommentTableViewCell: ViewCodingProtocol {
     func buildViewHierarchy() {
         contentView.addSubview(dateStackView)
+        dateStackView.addArrangedSubview(avatarView)
         dateStackView.addArrangedSubview(dateLabel)
         dateStackView.addArrangedSubview(timeLabel)
         dateStackView.addArrangedSubview(UIView())
         contentView.addSubview(bodyStackView)
-        bodyStackView.addArrangedSubview(titleLabel)
+        bodyStackView.addArrangedSubview(userNameLabel)
         bodyStackView.addArrangedSubview(bodyLabel)
-        bodyStackView.addArrangedSubview(postImageView)
+        bodyStackView.addArrangedSubview(UIView())
     }
     
     func setupConstraints() {
@@ -102,7 +104,7 @@ extension PostTableViewCell: ViewCodingProtocol {
             $0.widthAnchor.constraint(equalToConstant: 48)
         ]}
         dateLabel.constraint {[
-            $0.heightAnchor.constraint(equalToConstant: 70)
+            $0.heightAnchor.constraint(equalToConstant: 36)
         ]}
         timeLabel.constraint {[
             $0.heightAnchor.constraint(equalToConstant: 20)
@@ -114,7 +116,8 @@ extension PostTableViewCell: ViewCodingProtocol {
             $0.leadingAnchor.constraint(equalTo: dateStackView.trailingAnchor, constant: 8),
             $0.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ]}
-        postImageView.constraint {[
+        avatarView.constraint {[
+            $0.widthAnchor.constraint(equalToConstant: 48),
             $0.heightAnchor.constraint(equalTo: $0.widthAnchor)
         ]}
 
@@ -125,11 +128,14 @@ extension PostTableViewCell: ViewCodingProtocol {
         dateStackView.alignment = .leading
         dateStackView.distribution = .fill
 
-        dateLabel.font = UIFont.TBFonts.body.font()
+        avatarView.contentMode = .scaleToFill
+        avatarView.clipsToBounds = true
+
+        dateLabel.font = UIFont.TBFonts.caption.font()
         dateLabel.textColor = UIColor.TBColors.primary.text
         dateLabel.numberOfLines = 3
 
-        timeLabel.font = UIFont.TBFonts.caption.font()
+        timeLabel.font = UIFont.TBFonts.label.font()
         timeLabel.textColor = UIColor.TBColors.primary.text
         timeLabel.numberOfLines = 1
 
@@ -137,15 +143,11 @@ extension PostTableViewCell: ViewCodingProtocol {
         bodyStackView.alignment = .fill
         bodyStackView.distribution = .fill
 
-        titleLabel.font = UIFont.TBFonts.body.font()
-        titleLabel.textColor = UIColor.TBColors.primary.text
+        userNameLabel.font = UIFont.TBFonts.body.font()
+        userNameLabel.textColor = UIColor.TBColors.primary.text
 
         bodyLabel.font = UIFont.TBFonts.caption.font()
         bodyLabel.textColor = UIColor.TBColors.primary.text
         bodyLabel.numberOfLines = 0
-
-        postImageView.contentMode = .scaleToFill
-        postImageView.clipsToBounds = true
-        postImageView.backgroundColor = UIColor.TBColors.primary.postImagePlaceholder
     }
 }
