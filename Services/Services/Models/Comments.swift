@@ -19,4 +19,14 @@ public struct Comment: Codable {
         case avatarURL = "avatarUrl"
         case postID = "postId"
     }
+
+    public init(id: Int, date: String, body: String, userName: String, email: String, avatarURL: String, postID: Int) {
+        self.id = id
+        self.date = date
+        self.body = body
+        self.userName = userName
+        self.email = email
+        self.avatarURL = avatarURL
+        self.postID = postID
+    }
 }
