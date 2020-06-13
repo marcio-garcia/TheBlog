@@ -12,6 +12,7 @@
 
 import UIKit
 import Services
+import DesignSystem
 
 protocol PostDetailsDisplayLogic: class {
     func displayPost(_ Post: Post?)

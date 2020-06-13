@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AvatarView: UIView {
+public class AvatarView: UIView {
 
     private lazy var avatarImageView = { return UIImageView() }()
     private lazy var noImageView = { return UIView() }()
@@ -29,7 +29,7 @@ class AvatarView: UIView {
         }
     }
 
-    init() {
+    public init() {
         self.name = ""
         super.init(frame: CGRect.zero)
         setupViewConfiguration()
@@ -49,19 +49,19 @@ class AvatarView: UIView {
 }
 
 extension AvatarView: ViewCodingProtocol {
-    func buildViewHierarchy() {
+    public func buildViewHierarchy() {
         addSubview(noImageView)
         addSubview(initialsLabel)
         addSubview(avatarImageView)
     }
 
-    func setupConstraints() {
+    public func setupConstraints() {
         noImageView.constraint(to: self)
         initialsLabel.constraint(to: self)
         avatarImageView.constraint(to: self)
     }
 
-    func configureViews() {
+    public func configureViews() {
         self.layer.borderColor = UIColor.TBColors.primary.avatarBorder.cgColor
         self.layer.borderWidth = 2
         self.layer.cornerRadius = 5

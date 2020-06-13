@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AuthorTitleView: UIView {
+public class AuthorTitleView: UIView {
 
     private lazy var avatarView = { return AvatarView() }()
     private lazy var nameLabel = { return UILabel() }()
@@ -32,7 +32,7 @@ class AuthorTitleView: UIView {
         }
     }
 
-    init() {
+    public init() {
         super.init(frame: CGRect.zero)
         setupViewConfiguration()
     }
@@ -43,12 +43,12 @@ class AuthorTitleView: UIView {
 }
 
 extension AuthorTitleView: ViewCodingProtocol {
-    func buildViewHierarchy() {
+    public func buildViewHierarchy() {
         addSubview(avatarView)
         addSubview(nameLabel)
     }
 
-    func setupConstraints() {
+    public func setupConstraints() {
         avatarView.constraint {[
             $0.topAnchor.constraint(equalTo: topAnchor),
             $0.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -63,7 +63,7 @@ extension AuthorTitleView: ViewCodingProtocol {
         ]}
     }
 
-    func configureViews() {
+    public func configureViews() {
         nameLabel.font = UIFont.TBFonts.body.font()
         nameLabel.textColor = UIColor.TBColors.primary.text
         nameLabel.textAlignment = .left

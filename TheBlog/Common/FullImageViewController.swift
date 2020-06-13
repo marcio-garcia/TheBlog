@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DesignSystem
 
 class FullImageViewController: UIViewController {
 

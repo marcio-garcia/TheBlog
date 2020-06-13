@@ -9,6 +9,7 @@
 import UIKit
 import Ivorywhite
 import Services
+import DesignSystem
 
 protocol AuthorDetailsContentViewProtocol: UIView {
     func updateAuthor(author: Author?)

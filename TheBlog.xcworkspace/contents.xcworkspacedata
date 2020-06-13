@@ -7,4 +7,7 @@
    <FileRef
       location = "group:Services/Services.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:DesignSystem/DesignSystem.xcodeproj">
+   </FileRef>
 </Workspace>

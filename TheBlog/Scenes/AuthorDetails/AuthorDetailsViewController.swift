@@ -12,6 +12,7 @@
 
 import UIKit
 import Services
+import DesignSystem
 
 protocol AuthorDetailsDisplayLogic: class {
     func displayAuthor(_ author: Author?)

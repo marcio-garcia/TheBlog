@@ -398,7 +398,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/../Frameworks/,
+				$SRCROOT/../Frameworks/Services.framework,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

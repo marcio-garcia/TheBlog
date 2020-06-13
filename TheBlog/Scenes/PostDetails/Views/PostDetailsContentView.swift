@@ -9,6 +9,7 @@
 import UIKit
 import Ivorywhite
 import Services
+import DesignSystem
 
 protocol PostDetailsContentViewProtocol: UIView {
     func updatePost(_ post: Post?)

@@ -8,6 +8,7 @@
 
 import UIKit
 import Services
+import DesignSystem
 
 class CommentTableViewCell: UITableViewCell {
 
