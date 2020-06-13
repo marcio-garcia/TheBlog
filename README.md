@@ -8,3 +8,4 @@ Simple app that displays blog posts
 - There is a specific worker for downloading images, it is called ImageWorker. The image cache is injected to this worker in order to avoid redownloading the displayed images.
 - It is assumed that all posts have an imageURL. If this url is broken some way, the app displays an image placeholder.
 
+App icon made by Flat Icons - https://www.flaticon.com
