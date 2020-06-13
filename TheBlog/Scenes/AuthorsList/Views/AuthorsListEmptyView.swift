@@ -69,7 +69,7 @@ extension AuthorsListEmptyView: ViewCodingProtocol {
 
         if shouldDisplayActionButton {
             actionButton.setTitle(actionTitle, for: .normal)
-            actionButton.setTitleColor(.blue, for: .normal)
+            actionButton.setTitleColor(UIColor.TBColors.primary.buttonTitle, for: .normal)
             actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
         }
     }

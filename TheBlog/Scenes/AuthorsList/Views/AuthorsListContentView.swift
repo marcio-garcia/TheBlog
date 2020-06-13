@@ -74,7 +74,7 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     func configureViews() {
         tableView.estimatedRowHeight = 80.0
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = UIColor.TBColors.primary.background
         tableView.refreshControl = refreshControl
         tableView.dataSource = self
         tableView.delegate = self

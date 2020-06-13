@@ -31,6 +31,10 @@ extension UIColor {
                                blue: 217 / 255,
                                alpha: 1)
             }
+
+            public static var buttonTitle: UIColor {
+                return UIColor.blue
+            }
         }
 
         public enum secondary {
@@ -62,6 +66,10 @@ extension UIColor {
                                green: 217 / 255,
                                blue: 217 / 255,
                                alpha: 1)
+            }
+
+            public static var buttonTitle: UIColor {
+                return UIColor.white
             }
         }
 
