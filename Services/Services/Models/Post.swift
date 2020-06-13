@@ -19,4 +19,13 @@ public struct Post: Codable {
         case imageURL = "imageUrl"
         case authorID = "authorId"
     }
+
+    public init(id: Int, date: String, title: String, body: String, imageURL: String, authorID: Int) {
+        self.id = id
+        self.date = date
+        self.title = title
+        self.body = body
+        self.imageURL = imageURL
+        self.authorID = authorID
+    }
 }

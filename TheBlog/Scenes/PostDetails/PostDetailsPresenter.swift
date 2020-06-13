@@ -14,7 +14,7 @@ import UIKit
 import Services
 
 protocol PostDetailsPresentationLogic {
-    func presentPost(_ Post: Post?)
+    func presentPost(_ post: Post?)
     func presentComments(_ comments: Comments)
     func presentError(_ error: Error)
 }
@@ -24,8 +24,20 @@ class PostDetailsPresenter: PostDetailsPresentationLogic {
   
     // MARK: PostDetailsPresentationLogic
 
-    func presentPost(_ Post: Post?) {
-        viewController?.displayPost(Post)
+    func presentPost(_ post: Post?) {
+        if let _post = post,
+            let postDate = Date.date(from: _post.date, format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") {
+
+            let displayedPost = Post(id: _post.id,
+                                     date: Date.string(from: postDate, format: "dd MMM yyyy HH:mm"),
+                                     title: _post.title,
+                                     body: _post.body,
+                                     imageURL: _post.imageURL,
+                                     authorID: _post.authorID)
+            viewController?.displayPost(displayedPost)
+        } else {
+            viewController?.displayError(title: "Ops!", message: "Sorry, an unexpected error occurred")
+        }
     }
 
     func presentComments(_ comments: Comments) {
