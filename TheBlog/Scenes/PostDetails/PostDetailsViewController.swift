@@ -60,7 +60,8 @@ class PostDetailsViewController: UIViewController, PostDetailsDisplayLogic {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        title = "Posts"
+        title = "Comments"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         fetchPost()
         fetchFirstPosts()
     }

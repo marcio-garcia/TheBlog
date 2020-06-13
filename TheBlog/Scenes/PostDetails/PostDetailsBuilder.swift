@@ -31,7 +31,7 @@ class PostDetailsBuilder {
         let interactor = PostDetailsInteractor(presenter: presenter, worker: worker)
         let router = PostDetailsRouter(dataStore: interactor)
         let viewController = PostDetailsViewController(interactor: interactor,
-                                                       router: nil,
+                                                       router: router,
                                                        imageWorker: imageWorker)
         router.viewController = viewController
         presenter.viewController = viewController

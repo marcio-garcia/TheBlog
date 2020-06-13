@@ -61,6 +61,7 @@ class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         title = "Posts"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         fetchAuthor()
         fetchFirstPosts()
     }

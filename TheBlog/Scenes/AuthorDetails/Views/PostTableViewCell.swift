@@ -56,8 +56,6 @@ class PostTableViewCell: UITableViewCell {
     
     func configure(imageWorker: ImageWorkLogic?, displayedPost: DisplayedPost) {
 
-        dateLabel.text = nil
-        timeLabel.text = nil
         if let postDate = Date.date(from: displayedPost.post.date, format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") {
             dateLabel.text = Date.string(from: postDate, format: "dd MMM yyyy")
             timeLabel.text = Date.string(from: postDate, format: "HH:mm")

@@ -15,11 +15,12 @@ class CommentTableViewCell: UITableViewCell {
     
     // MARK: Layout properties
 
-    private lazy var userStackView = { UIStackView() }()
+    private lazy var dateStackView = { UIStackView() }()
     private lazy var bodyStackView = { UIStackView() }()
     private lazy var avatarView = { AvatarView() }()
-    private lazy var userNameLabel = { UILabel() }()
     private lazy var dateLabel = { UILabel() }()
+    private lazy var timeLabel = { UILabel() }()
+    private lazy var userNameLabel = { UILabel() }()
     private lazy var bodyLabel = { UILabel() }()
 
     // MARK: properties
@@ -47,17 +48,18 @@ class CommentTableViewCell: UITableViewCell {
         }
         userNameLabel.text = nil
         dateLabel.text = nil
+        timeLabel.text = nil
         bodyLabel.text = nil
         avatarView.image = nil
     }
     
     func configure(imageWorker: ImageWorkLogic?, displayedComment: Comment) {
 
-        dateLabel.text = nil
         if let commentDate = Date.date(from: displayedComment.date,
                                        format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") {
 
-            dateLabel.text = Date.string(from: commentDate, format: "dd MMMM yyyy HH:mm")
+            dateLabel.text = Date.string(from: commentDate, format: "dd MMM yyyy")
+            timeLabel.text = Date.string(from: commentDate, format: "HH:mm")
         }
         userNameLabel.text = displayedComment.userName
         bodyLabel.text = displayedComment.body
@@ -83,31 +85,35 @@ class CommentTableViewCell: UITableViewCell {
 
 extension CommentTableViewCell: ViewCodingProtocol {
     func buildViewHierarchy() {
-        contentView.addSubview(userStackView)
-        userStackView.addArrangedSubview(avatarView)
-        userStackView.addArrangedSubview(userNameLabel)
-        userStackView.addArrangedSubview(UIView())
+        contentView.addSubview(dateStackView)
+        dateStackView.addArrangedSubview(avatarView)
+        dateStackView.addArrangedSubview(dateLabel)
+        dateStackView.addArrangedSubview(timeLabel)
+        dateStackView.addArrangedSubview(UIView())
         contentView.addSubview(bodyStackView)
-        bodyStackView.addArrangedSubview(dateLabel)
+        bodyStackView.addArrangedSubview(userNameLabel)
         bodyStackView.addArrangedSubview(bodyLabel)
         bodyStackView.addArrangedSubview(UIView())
     }
     
     func setupConstraints() {
-        userStackView.constraint {[
+        dateStackView.constraint {[
             $0.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             $0.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
             $0.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             $0.widthAnchor.constraint(equalToConstant: 48)
         ]}
-//        dateLabel.constraint {[
-//            $0.heightAnchor.constraint(equalToConstant: 70)
-//        ]}
+        dateLabel.constraint {[
+            $0.heightAnchor.constraint(equalToConstant: 36)
+        ]}
+        timeLabel.constraint {[
+            $0.heightAnchor.constraint(equalToConstant: 20)
+        ]}
 
         bodyStackView.constraint {[
             $0.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             $0.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
-            $0.leadingAnchor.constraint(equalTo: userStackView.trailingAnchor, constant: 8),
+            $0.leadingAnchor.constraint(equalTo: dateStackView.trailingAnchor, constant: 8),
             $0.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ]}
         avatarView.constraint {[
@@ -118,23 +124,27 @@ extension CommentTableViewCell: ViewCodingProtocol {
     }
 
     func configureViews() {
-        userStackView.axis = .vertical
-        userStackView.alignment = .leading
-        userStackView.distribution = .fill
+        dateStackView.axis = .vertical
+        dateStackView.alignment = .leading
+        dateStackView.distribution = .fill
 
         avatarView.contentMode = .scaleToFill
         avatarView.clipsToBounds = true
 
-        userNameLabel.font = UIFont.TBFonts.body.font()
-        userNameLabel.textColor = UIColor.TBColors.primary.text
+        dateLabel.font = UIFont.TBFonts.caption.font()
+        dateLabel.textColor = UIColor.TBColors.primary.text
+        dateLabel.numberOfLines = 3
+
+        timeLabel.font = UIFont.TBFonts.label.font()
+        timeLabel.textColor = UIColor.TBColors.primary.text
+        timeLabel.numberOfLines = 1
 
         bodyStackView.axis = .vertical
         bodyStackView.alignment = .fill
         bodyStackView.distribution = .fill
 
-        dateLabel.font = UIFont.TBFonts.body.font()
-        dateLabel.textColor = UIColor.TBColors.primary.text
-        dateLabel.numberOfLines = 3
+        userNameLabel.font = UIFont.TBFonts.body.font()
+        userNameLabel.textColor = UIColor.TBColors.primary.text
 
         bodyLabel.font = UIFont.TBFonts.caption.font()
         bodyLabel.textColor = UIColor.TBColors.primary.text

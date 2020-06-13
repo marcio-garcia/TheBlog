@@ -38,6 +38,7 @@ class PostDetailsContentView: UIView, ViewCodingProtocol {
         super.init(frame: CGRect.zero)
         self.viewController = viewController
         self.imageWorker = imageWorker
+        tableView.tableHeaderView = postHeaderView
         setupViewConfiguration()
     }
     
@@ -48,25 +49,25 @@ class PostDetailsContentView: UIView, ViewCodingProtocol {
     // MARK: ViewCodingProtocol
     
     func buildViewHierarchy() {
-        addSubview(postHeaderView)
         addSubview(tableView)
         addSubview(activityIndicatorView)
     }
     
     func setupConstraints() {
-        postHeaderView.constraint {[
-            $0.topAnchor.constraint(equalTo: topAnchor),
-            $0.leadingAnchor.constraint(equalTo: leadingAnchor),
-            $0.trailingAnchor.constraint(equalTo: trailingAnchor),
-            $0.heightAnchor.constraint(equalToConstant: 100.0)
-        ]}
-
         tableView.constraint {[
-            $0.topAnchor.constraint(equalTo: postHeaderView.bottomAnchor),
+            $0.topAnchor.constraint(equalTo: topAnchor),
             $0.bottomAnchor.constraint(equalTo: bottomAnchor),
             $0.leadingAnchor.constraint(equalTo: leadingAnchor),
             $0.trailingAnchor.constraint(equalTo: trailingAnchor),
         ]}
+
+        postHeaderView.constraint {[
+            $0.topAnchor.constraint(equalTo: tableView.topAnchor),
+            $0.leadingAnchor.constraint(equalTo: leadingAnchor),
+            $0.trailingAnchor.constraint(equalTo: trailingAnchor),
+            $0.heightAnchor.constraint(equalToConstant: 400)
+        ]}
+
 
         activityIndicatorView.constraint {[
             $0.topAnchor.constraint(equalTo: topAnchor, constant: 16),
@@ -87,8 +88,11 @@ class PostDetailsContentView: UIView, ViewCodingProtocol {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
-        tableView.register(PostTableViewCell.self,
-                           forCellReuseIdentifier: PostTableViewCell.identifier)
+        tableView.register(CommentTableViewCell.self,
+                           forCellReuseIdentifier: CommentTableViewCell.identifier)
+
+        tableView.tableHeaderView?.layoutIfNeeded()
+        tableView.tableHeaderView = tableView.tableHeaderView
 
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 
@@ -102,7 +106,7 @@ class PostDetailsContentView: UIView, ViewCodingProtocol {
     }
 
     private func buildEmtpyView() -> UIView {
-        return PostDetailsEmptyView(messageText: "No posts yet.",
+        return PostDetailsEmptyView(messageText: "No comments yet.",
                                       actionTitle: nil,
                                       actionHandler: nil)
     }
@@ -129,6 +133,7 @@ extension PostDetailsContentView: PostDetailsContentViewProtocol {
         postHeaderView.title = post?.title
         postHeaderView.date = post?.date
         postHeaderView.body = post?.body
+        tableView.tableHeaderView = postHeaderView
         guard let urlString = post?.imageURL, let url = URL(string: urlString) else {
             postHeaderView.image = nil
             return

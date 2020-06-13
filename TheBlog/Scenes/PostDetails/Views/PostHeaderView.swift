@@ -46,10 +46,10 @@ class PostHeaderView: UIView {
 
     public var body: String? {
         get {
-            return dateLabel.text
+            return bodyLabel.text
         }
         set {
-            dateLabel.text = newValue
+            bodyLabel.text = newValue
         }
     }
 
@@ -75,20 +75,26 @@ extension PostHeaderView: ViewCodingProtocol {
         titleLabel.constraint {[
             $0.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             $0.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            $0.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 16),
-            $0.heightAnchor.constraint(equalToConstant: 40)
+            $0.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ]}
 
         dateLabel.constraint {[
             $0.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            $0.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            $0.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 16),
+            $0.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            $0.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
         ]}
 
         bodyLabel.constraint {[
-            $0.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 0),
-            $0.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            $0.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 16),
+            $0.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 8),
+            $0.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            $0.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+        ]}
+
+        postImageView.constraint {[
+            $0.topAnchor.constraint(equalTo: bodyLabel.bottomAnchor, constant: 8),
+            $0.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            $0.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            $0.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
         ]}
     }
 
@@ -101,7 +107,9 @@ extension PostHeaderView: ViewCodingProtocol {
 
         bodyLabel.font = UIFont.TBFonts.caption.font()
         bodyLabel.textColor = UIColor.TBColors.primary.text
+        bodyLabel.numberOfLines = 0
 
-        postImageView.contentMode = .scaleToFill
+        postImageView.contentMode = .scaleAspectFill
+        postImageView.clipsToBounds = true
     }
 }
