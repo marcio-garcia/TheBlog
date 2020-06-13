@@ -15,7 +15,7 @@ protocol PostDetailsContentViewProtocol: UIView {
     func updateComments(displayedComments: Comments)
 }
 
-class PostDetailsContentView: UIView, ViewCodingProtocol {
+class PostDetailsContentView: UIView {
 
     // MARK: Layout properties
 
@@ -46,59 +46,6 @@ class PostDetailsContentView: UIView, ViewCodingProtocol {
         fatalError("This view is meant to be used with view coding")
     }
     
-    // MARK: ViewCodingProtocol
-    
-    func buildViewHierarchy() {
-        addSubview(tableView)
-        addSubview(activityIndicatorView)
-    }
-    
-    func setupConstraints() {
-        tableView.constraint {[
-            $0.topAnchor.constraint(equalTo: topAnchor),
-            $0.bottomAnchor.constraint(equalTo: bottomAnchor),
-            $0.leadingAnchor.constraint(equalTo: leadingAnchor),
-            $0.trailingAnchor.constraint(equalTo: trailingAnchor),
-        ]}
-
-        postHeaderView.constraint {[
-            $0.topAnchor.constraint(equalTo: tableView.topAnchor),
-            $0.leadingAnchor.constraint(equalTo: leadingAnchor),
-            $0.trailingAnchor.constraint(equalTo: trailingAnchor),
-            $0.heightAnchor.constraint(equalToConstant: 400)
-        ]}
-
-
-        activityIndicatorView.constraint {[
-            $0.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            $0.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            $0.widthAnchor.constraint(equalToConstant: 24),
-            $0.heightAnchor.constraint(equalTo: $0.widthAnchor)
-        ]}
-    }
-    
-    func configureViews() {
-
-        postHeaderView.backgroundColor = UIColor.TBColors.primary.background
-
-        tableView.estimatedRowHeight = 200.0
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.backgroundColor = UIColor.TBColors.primary.background
-        tableView.refreshControl = refreshControl
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.tableFooterView = UIView()
-        tableView.register(CommentTableViewCell.self,
-                           forCellReuseIdentifier: CommentTableViewCell.identifier)
-
-        tableView.tableHeaderView?.layoutIfNeeded()
-        tableView.tableHeaderView = tableView.tableHeaderView
-
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-
-        activityIndicatorView.startAnimating()
-    }
-    
     // MARK: Data
     
     @objc func refreshData(_ sender: UIRefreshControl) {
@@ -122,7 +69,69 @@ class PostDetailsContentView: UIView, ViewCodingProtocol {
                 self.prefetchingPosts = true
                 self.viewController?.fetchNextPosts()
             }
-         }
+        }
+    }
+
+    // MARK: Actions
+
+    func postImageTapped(image: UIImage?) {
+        viewController?.routeToFullScreenImage(image: image)
+    }
+}
+
+// MARK: ViewCodingProtocol
+
+extension PostDetailsContentView: ViewCodingProtocol {
+    func buildViewHierarchy() {
+        addSubview(tableView)
+        addSubview(activityIndicatorView)
+    }
+
+    func setupConstraints() {
+        tableView.constraint {[
+            $0.topAnchor.constraint(equalTo: topAnchor),
+            $0.bottomAnchor.constraint(equalTo: bottomAnchor),
+            $0.leadingAnchor.constraint(equalTo: leadingAnchor),
+            $0.trailingAnchor.constraint(equalTo: trailingAnchor),
+        ]}
+
+        postHeaderView.constraint {[
+            $0.topAnchor.constraint(equalTo: tableView.topAnchor),
+            $0.leadingAnchor.constraint(equalTo: leadingAnchor),
+            $0.trailingAnchor.constraint(equalTo: trailingAnchor),
+            $0.heightAnchor.constraint(equalToConstant: 400)
+        ]}
+
+
+        activityIndicatorView.constraint {[
+            $0.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            $0.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            $0.widthAnchor.constraint(equalToConstant: 24),
+            $0.heightAnchor.constraint(equalTo: $0.widthAnchor)
+        ]}
+    }
+
+    func configureViews() {
+
+        postHeaderView.backgroundColor = UIColor.TBColors.primary.background
+        postHeaderView.imageTapHandler = postImageTapped
+
+        tableView.estimatedRowHeight = 200.0
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.backgroundColor = UIColor.TBColors.primary.background
+        tableView.refreshControl = refreshControl
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.tableFooterView = UIView()
+        tableView.register(CommentTableViewCell.self,
+                           forCellReuseIdentifier: CommentTableViewCell.identifier)
+
+        tableView.tableHeaderView?.layoutIfNeeded()
+        tableView.tableHeaderView = tableView.tableHeaderView
+
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+
+        activityIndicatorView.startAnimating()
     }
 }
 

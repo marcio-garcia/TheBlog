@@ -99,6 +99,12 @@ class PostDetailsViewController: UIViewController, PostDetailsDisplayLogic {
             self.present(alert, animated: true, completion: nil)
         }
     }
+
+    // MARK: Routing
+
+    func routeToFullScreenImage(image: UIImage?) {
+        router?.routeToFullScreenImage(imageUrl: nil, image: image, imageWorker: imageWorker)
+    }
 }
 
 extension PostDetailsViewController: ViewCodingProtocol {

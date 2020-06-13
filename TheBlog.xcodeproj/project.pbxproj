@@ -28,6 +28,7 @@
 		251F075324941329006F5E09 /* PostDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F074D24941329006F5E09 /* PostDetailsPresenter.swift */; };
 		251F075424941329006F5E09 /* PostDetailsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F074E24941329006F5E09 /* PostDetailsBuilder.swift */; };
 		251F075524941329006F5E09 /* PostDetailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F074F24941329006F5E09 /* PostDetailsRouter.swift */; };
+		251F075724951102006F5E09 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F075624951102006F5E09 /* FullImageViewController.swift */; };
 		2524112924903ACE0024079B /* UIAlertController+Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2524112824903ACD0024079B /* UIAlertController+Standard.swift */; };
 		2524113A249161220024079B /* AuthorsListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241139249161220024079B /* AuthorsListEmptyView.swift */; };
 		2524115B249172AE0024079B /* AuthorDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241154249172AE0024079B /* AuthorDetailsInteractor.swift */; };
@@ -116,6 +117,7 @@
 		251F074D24941329006F5E09 /* PostDetailsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsPresenter.swift; sourceTree = "<group>"; };
 		251F074E24941329006F5E09 /* PostDetailsBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsBuilder.swift; sourceTree = "<group>"; };
 		251F074F24941329006F5E09 /* PostDetailsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsRouter.swift; sourceTree = "<group>"; };
+		251F075624951102006F5E09 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		2524112824903ACD0024079B /* UIAlertController+Standard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Standard.swift"; sourceTree = "<group>"; };
 		25241139249161220024079B /* AuthorsListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListEmptyView.swift; sourceTree = "<group>"; };
 		25241154249172AE0024079B /* AuthorDetailsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsInteractor.swift; sourceTree = "<group>"; };
@@ -467,6 +469,7 @@
 			isa = PBXGroup;
 			children = (
 				2584066E248D78BE00F6C548 /* ImageWorker.swift */,
+				251F075624951102006F5E09 /* FullImageViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -646,6 +649,7 @@
 				25840668248D682E00F6C548 /* UIView+NSLayoutConstraint.swift in Sources */,
 				2524115B249172AE0024079B /* AuthorDetailsInteractor.swift in Sources */,
 				25241161249172AE0024079B /* AuthorDetailsRouter.swift in Sources */,
+				251F075724951102006F5E09 /* FullImageViewController.swift in Sources */,
 				251F071724926A0A006F5E09 /* TBFonts.swift in Sources */,
 				258405B7248BEEEB00F6C548 /* AppConfiguration.swift in Sources */,
 				2584064C248D3D5F00F6C548 /* AuthorsListRouter.swift in Sources */,

@@ -11,11 +11,14 @@ import Services
 
 class PostHeaderView: UIView {
 
+    // MARK: Layout properties
+
     private lazy var titleLabel = { return UILabel() }()
     private lazy var dateLabel = { return UILabel() }()
     private lazy var bodyLabel = { return UILabel() }()
     private lazy var postImageView = { return UIImageView() }()
 
+    // MARK: Properties
 
     public var image: UIImage? {
         get {
@@ -53,6 +56,10 @@ class PostHeaderView: UIView {
         }
     }
 
+    public var imageTapHandler: ((UIImage?) -> Void)?
+
+    // MARK: View Lifecycle
+
     init() {
         super.init(frame: CGRect.zero)
         setupViewConfiguration()
@@ -60,6 +67,12 @@ class PostHeaderView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("This view should me implemented with view coding")
+    }
+
+    // MARK: Actions
+
+    @objc func postImageViewTapped(_ gesture: UITapGestureRecognizer) {
+        imageTapHandler?(postImageView.image)
     }
 }
 
@@ -111,5 +124,8 @@ extension PostHeaderView: ViewCodingProtocol {
 
         postImageView.contentMode = .scaleAspectFill
         postImageView.clipsToBounds = true
+        postImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(postImageViewTapped))
+        postImageView.addGestureRecognizer(tap)
     }
 }

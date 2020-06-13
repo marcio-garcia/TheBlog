@@ -14,6 +14,7 @@ import UIKit
 
 protocol PostDetailsRoutingLogic {
     var dataStore: PostDetailsDataStore? { get }
+    func routeToFullScreenImage(imageUrl: String?, image: UIImage?, imageWorker: ImageWorkLogic?)
 }
 
 protocol PostDetailsDataPassing {
@@ -27,5 +28,10 @@ class PostDetailsRouter: PostDetailsRoutingLogic, PostDetailsDataPassing {
 
     init(dataStore: PostDetailsDataStore?) {
         self.dataStore = dataStore
+    }
+
+    func routeToFullScreenImage(imageUrl: String?, image: UIImage?, imageWorker: ImageWorkLogic?) {
+        let vc = FullImageViewController(imageUrl: nil, image: image, imageWorker: imageWorker)
+        viewController?.navigationController?.pushViewController(vc, animated: true)
     }
 }
