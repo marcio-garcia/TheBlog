@@ -36,12 +36,22 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     private weak var imageWorker: ImageWorkLogic?
     private var prefetchingAuthors: Bool = false
 
+    private var listingDataSource: ListingDataSource<AuthorsListTableViewCell>?
+    private var listingDelegate: ListingDelegate<AuthorsListTableViewCell>?
+
     // MARK: Object lifecycle
     
     init(viewController: AuthorsListViewController?, imageWorker: ImageWorkLogic?) {
         super.init(frame: CGRect.zero)
+
         self.viewController = viewController
         self.imageWorker = imageWorker
+
+        self.listingDataSource = ListingDataSource(imageWorker: imageWorker)
+        self.listingDelegate = ListingDelegate(heightForRow: 80.0,
+                                               didSelectRowHandler: didSelectRow,
+                                               didScrollHandler: didScroll)
+
         setupViewConfiguration()
     }
     
@@ -77,8 +87,8 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = UIColor.TBColors.primary.background
         tableView.refreshControl = refreshControl
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableView.dataSource = self.listingDataSource
+        tableView.delegate = self.listingDelegate
         tableView.register(AuthorsListTableViewCell.self, forCellReuseIdentifier: AuthorsListTableViewCell.identifier)
         tableView.tableFooterView = UIView()
         
@@ -99,18 +109,15 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
         }
     }
 
-    // MARK: Pagination
+    // MARK: Actions
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard prefetchingAuthors == false else { return }
-        let actualPosition: CGFloat = scrollView.contentOffset.y
-        let contentHeight: CGFloat = scrollView.contentSize.height - (scrollView.frame.size.height)
-        if (actualPosition >= contentHeight) {
-            DispatchQueue.global().async {
-                self.prefetchingAuthors = true
-                self.viewController?.fetchNextAuthors()
-            }
-         }
+    func didSelectRow(cell: AuthorsListTableViewCell) {
+        let selectedAuthor = cell.selectedAuthor()
+        viewController?.selectedAurhor(selectedAuthor)
+    }
+
+    func didScroll() {
+        viewController?.fetchNextAuthors()
     }
 }
 
@@ -119,6 +126,7 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
 extension AuthorsListContentView: AuthorsListContentViewProtocol {
     func updateAuthors(displayedAuthors: Authors) {
         self.displayedAuthors.append(contentsOf: displayedAuthors)
+        self.listingDataSource?.dataList = self.displayedAuthors
         DispatchQueue.main.async {
             self.activityIndicatorView.stopAnimating()
             self.refreshControl.endRefreshing()
@@ -130,44 +138,8 @@ extension AuthorsListContentView: AuthorsListContentViewProtocol {
                     self.tableView.reloadData()
                 }
             }
-            self.prefetchingAuthors = false
-        }
-    }
-}
-
-// MARK: UITableViewDataSource
-
-extension AuthorsListContentView: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return displayedAuthors.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: AuthorsListTableViewCell.identifier,
-                                                    for: indexPath) as? AuthorsListTableViewCell {
-
-            cell.configure(imageWorker: imageWorker, author: displayedAuthors[indexPath.row])
-            return cell
-        }
-        return UITableViewCell()
-    }
-    
-    
-}
-
-// MARK: UITableViewDelegate
-
-extension AuthorsListContentView: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if let cell = tableView.cellForRow(at: indexPath) as? AuthorsListTableViewCell {
-            let selectedAuthor = cell.selectedAuthor()
-            viewController?.selectedAurhor(selectedAuthor)
+            //self.prefetchingAuthors = false
+            self.listingDelegate?.endFetching()
         }
     }
 }

@@ -10,7 +10,9 @@ import UIKit
 import Services
 import DesignSystem
 
-class AuthorsListTableViewCell: UITableViewCell {
+class AuthorsListTableViewCell: UITableViewCell, ListingTableViewCell {
+
+    typealias ModelType = Author
 
     static let identifier = String(describing: AuthorsListTableViewCell.self)
     
@@ -46,7 +48,7 @@ class AuthorsListTableViewCell: UITableViewCell {
         authorTitleView.name = nil
     }
     
-    func configure(imageWorker: ImageWorkLogic?, author: Author) {
+    func configure(imageWorker: ImageWorkLogic?, data author: Author) {
         self.author = author
         self.authorTitleView.name = author.name
         if let imageWorker = imageWorker {
