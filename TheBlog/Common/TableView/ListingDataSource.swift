@@ -12,15 +12,22 @@ protocol ListingTableViewCell: UITableViewCell {
     associatedtype ModelType
     static var identifier: String { get }
     func configure(imageWorker: ImageWorkLogic?, data: ModelType)
+    func selected() -> ModelType?
 }
 
 class ListingDataSource<TableViewCellType: ListingTableViewCell>: NSObject, UITableViewDataSource {
 
-    var dataList: [TableViewCellType.ModelType] = []
-    var imageWorker: ImageWorkLogic?
+    private var dataList: [TableViewCellType.ModelType] = []
+    private var imageWorker: ImageWorkLogic?
 
     init(imageWorker: ImageWorkLogic?) {
         self.imageWorker = imageWorker
+    }
+
+    @discardableResult
+    func updateDataList(with content: [TableViewCellType.ModelType]) -> [TableViewCellType.ModelType] {
+        dataList.append(contentsOf: content)
+        return dataList
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

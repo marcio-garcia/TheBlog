@@ -13,7 +13,7 @@ import DesignSystem
 
 protocol AuthorDetailsContentViewProtocol: UIView {
     func updateAuthor(author: Author?)
-    func updatePosts(displayedPosts: [DisplayedPost])
+    func updatePosts(posts: Posts)
 }
 
 class AuthorDetailsContentView: UIView, ViewCodingProtocol {
@@ -28,10 +28,12 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
     // MARK: Properties
 
     private weak var viewController: AuthorDetailsViewController?
-    private var displayedAuthor: Author?
-    private var displayedPosts: [DisplayedPost] = []
     private weak var imageWorker: ImageWorkLogic?
-    private var prefetchingPosts: Bool = false
+    private var displayedAuthor: Author?
+
+    private var listingDataSource: ListingDataSource<PostTableViewCell>?
+    private var listingDelegate: ListingDelegate<PostTableViewCell>?
+
 
     // MARK: Object lifecycle
     
@@ -39,6 +41,12 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
         super.init(frame: CGRect.zero)
         self.viewController = viewController
         self.imageWorker = imageWorker
+
+        self.listingDataSource = ListingDataSource(imageWorker: imageWorker)
+        self.listingDelegate = ListingDelegate(heightForRow: nil,
+                                               didSelectRowHandler: didSelectRow,
+                                               didScrollHandler: didScroll)
+
         setupViewConfiguration()
     }
     
@@ -85,8 +93,8 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = UIColor.TBColors.primary.background
         tableView.refreshControl = refreshControl
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableView.dataSource = listingDataSource
+        tableView.delegate = listingDelegate
         tableView.tableFooterView = UIView()
         tableView.register(PostTableViewCell.self,
                            forCellReuseIdentifier: PostTableViewCell.identifier)
@@ -107,19 +115,14 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
                                       actionTitle: nil,
                                       actionHandler: nil)
     }
+    // MARK: Actions
 
-    // MARK: Pagination
+    func didSelectRow(cell: PostTableViewCell) {
+        viewController?.selectedPost(cell.selected())
+    }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard prefetchingPosts == false else { return }
-        let actualPosition: CGFloat = scrollView.contentOffset.y
-        let contentHeight: CGFloat = scrollView.contentSize.height - (scrollView.frame.size.height)
-        if (actualPosition >= contentHeight) {
-            DispatchQueue.global().async {
-                self.prefetchingPosts = true
-                self.viewController?.fetchNextPosts()
-            }
-         }
+    func didScroll() {
+        viewController?.fetchNextPosts()
     }
 }
 
@@ -144,50 +147,21 @@ extension AuthorDetailsContentView: AuthorDetailsContentViewProtocol {
         })
     }
 
-    func updatePosts(displayedPosts: [DisplayedPost]) {
-        self.displayedPosts.append(contentsOf: displayedPosts)
+    func updatePosts(posts: Posts) {
+        guard let dataSource = listingDataSource else { return }
+        let updatedDataList = dataSource.updateDataList(with: posts)
         DispatchQueue.main.async {
             self.activityIndicatorView.stopAnimating()
             self.refreshControl.endRefreshing()
 
-            if self.displayedPosts.isEmpty {
+            if updatedDataList.isEmpty {
                 self.tableView.backgroundView = self.buildEmtpyView()
             } else {
-                if !displayedPosts.isEmpty {
+                if !posts.isEmpty {
                     self.tableView.reloadData()
                 }
             }
-            self.prefetchingPosts = false
+            self.listingDelegate?.endFetching()
         }
     }
 }
-
-// MARK: UITableViewDataSource
-
-extension AuthorDetailsContentView: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return displayedPosts.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier,
-                                                    for: indexPath) as? PostTableViewCell {
-
-            cell.configure(imageWorker: imageWorker, displayedPost: displayedPosts[indexPath.row])
-
-            return cell
-        }
-        return UITableViewCell()
-    }
-}
-
-// MARK: UITableViewDelegate
-
-extension AuthorDetailsContentView: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        viewController?.selectedPost(displayedPosts[indexPath.row].post)
-    }
-}
-

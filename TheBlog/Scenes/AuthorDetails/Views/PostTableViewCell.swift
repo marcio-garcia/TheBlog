@@ -10,7 +10,8 @@ import UIKit
 import Services
 import DesignSystem
 
-class PostTableViewCell: UITableViewCell {
+class PostTableViewCell: UITableViewCell, ListingTableViewCell {
+    typealias ModelType = Post
 
     static let identifier = String(describing: PostTableViewCell.self)
     
@@ -28,6 +29,7 @@ class PostTableViewCell: UITableViewCell {
     
     public weak var imageWorker: ImageWorkLogic?
     private var requestId: RequestId?
+    private var post: Post?
 
     // MARK: Object lifecycle
     
@@ -55,18 +57,18 @@ class PostTableViewCell: UITableViewCell {
         postImageView.image = UIImage(named: "image-placeholder")
     }
     
-    func configure(imageWorker: ImageWorkLogic?, displayedPost: DisplayedPost) {
-
-        if let postDate = Date.date(from: displayedPost.post.date, format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") {
+    func configure(imageWorker: ImageWorkLogic?, data post: Post) {
+        self.post = post
+        if let postDate = Date.date(from: post.date, format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") {
             dateLabel.text = Date.string(from: postDate, format: "dd MMM yyyy")
             timeLabel.text = Date.string(from: postDate, format: "HH:mm")
         }
-        titleLabel.text = displayedPost.post.title
-        bodyLabel.text = displayedPost.post.body
+        titleLabel.text = post.title
+        bodyLabel.text = post.body
         if let imageWorker = imageWorker {
             self.imageWorker = imageWorker
         }
-        if let url = URL(string: displayedPost.post.imageURL), displayedPost.hasImage {
+        if let url = URL(string: post.imageURL) {
             self.requestId = self.imageWorker?.download(with: url, completion: { result in
                 DispatchQueue.main.async {
                     switch result {
@@ -78,6 +80,10 @@ class PostTableViewCell: UITableViewCell {
                 }
             })
         }
+    }
+
+    func selected() -> Post? {
+        return post
     }
 }
 

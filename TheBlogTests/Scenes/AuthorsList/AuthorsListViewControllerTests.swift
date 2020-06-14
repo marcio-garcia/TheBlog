@@ -89,7 +89,7 @@ class AuthorsListBusinessLogicSpy: AuthorsListBusinessLogic {
 
 class AuthorsListContentViewSpy: UIView, AuthorsListContentViewProtocol {
     var updateAuthorsCalled = false
-    func updateAuthors(displayedAuthors: Authors) {
+    func updateAuthors(authors: Authors) {
         updateAuthorsCalled = true
     }
 }

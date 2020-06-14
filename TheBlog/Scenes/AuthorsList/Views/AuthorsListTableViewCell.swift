@@ -67,7 +67,7 @@ class AuthorsListTableViewCell: UITableViewCell, ListingTableViewCell {
         }
     }
 
-    func selectedAuthor() -> Author? {
+    func selected() -> Author? {
         return author
     }
 }

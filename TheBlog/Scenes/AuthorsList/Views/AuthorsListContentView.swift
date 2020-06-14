@@ -12,7 +12,7 @@ import Services
 import DesignSystem
 
 protocol AuthorsListContentViewProtocol: UIView {
-    func updateAuthors(displayedAuthors: Authors)
+    func updateAuthors(authors: Authors)
 }
 
 class AuthorsListContentView: UIView, ViewCodingProtocol {
@@ -32,9 +32,7 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     // MARK: Properties
 
     private weak var viewController: AuthorsListViewController?
-    private var displayedAuthors: Authors = []
     private weak var imageWorker: ImageWorkLogic?
-    private var prefetchingAuthors: Bool = false
 
     private var listingDataSource: ListingDataSource<AuthorsListTableViewCell>?
     private var listingDelegate: ListingDelegate<AuthorsListTableViewCell>?
@@ -112,7 +110,7 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
     // MARK: Actions
 
     func didSelectRow(cell: AuthorsListTableViewCell) {
-        let selectedAuthor = cell.selectedAuthor()
+        let selectedAuthor = cell.selected()
         viewController?.selectedAurhor(selectedAuthor)
     }
 
@@ -124,17 +122,17 @@ class AuthorsListContentView: UIView, ViewCodingProtocol {
 // MARK: AuthorsListContentViewProtocol
 
 extension AuthorsListContentView: AuthorsListContentViewProtocol {
-    func updateAuthors(displayedAuthors: Authors) {
-        self.displayedAuthors.append(contentsOf: displayedAuthors)
-        self.listingDataSource?.dataList = self.displayedAuthors
+    func updateAuthors(authors: Authors) {
+        guard let dataSource = listingDataSource else { return }
+        let updatedDataList = dataSource.updateDataList(with: authors)
         DispatchQueue.main.async {
             self.activityIndicatorView.stopAnimating()
             self.refreshControl.endRefreshing()
 
-            if self.displayedAuthors.isEmpty {
+            if updatedDataList.isEmpty {
                 self.tableView.backgroundView = self.buildEmtpyView()
             } else {
-                if !displayedAuthors.isEmpty {
+                if !authors.isEmpty {
                     self.tableView.reloadData()
                 }
             }

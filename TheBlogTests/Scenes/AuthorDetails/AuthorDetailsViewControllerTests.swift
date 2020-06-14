@@ -117,7 +117,7 @@ class AuthorDetailsContentViewSpy: UIView, AuthorDetailsContentViewProtocol {
         updateAuthorCalled = true
     }
 
-    func updatePosts(displayedPosts: [DisplayedPost]) {
+    func updatePosts(posts: Posts) {
         updatePostsCalled = true
     }
 }
