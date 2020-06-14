@@ -24,6 +24,7 @@ class PostTableViewCell: UITableViewCell, ListingTableViewCell {
     private lazy var timeLabel = { UILabel() }()
     private lazy var bodyLabel = { UILabel() }()
     private lazy var postImageView = { UIImageView() }()
+    private lazy var activityIndicatorView = { UIActivityIndicatorView() }()
 
     // MARK: properties
     
@@ -69,11 +70,13 @@ class PostTableViewCell: UITableViewCell, ListingTableViewCell {
             self.imageWorker = imageWorker
         }
         if let url = URL(string: post.imageURL) {
-            self.requestId = self.imageWorker?.download(with: url, completion: { result in
+            activityIndicatorView.startAnimating()
+            self.requestId = self.imageWorker?.download(with: url, completion: { [weak self] result in
                 DispatchQueue.main.async {
+                    self?.activityIndicatorView.stopAnimating()
                     switch result {
                     case .success(let image):
-                        self.postImageView.image = image
+                        self?.postImageView.image = image
                     case .failure:
                         break
                     }
@@ -99,6 +102,7 @@ extension PostTableViewCell: ViewCodingProtocol {
         bodyStackView.addArrangedSubview(titleLabel)
         bodyStackView.addArrangedSubview(bodyLabel)
         bodyStackView.addArrangedSubview(postImageView)
+        postImageView.addSubview(activityIndicatorView)
     }
     
     func setupConstraints() {
@@ -125,6 +129,10 @@ extension PostTableViewCell: ViewCodingProtocol {
             $0.heightAnchor.constraint(equalTo: $0.widthAnchor)
         ]}
 
+        activityIndicatorView.constraint {[
+            $0.centerXAnchor.constraint(equalTo: postImageView.centerXAnchor),
+            $0.centerYAnchor.constraint(equalTo: postImageView.centerYAnchor)
+        ]}
     }
 
     func configureViews() {
