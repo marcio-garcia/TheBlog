@@ -1,0 +1,11 @@
+framework module DesignSystem {
+  umbrella header "DesignSystem.h"
+
+  export *
+  module * { export * }
+}
+
+module DesignSystem.Swift {
+    header "DesignSystem-Swift.h"
+    requires objc
+}

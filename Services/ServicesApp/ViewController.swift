@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  TheBlog
+//  ServicesApp
 //
-//  Created by Marcio Garcia on 06/06/20.
+//  Created by Marcio Garcia on 07/06/20.
 //  Copyright © 2020 Oxl Tech. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
+        // Do any additional setup after loading the view.
     }
 
 

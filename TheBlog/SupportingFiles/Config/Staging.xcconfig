@@ -14,4 +14,4 @@ OXL_BUNDLE_IDENTIFIER = oxltech.com.TheBlog.stg
 OXL_APPICON_NAME = AppIcon-Stg
 OXL_ENVIRONMENT = staging
 // In a real situation the staging base URL would be different than the production one.
-OXL_API_BASE_URL = sym-json-server.herokuapp.com
+OXL_API_BASE_URL = https:\/\/sym-json-server.herokuapp.com
