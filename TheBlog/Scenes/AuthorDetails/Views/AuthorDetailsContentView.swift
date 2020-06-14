@@ -115,6 +115,7 @@ class AuthorDetailsContentView: UIView, ViewCodingProtocol {
                                       actionTitle: nil,
                                       actionHandler: nil)
     }
+
     // MARK: Actions
 
     func didSelectRow(cell: PostTableViewCell) {

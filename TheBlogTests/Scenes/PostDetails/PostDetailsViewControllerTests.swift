@@ -114,7 +114,7 @@ class PostDetailsContentViewSpy: UIView, PostDetailsContentViewProtocol {
         updatePostCalled = true
     }
 
-    func updateComments(displayedComments: Comments) {
+    func updateComments(comments: Comments) {
         updateCommentsCalled = true
     }
 }

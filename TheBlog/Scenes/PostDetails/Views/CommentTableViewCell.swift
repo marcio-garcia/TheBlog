@@ -10,7 +10,9 @@ import UIKit
 import Services
 import DesignSystem
 
-class CommentTableViewCell: UITableViewCell {
+class CommentTableViewCell: UITableViewCell, ListingTableViewCell {
+
+    typealias ModelType = Comment
 
     static let identifier = String(describing: CommentTableViewCell.self)
     
@@ -55,20 +57,20 @@ class CommentTableViewCell: UITableViewCell {
         avatarView.image = nil
     }
     
-    func configure(imageWorker: ImageWorkLogic?, displayedComment: Comment) {
+    func configure(imageWorker: ImageWorkLogic?, data comment: Comment) {
 
-        if let commentDate = Date.date(from: displayedComment.date,
+        if let commentDate = Date.date(from: comment.date,
                                        format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") {
 
             dateLabel.text = Date.string(from: commentDate, format: "dd MMM yyyy")
             timeLabel.text = Date.string(from: commentDate, format: "HH:mm")
         }
-        userNameLabel.text = displayedComment.userName
-        bodyLabel.text = displayedComment.body
+        userNameLabel.text = comment.userName
+        bodyLabel.text = comment.body
         if let imageWorker = imageWorker {
             self.imageWorker = imageWorker
         }
-        if let url = URL(string: displayedComment.avatarURL) {
+        if let url = URL(string: comment.avatarURL) {
             self.requestId = self.imageWorker?.download(with: url, completion: { result in
                 DispatchQueue.main.async {
                     switch result {
@@ -80,6 +82,10 @@ class CommentTableViewCell: UITableViewCell {
                 }
             })
         }
+    }
+
+    func selected() -> Comment? {
+        return nil
     }
 }
 
