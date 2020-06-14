@@ -16,7 +16,7 @@ import DesignSystem
 
 protocol AuthorDetailsDisplayLogic: class {
     func displayAuthor(_ author: Author?)
-    func displayPosts(_ displayedPosts: [DisplayedPost])
+    func displayPosts(_ displayedPosts: Posts)
     func displayError(title: String, message: String)
 }
 
@@ -92,12 +92,12 @@ class AuthorDetailsViewController: UIViewController, AuthorDetailsDisplayLogic {
         contentView?.updateAuthor(author: author)
     }
 
-    func displayPosts(_ displayedPosts: [DisplayedPost]) {
-        contentView?.updatePosts(displayedPosts: displayedPosts)
+    func displayPosts(_ posts: Posts) {
+        contentView?.updatePosts(posts: posts)
     }
 
     func displayError(title: String, message: String) {
-        contentView?.updatePosts(displayedPosts: [])
+        contentView?.updatePosts(posts: [])
         DispatchQueue.main.async {
             let alert = UIAlertController.standardMessage(title: title,
                                                           message: message,

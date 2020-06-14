@@ -64,7 +64,7 @@ class PostDetailsViewController: UIViewController, PostDetailsDisplayLogic {
         title = "Comments"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         fetchPost()
-        fetchFirstPosts()
+        fetchFirstComments()
     }
   
     // MARK: Fetch data
@@ -73,11 +73,11 @@ class PostDetailsViewController: UIViewController, PostDetailsDisplayLogic {
         interactor?.fetchPost()
     }
 
-    func fetchFirstPosts() {
+    func fetchFirstComments() {
         interactor?.fetchFirstComments()
     }
 
-    func fetchNextPosts() {
+    func fetchNextComments() {
         interactor?.fetchNextComments()
     }
 
@@ -88,11 +88,11 @@ class PostDetailsViewController: UIViewController, PostDetailsDisplayLogic {
     }
 
     func displayComments(_ comments: Comments) {
-        contentView?.updateComments(displayedComments: comments)
+        contentView?.updateComments(comments: comments)
     }
 
     func displayError(title: String, message: String) {
-        contentView?.updateComments(displayedComments: [])
+        contentView?.updateComments(comments: [])
         DispatchQueue.main.async {
             let alert = UIAlertController.standardMessage(title: title,
                                                           message: message,

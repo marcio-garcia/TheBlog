@@ -79,11 +79,11 @@ class AuthorsListViewController: UIViewController, AuthorsListDisplayLogic {
     // MARK: AuthorsListDisplayLogic
     
     func displayAuthors(_ authors: Authors) {
-        contentView?.updateAuthors(displayedAuthors: authors)
+        contentView?.updateAuthors(authors: authors)
     }
 
     func displayError(title: String, message: String) {
-        contentView?.updateAuthors(displayedAuthors: [])
+        contentView?.updateAuthors(authors: [])
         DispatchQueue.main.async {
             let alert = UIAlertController.standardMessage(title: title,
                                                           message: message,

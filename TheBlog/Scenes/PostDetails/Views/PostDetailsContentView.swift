@@ -13,7 +13,7 @@ import DesignSystem
 
 protocol PostDetailsContentViewProtocol: UIView {
     func updatePost(_ post: Post?)
-    func updateComments(displayedComments: Comments)
+    func updateComments(comments: Comments)
 }
 
 class PostDetailsContentView: UIView {
@@ -28,10 +28,11 @@ class PostDetailsContentView: UIView {
     // MARK: Properties
 
     private weak var viewController: PostDetailsViewController?
-    private var displayedPost: Post?
-    private var displayedComments: Comments = []
     private weak var imageWorker: ImageWorkLogic?
-    private var prefetchingPosts: Bool = false
+    private var displayedPost: Post?
+
+    private var listingDataSource: ListingDataSource<CommentTableViewCell>?
+    private var listingDelegate: ListingDelegate<CommentTableViewCell>?
 
     // MARK: Object lifecycle
     
@@ -40,6 +41,11 @@ class PostDetailsContentView: UIView {
         self.viewController = viewController
         self.imageWorker = imageWorker
         tableView.tableHeaderView = postHeaderView
+
+        self.listingDataSource = ListingDataSource(imageWorker: imageWorker)
+        self.listingDelegate = ListingDelegate(heightForRow: nil,
+                                               didSelectRowHandler: nil,
+                                               didScrollHandler: didScroll)
         setupViewConfiguration()
     }
     
@@ -50,7 +56,7 @@ class PostDetailsContentView: UIView {
     // MARK: Data
     
     @objc func refreshData(_ sender: UIRefreshControl) {
-        viewController?.fetchFirstPosts()
+        viewController?.fetchFirstComments()
     }
 
     private func buildEmtpyView() -> UIView {
@@ -59,24 +65,14 @@ class PostDetailsContentView: UIView {
                                       actionHandler: nil)
     }
 
-    // MARK: Pagination
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard prefetchingPosts == false else { return }
-        let actualPosition: CGFloat = scrollView.contentOffset.y
-        let contentHeight: CGFloat = scrollView.contentSize.height - (scrollView.frame.size.height)
-        if (actualPosition >= contentHeight) {
-            DispatchQueue.global().async {
-                self.prefetchingPosts = true
-                self.viewController?.fetchNextPosts()
-            }
-        }
-    }
-
     // MARK: Actions
 
     func postImageTapped(image: UIImage?) {
         viewController?.routeToFullScreenImage(image: image)
+    }
+
+    func didScroll() {
+        viewController?.fetchNextComments()
     }
 }
 
@@ -121,8 +117,8 @@ extension PostDetailsContentView: ViewCodingProtocol {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = UIColor.TBColors.primary.background
         tableView.refreshControl = refreshControl
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableView.dataSource = listingDataSource
+        tableView.delegate = listingDelegate
         tableView.tableFooterView = UIView()
         tableView.register(CommentTableViewCell.self,
                            forCellReuseIdentifier: CommentTableViewCell.identifier)
@@ -158,49 +154,21 @@ extension PostDetailsContentView: PostDetailsContentViewProtocol {
         })
     }
 
-    func updateComments(displayedComments: Comments) {
-        self.displayedComments.append(contentsOf: displayedComments)
+    func updateComments(comments: Comments) {
+        guard let dataSource = listingDataSource else { return }
+        let updtedDataList = dataSource.updateDataList(with: comments)
         DispatchQueue.main.async {
             self.activityIndicatorView.stopAnimating()
             self.refreshControl.endRefreshing()
 
-            if self.displayedComments.isEmpty {
+            if updtedDataList.isEmpty {
                 self.tableView.backgroundView = self.buildEmtpyView()
             } else {
-                if !displayedComments.isEmpty {
+                if !comments.isEmpty {
                     self.tableView.reloadData()
                 }
             }
-            self.prefetchingPosts = false
+            self.listingDelegate?.endFetching()
         }
     }
 }
-
-// MARK: UITableViewDataSource
-
-extension PostDetailsContentView: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return displayedComments.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: CommentTableViewCell.identifier,
-                                                    for: indexPath) as? CommentTableViewCell {
-
-            cell.configure(imageWorker: imageWorker, displayedComment: displayedComments[indexPath.row])
-
-            return cell
-        }
-        return UITableViewCell()
-    }
-}
-
-// MARK: UITableViewDelegate
-
-extension PostDetailsContentView: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
-

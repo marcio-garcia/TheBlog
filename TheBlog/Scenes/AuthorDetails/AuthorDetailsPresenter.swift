@@ -19,15 +19,6 @@ protocol AuthorDetailsPresentationLogic {
     func presentError(_ error: Error)
 }
 
-class DisplayedPost {
-    var post: Post
-    var hasImage: Bool
-    init(post: Post, hasImage: Bool) {
-        self.post = post
-        self.hasImage = hasImage
-    }
-}
-
 class AuthorDetailsPresenter: AuthorDetailsPresentationLogic {
     weak var viewController: AuthorDetailsDisplayLogic?
   
@@ -38,13 +29,7 @@ class AuthorDetailsPresenter: AuthorDetailsPresentationLogic {
     }
 
     func presentPosts(_ posts: Posts) {
-        let displayedPosts = posts.map { post -> DisplayedPost in
-            if URL(string: post.imageURL) == nil {
-                return DisplayedPost(post: post, hasImage: false)
-            }
-            return DisplayedPost(post: post, hasImage: true)
-        }
-        viewController?.displayPosts(displayedPosts)
+        viewController?.displayPosts(posts)
     }
 
     func presentError(_ error: Error) {

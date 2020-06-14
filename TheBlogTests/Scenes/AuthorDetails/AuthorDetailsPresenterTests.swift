@@ -75,7 +75,7 @@ class AuthorDetailsDisplayLogicSpy: AuthorDetailsDisplayLogic {
         displayAuthorCalled = true
     }
 
-    func displayPosts(_ displayedPosts: [DisplayedPost]) {
+    func displayPosts(_ displayedPosts: Posts) {
         displayPostsCalled = true
     }
 

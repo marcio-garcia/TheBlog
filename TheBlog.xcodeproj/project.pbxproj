@@ -31,6 +31,8 @@
 		251F07B824955AD8006F5E09 /* PostDetailsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F07B424955AD8006F5E09 /* PostDetailsInteractorTests.swift */; };
 		251F07B924955AD8006F5E09 /* PostDetailsWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F07B524955AD8006F5E09 /* PostDetailsWorkerTests.swift */; };
 		251F07BA24955AD8006F5E09 /* PostDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F07B624955AD8006F5E09 /* PostDetailsViewControllerTests.swift */; };
+		251F07BD24966FD6006F5E09 /* ListingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F07BC24966FD6006F5E09 /* ListingDataSource.swift */; };
+		251F07BF24967450006F5E09 /* ListingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F07BE24967450006F5E09 /* ListingDelegate.swift */; };
 		2524112924903ACE0024079B /* UIAlertController+Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2524112824903ACD0024079B /* UIAlertController+Standard.swift */; };
 		2524113A249161220024079B /* AuthorsListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241139249161220024079B /* AuthorsListEmptyView.swift */; };
 		2524115B249172AE0024079B /* AuthorDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25241154249172AE0024079B /* AuthorDetailsInteractor.swift */; };
@@ -120,6 +122,8 @@
 		251F07B424955AD8006F5E09 /* PostDetailsInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsInteractorTests.swift; sourceTree = "<group>"; };
 		251F07B524955AD8006F5E09 /* PostDetailsWorkerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsWorkerTests.swift; sourceTree = "<group>"; };
 		251F07B624955AD8006F5E09 /* PostDetailsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsViewControllerTests.swift; sourceTree = "<group>"; };
+		251F07BC24966FD6006F5E09 /* ListingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDataSource.swift; sourceTree = "<group>"; };
+		251F07BE24967450006F5E09 /* ListingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDelegate.swift; sourceTree = "<group>"; };
 		2524112824903ACD0024079B /* UIAlertController+Standard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Standard.swift"; sourceTree = "<group>"; };
 		25241139249161220024079B /* AuthorsListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsListEmptyView.swift; sourceTree = "<group>"; };
 		25241154249172AE0024079B /* AuthorDetailsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorDetailsInteractor.swift; sourceTree = "<group>"; };
@@ -232,6 +236,15 @@
 				251F07B524955AD8006F5E09 /* PostDetailsWorkerTests.swift */,
 			);
 			path = PostDetails;
+			sourceTree = "<group>";
+		};
+		251F07BB24966FB8006F5E09 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				251F07BC24966FD6006F5E09 /* ListingDataSource.swift */,
+				251F07BE24967450006F5E09 /* ListingDelegate.swift */,
+			);
+			path = TableView;
 			sourceTree = "<group>";
 		};
 		252411522491720F0024079B /* AuthorDetails */ = {
@@ -428,6 +441,7 @@
 		2584066D248D789900F6C548 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				251F07BB24966FB8006F5E09 /* TableView */,
 				2584066E248D78BE00F6C548 /* ImageWorker.swift */,
 				251F075624951102006F5E09 /* FullImageViewController.swift */,
 			);
@@ -599,8 +613,10 @@
 				2584064B248D3D5F00F6C548 /* AuthorsListWorker.swift in Sources */,
 				2524115D249172AE0024079B /* AuthorDetailsBuilder.swift in Sources */,
 				2524115B249172AE0024079B /* AuthorDetailsInteractor.swift in Sources */,
+				251F07BF24967450006F5E09 /* ListingDelegate.swift in Sources */,
 				25241161249172AE0024079B /* AuthorDetailsRouter.swift in Sources */,
 				251F075724951102006F5E09 /* FullImageViewController.swift in Sources */,
+				251F07BD24966FD6006F5E09 /* ListingDataSource.swift in Sources */,
 				258405B7248BEEEB00F6C548 /* AppConfiguration.swift in Sources */,
 				2584064C248D3D5F00F6C548 /* AuthorsListRouter.swift in Sources */,
 				251F07462494131D006F5E09 /* PostDetailsEmptyView.swift in Sources */,
