@@ -68,3 +68,7 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 
 \.DS_Store
+
+# tests
+test-coverage
+
