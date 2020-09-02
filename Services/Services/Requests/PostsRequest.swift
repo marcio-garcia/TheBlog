@@ -15,7 +15,9 @@ public enum PostsOrderBy: String {
 }
 
 class PostsRequest: Request, NetworkRequest {
+
     typealias ModelType = Posts
+    typealias ErrorModelType = BlogError
     
     init?(apiConfiguration: ApiConfiguration,
           authorId: Int,
@@ -50,9 +52,14 @@ class PostsRequest: Request, NetworkRequest {
             }
         }
     }
-    
-    func parse(data: Data) throws -> ModelType? {
+
+    func parse(data: Data) -> ModelType? {
         let authors = try? JSONDecoder().decode(ModelType.self, from: data)
         return authors
+    }
+
+    func parseError(data: Data) -> ErrorModelType? {
+        let error = try? JSONDecoder().decode(ErrorModelType.self, from: data)
+        return error
     }
 }

@@ -16,7 +16,9 @@ public enum CommentsOrderBy: String {
 }
 
 class CommentsRequest: Request, NetworkRequest {
+
     typealias ModelType = Comments
+    typealias ErrorModelType = BlogError
     
     init?(apiConfiguration: ApiConfiguration,
           postId: Int,
@@ -59,8 +61,13 @@ class CommentsRequest: Request, NetworkRequest {
         }
     }
     
-    func parse(data: Data) throws -> ModelType? {
+    func parse(data: Data) -> ModelType? {
         let authors = try? JSONDecoder().decode(ModelType.self, from: data)
         return authors
+    }
+
+    func parseError(data: Data) -> ErrorModelType? {
+        let error = try? JSONDecoder().decode(ErrorModelType.self, from: data)
+        return error
     }
 }
