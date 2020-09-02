@@ -45,10 +45,8 @@ class PostDetailsWorker: PostDetailsWorkLogic {
                                 commentsPerPage: commentsPerPage,
                                 orderBy: orderBy,
                                 direction: direction) { comments, error in
-            if let _error = error as? NetworkError {
+            if let _error = error {
                 completion(comments, _error)
-            } else if let _error = error {
-                completion(comments, _error as NSError)
             } else {
                 completion(comments, error)
             }

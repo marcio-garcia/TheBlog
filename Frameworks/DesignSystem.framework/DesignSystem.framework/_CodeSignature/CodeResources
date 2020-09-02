@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/DesignSystem-Swift.h</key>
 		<data>
-		RK/Pe58oZ/mjAH9IX1GoQ1nrtBE=
+		LsF7Xo2pvs9WKe/BbIgftqH41Vw=
 		</data>
 		<key>Headers/DesignSystem.h</key>
 		<data>
@@ -14,31 +14,31 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		lfFEUtKPnrmVJSv+cke3IB1wsX8=
+		5oAecd2xDtYTNscsmmIxAKZ99kM=
 		</data>
 		<key>Modules/DesignSystem.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		xZ9tZbne6xGrQCaY9yUsV/5wYUE=
+		WFScuiTXlwZAUXyizQM91MzUelY=
 		</data>
 		<key>Modules/DesignSystem.swiftmodule/Project/x86_64.swiftsourceinfo</key>
 		<data>
-		xZ9tZbne6xGrQCaY9yUsV/5wYUE=
+		WFScuiTXlwZAUXyizQM91MzUelY=
 		</data>
 		<key>Modules/DesignSystem.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		TUn8Ox4NFe2MpOhpxamZuj0V5eM=
+		C7WD0ruTiHIHU8hSVV0lw5TPIWM=
 		</data>
 		<key>Modules/DesignSystem.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		H5FmbHVTVwTnRKFZW/InHSn+PI8=
+		m0epZ9gVLJpSKG1xt5mTY+etXa0=
 		</data>
 		<key>Modules/DesignSystem.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		TUn8Ox4NFe2MpOhpxamZuj0V5eM=
+		C7WD0ruTiHIHU8hSVV0lw5TPIWM=
 		</data>
 		<key>Modules/DesignSystem.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		H5FmbHVTVwTnRKFZW/InHSn+PI8=
+		m0epZ9gVLJpSKG1xt5mTY+etXa0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -63,7 +63,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			RdZJl5VhSH9PthTfpAi5OzrHz+usOtJv65tppFgJ+Ck=
+			46kehe3lWhHjDPU5e9Kdd/ptVnTUHLGVa4B8Wzt/2r4=
 			</data>
 		</dict>
 		<key>Headers/DesignSystem.h</key>
@@ -77,42 +77,42 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4zNCtKB9J7MaOdEJVOFwVAiHQtASumzNRnw1XVLc1PE=
+			g9oqMh+F4MnaOlKooKGIcbvDl6Air6ma89SyguTTVxc=
 			</data>
 		</dict>
 		<key>Modules/DesignSystem.swiftmodule/Project/x86_64.swiftsourceinfo</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4zNCtKB9J7MaOdEJVOFwVAiHQtASumzNRnw1XVLc1PE=
+			g9oqMh+F4MnaOlKooKGIcbvDl6Air6ma89SyguTTVxc=
 			</data>
 		</dict>
 		<key>Modules/DesignSystem.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BptcIrUFK3QIXmSGGoaJBE2nrMML177qaCKPezW7LcQ=
+			uNjOINSastWlpSGKl2M+CDNdBRuGVQQon0cO14et4NI=
 			</data>
 		</dict>
 		<key>Modules/DesignSystem.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RZRk81bZ7KQsl9IpEv/skJ5rSytnCpMWu18x6D2DTWQ=
+			o0I1Y7F10QqiI8TZPeGdLlr7WEwQWnfLXKqdDGlAKAg=
 			</data>
 		</dict>
 		<key>Modules/DesignSystem.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BptcIrUFK3QIXmSGGoaJBE2nrMML177qaCKPezW7LcQ=
+			uNjOINSastWlpSGKl2M+CDNdBRuGVQQon0cO14et4NI=
 			</data>
 		</dict>
 		<key>Modules/DesignSystem.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RZRk81bZ7KQsl9IpEv/skJ5rSytnCpMWu18x6D2DTWQ=
+			o0I1Y7F10QqiI8TZPeGdLlr7WEwQWnfLXKqdDGlAKAg=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
