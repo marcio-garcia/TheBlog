@@ -9,7 +9,9 @@
 import Ivorywhite
 
 class AuthorsRequest: Request, NetworkRequest {
+    
     typealias ModelType = Authors
+    typealias ErrorModelType = BlogError
     
     init?(apiConfiguration: ApiConfiguration, page: Int, authorsPerPage: Int?) {
         super.init()
@@ -30,8 +32,13 @@ class AuthorsRequest: Request, NetworkRequest {
         }
     }
     
-    func parse(data: Data) throws -> ModelType? {
+    func parse(data: Data) -> ModelType? {
         let authors = try? JSONDecoder().decode(ModelType.self, from: data)
         return authors
+    }
+
+    func parseError(data: Data) -> ErrorModelType? {
+        let error = try? JSONDecoder().decode(ErrorModelType.self, from: data)
+        return error
     }
 }

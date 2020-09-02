@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		251F07C0249676EA006F5E09 /* Ivorywhite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25840611248C186500F6C548 /* Ivorywhite.framework */; };
+		2535A27C25000FC500A38DF9 /* BlogError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2535A27B25000FC500A38DF9 /* BlogError.swift */; };
 		258405E0248C10A300F6C548 /* Services.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258405D6248C10A300F6C548 /* Services.framework */; };
 		258405E5248C10A300F6C548 /* ServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258405E4248C10A300F6C548 /* ServicesTests.swift */; };
 		258405E7248C10A300F6C548 /* Services.h in Headers */ = {isa = PBXBuildFile; fileRef = 258405D9248C10A300F6C548 /* Services.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -65,6 +66,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2535A27B25000FC500A38DF9 /* BlogError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogError.swift; sourceTree = "<group>"; };
 		258405D6248C10A300F6C548 /* Services.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Services.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		258405D9248C10A300F6C548 /* Services.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
 		258405DA248C10A300F6C548 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				258405F3248C113700F6C548 /* Author.swift */,
 				258405F1248C113700F6C548 /* Post.swift */,
 				258405F2248C113700F6C548 /* Comments.swift */,
+				2535A27B25000FC500A38DF9 /* BlogError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				25840606248C131000F6C548 /* Request.swift in Sources */,
 				258405F5248C113700F6C548 /* Comments.swift in Sources */,
 				25840608248C137200F6C548 /* AuthorsRequest.swift in Sources */,
+				2535A27C25000FC500A38DF9 /* BlogError.swift in Sources */,
 				2584060A248C173400F6C548 /* PostsRequest.swift in Sources */,
 				25840603248C125B00F6C548 /* ApiConfiguration.swift in Sources */,
 				2584060C248C179B00F6C548 /* CommentsRequest.swift in Sources */,
@@ -703,7 +707,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = ServicesApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -726,7 +730,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = ServicesApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -28,7 +28,7 @@ class BlogService: BlogApi {
         guard let request = AuthorsRequest(apiConfiguration: apiConfiguration,
                                            page: page,
                                            authorsPerPage: authorsPerPage) else {
-            completion(nil, NetworkError.badRequest)
+            completion(nil, NetworkError<Any>.error(999, nil))
             return nil
         }
         
@@ -50,7 +50,7 @@ class BlogService: BlogApi {
                                          postsPerPage: postsPerPage,
                                          orderBy: orderBy,
                                          direction: direction) else {
-            completion(nil, NetworkError.badRequest)
+            completion(nil, NetworkError<Any>.error(999, nil))
             return nil
         }
 
@@ -72,7 +72,7 @@ class BlogService: BlogApi {
                                             commentsPerPage: commentsPerPage,
                                             orderBy: orderBy,
                                             direction: direction) else {
-            completion(nil, NetworkError.badRequest)
+            completion(nil, NetworkError<Any>.error(999, nil))
             return nil
         }
         
