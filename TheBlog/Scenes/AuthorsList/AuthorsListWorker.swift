@@ -31,10 +31,8 @@ class AuthorsListWorker: AuthorsListWorkLogic {
     
     func requestAuthors(page: Int, authorsPerPage: Int?, completion: @escaping (Authors?, Error?) -> Void) {
         service.requestAuthors(page: page, authorsPerPage: authorsPerPage) { authors, error in
-            if let _error = error as? NetworkError {
+            if let _error = error {
                 completion(authors, _error)
-            } else if let _error = error {
-                completion(authors, _error as NSError)
             } else {
                 completion(authors, error)
             }

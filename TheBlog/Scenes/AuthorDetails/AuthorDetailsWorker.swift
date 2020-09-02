@@ -45,10 +45,8 @@ class AuthorDetailsWorker: AuthorDetailsWorkLogic {
                              postsPerPage: postsPerPage,
                              orderBy: orderBy,
                              direction: direction) { posts, error in
-            if let _error = error as? NetworkError {
+            if let _error = error {
                 completion(posts, _error)
-            } else if let _error = error {
-                completion(posts, _error as NSError)
             } else {
                 completion(posts, error)
             }
