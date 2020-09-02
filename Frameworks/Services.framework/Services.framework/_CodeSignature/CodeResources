@@ -4,143 +4,110 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Headers/DesignSystem-Swift.h</key>
+		<key>Headers/Services-Swift.h</key>
 		<data>
-		LsF7Xo2pvs9WKe/BbIgftqH41Vw=
+		mwnWWN9btz47sEMWXiK8egyCuM4=
 		</data>
-		<key>Headers/DesignSystem.h</key>
+		<key>Headers/Services.h</key>
 		<data>
-		Zcrcfop6RAZLtPFOdu2CXOYGEe0=
+		xcG9gOM3bx6HIxJoNHUYZN6LYA0=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		5oAecd2xDtYTNscsmmIxAKZ99kM=
+		lMorNkxtTLyFG0SDyoh7ae9rCvY=
 		</data>
-		<key>Modules/DesignSystem.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
+		<key>Modules/Services.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		O5UKynGiG6JkgzBrSBKjdJbcQPw=
+		dCh7R1WYWAoquaFKYyAmBfl6LbA=
 		</data>
-		<key>Modules/DesignSystem.swiftmodule/Project/x86_64.swiftsourceinfo</key>
+		<key>Modules/Services.swiftmodule/Project/x86_64.swiftsourceinfo</key>
 		<data>
-		O5UKynGiG6JkgzBrSBKjdJbcQPw=
+		dCh7R1WYWAoquaFKYyAmBfl6LbA=
 		</data>
-		<key>Modules/DesignSystem.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
+		<key>Modules/Services.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		C7WD0ruTiHIHU8hSVV0lw5TPIWM=
+		b8PI4/FVRyIZ9HDNV67ZBe37yKY=
 		</data>
-		<key>Modules/DesignSystem.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
+		<key>Modules/Services.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		OH+GXWUtcho35NpqkMFr6V0+bq8=
+		27eWw8kUnrAszsXf/9JsNpu1GnY=
 		</data>
-		<key>Modules/DesignSystem.swiftmodule/x86_64.swiftdoc</key>
+		<key>Modules/Services.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		C7WD0ruTiHIHU8hSVV0lw5TPIWM=
+		b8PI4/FVRyIZ9HDNV67ZBe37yKY=
 		</data>
-		<key>Modules/DesignSystem.swiftmodule/x86_64.swiftmodule</key>
+		<key>Modules/Services.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		OH+GXWUtcho35NpqkMFr6V0+bq8=
+		27eWw8kUnrAszsXf/9JsNpu1GnY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		xJsG9qjMVwy4usjPcBdP7Ij43LA=
-		</data>
-		<key>Roboto-Bold.ttf</key>
-		<data>
-		PdcTET/y15uU0t80Pi4o+o5yec8=
-		</data>
-		<key>Roboto-Medium.ttf</key>
-		<data>
-		9ngwENXe8SjEoVOTMzJPdXAdm6s=
-		</data>
-		<key>Roboto-Regular.ttf</key>
-		<data>
-		CWySRbahktFAOoKEjhBKZfV4qOw=
+		O35Mm8rEZnJI63AjEXkrY7BIn2Y=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Headers/DesignSystem-Swift.h</key>
+		<key>Headers/Services-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			46kehe3lWhHjDPU5e9Kdd/ptVnTUHLGVa4B8Wzt/2r4=
+			QltlHLqnwPAhRHDYtPij71x5ptKGbIyqoIji7ATNAdk=
 			</data>
 		</dict>
-		<key>Headers/DesignSystem.h</key>
+		<key>Headers/Services.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			huzTkKlszdB6pH8xwAc5jio9rBargg0XAoynzgRUYjY=
+			2mhg5wzPjZHVFZwtMR0YzSl91QqyCrVm+ky6XHgIVYk=
 			</data>
 		</dict>
-		<key>Modules/DesignSystem.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
+		<key>Modules/Services.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Lad/FpJyFxiteqAYYOj9/28kyEvmCXbj6uY5uTCa8PM=
+			JRxgQjUCouAvUQCZU1q90DGZihkmrAOlS9FJGIvyEWE=
 			</data>
 		</dict>
-		<key>Modules/DesignSystem.swiftmodule/Project/x86_64.swiftsourceinfo</key>
+		<key>Modules/Services.swiftmodule/Project/x86_64.swiftsourceinfo</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Lad/FpJyFxiteqAYYOj9/28kyEvmCXbj6uY5uTCa8PM=
+			JRxgQjUCouAvUQCZU1q90DGZihkmrAOlS9FJGIvyEWE=
 			</data>
 		</dict>
-		<key>Modules/DesignSystem.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
+		<key>Modules/Services.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uNjOINSastWlpSGKl2M+CDNdBRuGVQQon0cO14et4NI=
+			YFQlj06D/Cg1LlnQUWZTsMdl69Yn0b3QvNFs7zd7NOI=
 			</data>
 		</dict>
-		<key>Modules/DesignSystem.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
+		<key>Modules/Services.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			l4r1UlBpxkiLlfHRrHMEYw6N2zK0xOsBPw/dBLfzVaY=
+			N8ZZPNyRtMjR405vISGXqbwUm3XM82GLBKHNxcbgrKQ=
 			</data>
 		</dict>
-		<key>Modules/DesignSystem.swiftmodule/x86_64.swiftdoc</key>
+		<key>Modules/Services.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uNjOINSastWlpSGKl2M+CDNdBRuGVQQon0cO14et4NI=
+			YFQlj06D/Cg1LlnQUWZTsMdl69Yn0b3QvNFs7zd7NOI=
 			</data>
 		</dict>
-		<key>Modules/DesignSystem.swiftmodule/x86_64.swiftmodule</key>
+		<key>Modules/Services.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			l4r1UlBpxkiLlfHRrHMEYw6N2zK0xOsBPw/dBLfzVaY=
+			N8ZZPNyRtMjR405vISGXqbwUm3XM82GLBKHNxcbgrKQ=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YWEQOnYzlXmU/RFAygGleGvRB3VmDg593OpTzC1UDlE=
-			</data>
-		</dict>
-		<key>Roboto-Bold.ttf</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			ycyZHetdJ/JngwoZ8jAesWTZ5h7AhmnBoaKRxWIP9Ao=
-			</data>
-		</dict>
-		<key>Roboto-Medium.ttf</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			41JSqj3C6E6dchFYb+6a7eKkJtMjDIsTGIHZhfFv+DY=
-			</data>
-		</dict>
-		<key>Roboto-Regular.ttf</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			AXwL6aqm0DWXN+H6dirTBMDgEHkn+v9abB9BXH9SRO0=
+			QgQjB3cAjXL4AKC4uMfTfRjsKXgbe6PyQi1w4CbMl/k=
 			</data>
 		</dict>
 	</dict>
